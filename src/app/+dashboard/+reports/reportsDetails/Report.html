@@ -1,0 +1,154 @@
+<div class="col-md-12 no-p">
+    <div class="col-md-12 no-p">
+        <div class="col-md-12 main_body">
+            <div class="main_action clearfix">
+                <report-filter
+                    [allowed]="__allowed"
+                    [lang]="__lang"
+                    [pages]="__pagesCount"
+                    (onAction)="onActionReport($event)">
+                </report-filter>
+            </div>
+            <div class="col-md-12 padding-20">
+                <div *ngIf="__pages.length > 1" class="nextpage" (click)="changePage(__currentPage + 1)"><i class="ti-angle-left"></i></div>  	
+                <div *ngIf="__pages.length > 1" class="prevpage" (click)="changePage(__currentPage - 1)"><i class="ti-angle-right"></i></div>
+                <div class="col-md-12 col-xs-12 col-sm-12 no-p" *ngIf="__pages && __pages.length > 0">
+                    <div class="col-md-12 col-xs-12 col-sm-12 no-p" *ngFor="let list of __pages; let i = index">
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-p" *ngIf="__pagesShown[i] === true">
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-p reports_results found">
+                                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                                <div class="col-md-12 col-xs-12 col-sm-12 no-p">
+                                    <div class="col-md-12 no-p {{ i }}">
+                                    <!--<div class="col-md-12 no-p {{ i }}" *ngIf="((__currentPage === (i + 1)) && __startPrinterPage === 0 && __endPrinterPage === 0) 
+                                                                            || ((i + 1) >= __startPrinterPage && (i + 1) <= __endPrinterPage)"> -->
+                                        <div class="col-md-12 col-xs-12 col-sm-12 no-p">
+                                            <div class="col-md-12 no-p report_header">
+                                                <div class="col-md-12 no-p"><h2>{{ _global.getToken()['account']['name'] }}</h2></div>
+                                                <div class="col-md-12 no-p" *ngIf="__byArray"><h3>{{ __byArray[by] }}</h3></div>
+                                                <div class="col-md-12 no-p" *ngIf="!__byArray && __title"><h3>{{ __title }}</h3></div>
+                                                <div class="col-md-12 no-p"><h5>من {{ from | date:'dd/MM/yyyy' }} الى {{ to | date:'dd/MM/yyyy' }}</h5></div>
+                                            </div>
+                                            <div class="col-md-12 no-p report_content">
+                                                <table class="table" *ngIf="by !== 'traffic'">
+                                                    <thead >
+                                                        <tr>
+                                                            <td *ngFor="let key of __loopArray" [hidden]="!this.__allowed[key]">{{ __lang[key] }}</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngIf="list && list.length > 0">
+                                                        <tr *ngFor="let item of list">
+                                                            <td *ngFor="let key of __loopArray" [hidden]="!this.__allowed[key]">{{ item[key] }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="table" *ngIf="by === 'traffic'">
+                                                    <thead >
+                                                        <tr>
+                                                            <td>الاسم</td>
+                                                            <td [hidden]="!__allowed['src']">المصدر</td>
+                                                            <td [hidden]="!__allowed['number']">فاتورة-ايصال</td>
+                                                            <td [hidden]="!__allowed['quantity']">الكمية</td>
+                                                            <td [hidden]="!__allowed['cost']">التكلفة</td>
+                                                            <td [hidden]="!__allowed['price']">السعر</td>
+                                                            <td [hidden]="!__allowed['tax']">الضريبة</td>
+                                                            <td [hidden]="!__allowed['discount']">التخفيض</td>
+                                                            <td [hidden]="!__allowed['total']">الاجمالى</td>
+                                                            <td [hidden]="!__allowed['date']">التاريخ</td>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody *ngIf="list && list.length > 0">
+                                                        <tr *ngFor="let item of list">
+                                                            <td>{{ item.product_name }}</td>
+                                                            <td [hidden]="!__allowed['src']">{{ item.src | src }}{{ item.status | src }}</td>
+                                                            <td [hidden]="!__allowed['number']">{{ item.number }}</td>
+                                                            <td [hidden]="!__allowed['quantity']">{{ item.quantity }}</td>
+                                                            <td [hidden]="!__allowed['cost']">{{ item.cost | myCurrency }}</td>
+                                                            <td [hidden]="!__allowed['price']">{{ item.price | myCurrency }}</td>
+                                                            <td [hidden]="!__allowed['tax']">{{ item.tax | myCurrency }}</td>
+                                                            <td [hidden]="!__allowed['discount']">{{ item.discount | myCurrency }}</td>
+                                                            <td [hidden]="!__allowed['total']">{{ item.total | myCurrency }}</td>
+                                                            <td [hidden]="!__allowed['date']">{{ item.date }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 no-p report_footer">
+                                    <p class="reportDate">{{ __createdAt__ | date:'dd/MM/yyyy H:mm' }}</p>
+                                    <p class="paginate">صفحة {{ (i+1) }} من {{ __pages.length }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--=============================================
+                    =============================================
+                    =============================================-->
+                <div class="col-md-12 no-p reports_results notfound" *ngIf="!__pages || __pages.length === 0"> 
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                    <div class="col-md-12 col-xs-12 col-sm-12 no-p">
+                        <div class="col-md-12 no-p report_header">
+                            <div class="col-md-12 no-p"><h2>{{ _global.getToken()['account']['name'] }}</h2></div>
+                            <div class="col-md-12 no-p"><h3>{{ __reportTitle__ }}</h3></div>
+                            <div class="col-md-12 no-p"><h5>{{ __dateRangeStr__ }}</h5></div>
+                        </div>
+                        <div class="col-md-12 no-p report_content">
+                            <div class="col-md-12 no-p noreport">
+                                <img src="assets/img/expl/noresults.svg" />
+                                <p>لايوجد نتائج لعرضها حاليا</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-p report_footer">
+                        <p class="reportDate">{{ __createdAt__ }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fade modal" id="show-report-print-modal" tabindex="1" role="dialog"
+    aria-labelledby="myReciptDetailsModalLabel" aria-hidden="false">
+    <div class="modal-dialog" [ngClass]="{ 'modal-sm' : __modal === 'print' }">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal"><span>x</span></button>
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 no-p " *ngIf="__modal === 'print'">
+            <form [formGroup]="__printFormObject" (ngSubmit)="OnSubmitPrintForm(__printFormObject.value , __printFormObject.valid)" novalidate 
+                class="form col-md-12 no-p white">
+                <div class="col-md-12 form_paraphraph">
+                    <p class="title head">طباعة الفاتورة</p>
+                    <p class="note">خيارات طباعة الفاتورة</p>
+                </div>
+                <div class="col-md-12 first last">
+                    <div class="form-group col-md-6">
+                        <label class="col-lg-12  col-xs-12 col-sm-12 col-md-12 col-form-label">من الصفحة</label>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-md-12">
+                            <input [formControl]="__printFormObject.controls['from']" name="from" type="text" class="form-control autofocus" placeholder="من الصفحة" 
+                            [ngClass]="{'errors': validateControl('from')}"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-lg-12  col-xs-12 col-sm-12 col-md-12 col-form-label">الى الصفحة</label>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-md-12">
+                            <input [formControl]="__printFormObject.controls['to']" name="to" type="text" class="form-control autofocus" placeholder="الى الصفحة" 
+                            [ngClass]="{'errors': validateControl('to')}"/>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">طباعة البيانات</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

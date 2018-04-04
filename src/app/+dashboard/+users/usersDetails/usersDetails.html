@@ -1,0 +1,79 @@
+<div class="col-md-12 padding-20 " [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-8 offset-md-2 col-xs-12 col-sm-12  box">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head">اضافة مستخدم جديد</p>
+                        <p class="note">يمكنك اضافة المستخدمين و اعطاء التصاريح المناسبة لكل مستخدم حسب رغبتك</p>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">اسم المستخدم</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,alphnumdashed,max50" [formControl]="formObject.controls['username']" name="username" 
+                                type="text" class="form-control autofocus" placeholder="اسم المستخدم" [ngClass]="{'errors': validateControl('username')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">البريد الالكترونى</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,email" [formControl]="formObject.controls['email']" name="email" 
+                                type="text" class="form-control autofocus" placeholder="البريد الالكترونى" [ngClass]="{'errors': validateControl('email')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">كلمة المرور</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="password,min4,max16" [formControl]="formObject.controls['password']" name="password" 
+                                type="password" class="form-control" placeholder="كلمة المرور" [ngClass]="{'errors': validateControl('password')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">تأكيد كلمة المرور</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="password,min4,max16" [formControl]="formObject.controls['rePassword']" name="rePassword" 
+                                type="password" class="form-control" placeholder="تأكيد كلمة المرور" [ngClass]="{'errors': validateControl('rePassword')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 last">
+                        <div class="form-group col-md-6">
+                            <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">صلاحية المستخدم</label>
+                            <div class="col-md-12 ">
+                                <select class="form-control" [formControl]="formObject.controls['role']">
+                                    <option value="admin">مسؤول</option>
+                                    <option value="manager" selected>مدير</option>
+                                    <option value="user">مستخدم</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">المسجل الافتراضى</label>
+                            <div class="col-md-12 ">
+                                <select class="form-control" [formControl]="formObject.controls['register_id']">
+                                    <option value="0">غير مسموح للمستخدم</option>
+                                    <option value="{{ item.id }}" *ngFor="let item of __registers">{{ item.name }}#{{ item.number }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

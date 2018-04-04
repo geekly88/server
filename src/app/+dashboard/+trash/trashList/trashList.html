@@ -1,0 +1,90 @@
+<div class="fade modal" id="show-details-model" tabondex="-1" role="dialog"
+    aria-labelledby="myDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <trash-details [isDynamic]="true" (onAction)="OnDetailsAction($event)"
+                [param]="param" [editable]="editable" [editItem]="editItem"></trash-details>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-20 list">
+    <div class="col-md-12 headtitle">
+        <p>الاصناف المحذوفة</p>
+    </div>
+    <div class="main_action clearfix">
+        <p class="title">قائمة تضم جميع الأصناف المحذوفة أو الملغية من قائمة الأصناف</p>
+        <p>...</p>
+        <p class="title __expl" (click)="__explain = !__explain">اعرف أكثر <i class="fa fa-life-saver"></i></p>
+        <addnew-item (onAddNewClick)="onAddNewClick($event)"></addnew-item>
+    </div>
+    <div class="col-md-12 padding-20 expl bounceInDown" *ngIf="__explain || __hideLists">
+        <p>يمكنك اضافة الأصناف التالفة الى القائمة لتتمكن من جرد الأصناف و معرفة اتجاه كل وحدة من هذه الأصناف</p>
+        <p><img src="/assets/img/expl/trash.svg" width="100px" /></p>
+        <p class="add" (click)="onAddNewClick({})">ازالة صنف</p>
+    </div>
+    <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12 box noshadow">
+        <div class="main_body">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p above_table" [hidden]="__hideLists">
+                <li class="active">
+                    <a>الكل</a>
+                </li>
+                <li class="opp" (click)="onTopActionClick({clicked:true,action:'EXPORTLIST'})"><a>تصدير القائمة <i class="fa fa-database"></i></a></li>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p table-rainbow top-rainbow" [hidden]="__hideLists">
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+            </div>
+            <table class="table" [hidden]="__hideLists">
+                <thead>
+                    <tr>
+                        <td width="40px"><input type="checkbox" class="parentcheckbox option-input checkbox"></td>
+                        <td (click)="OnOrderBy('product_name')"  [ngClass]="{'active' : __order === 'product_name'}">الصنف</td>
+                        <td>الكمية</td>
+                        <td>السبب</td>
+                        <td>ملاحظة</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _list">
+                        <td width="40px">
+                            <span>
+                                <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
+                            </span>        
+                        </td>
+                        <td><a href="{{ _global.config['panelPath'] + 'products/' + item.product_id }}">{{ item.product_name }}</a></td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ __reasons[item.reason] }}</td>
+                        <td>{{ item.note }}</td>
+                        <td class="actions">
+                            <dashboard-actions
+                                [obj]="_actionsObjs" [item]="item" (onAction)="onAction($event)">
+                            </dashboard-actions>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="main_footer">
+            <dashboard-footer 
+                [pages]="__pages"
+                [count]="__count" 
+                [pageUrl]="_controller"
+                [filterObj]="_filtersObjs"
+                [searchObj]="_searchObjs"
+                (pageChanging)="onPageChanging($event)"
+                (onAction)="onTopActionClick($event)">
+            </dashboard-footer>
+        </div>
+    </div>
+</div>
+<!--<show-item [showItemFields]="_showItemFields" [showItem]="_showItem" [isShowItem]="_isShowItem" (onShowItem)="onShowItem($event)"></show-item>-->
+

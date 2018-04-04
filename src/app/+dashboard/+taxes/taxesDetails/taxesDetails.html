@@ -1,0 +1,35 @@
+<div class="col-md-12 padding-20 no-p">
+    <div class="col-md-12 no-p">
+        <div class="col-md-12 main_body white">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-md-12 col-sm-12 col-xs-12 form_paraphraph">
+                        <p class="title head">اضافة ضريبة جديد</p>
+                    </div>
+                    <div class="col-md-12 first last">
+                        <div class="form-group col-md-8 col-sm-6">
+                            <label class="col-lg-12 col-form-label">اسم الضريبة</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,alph,max50" [formControl]="formObject.controls['name']" name="name" 
+                                type="text" class="form-control autofocus" placeholder="اسم الضريبة" [ngClass]="{'errors': validateControl('name')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-6">
+                            <label class="col-lg-12 col-form-label">النسبة المئوية للضريبة</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,float" [formControl]="formObject.controls['tax']" name="tax" 
+                                type="text" class="form-control" placeholder="النسبة المئوية للضريبة : 20" [ngClass]="{'errors': validateControl('tax')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

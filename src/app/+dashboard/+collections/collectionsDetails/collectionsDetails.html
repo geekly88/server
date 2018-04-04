@@ -1,0 +1,38 @@
+<div class="col-md-12 padding-20" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 no-p" [ngClass]="{'box allpage-with-sidebar' : !isDynamic}">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head">اضافة مجموعة جديد</p>
+                    </div>
+                    <div class="col-md-12 first last">
+                        <div class="form-group col-md-8 col-sm-6">
+                            <label class="col-md-12 col-sm-12 col-form-label">المجموعة</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,alph,max50" [formControl]="formObject.controls['name']" name="name" 
+                                type="text" class="form-control autofocus" placeholder="المجموعة" [ngClass]="{'errors': validateControl('name')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-6">
+                            <label class="col-lg-12 col-form-label">الفرع الرئيسى</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <select class="form-control" name="father" (change)="onSelectItem($event)" [formControl]="formObject.controls['father']">
+                                    <option value=""></option>
+                                    <option *ngFor="let option of __collectionsArray"
+                                        [value]="option.name" value="{{ option.name }}" >{{ option.name }}</option>
+                                </select>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

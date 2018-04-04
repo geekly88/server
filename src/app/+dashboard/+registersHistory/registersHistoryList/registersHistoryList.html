@@ -1,0 +1,71 @@
+<div class="col-md-12 padding-20 list">
+    <div class="col-md-12 headtitle">
+        <p>تواريخ المسجلات و نشاطها</p>
+    </div>
+    <div class="main_action clearfix">
+        <p class="title">قائمة تضم جميع تواريخ المسجلات و نشاطاتها</p>
+        <!--<p>...</p>
+        <p class="title __expl" (click)="__explain = !__explain">اعرف أكثر <i class="fa fa-life-saver"></i></p>-->
+        <!--<addnew-item (onAddNewClick)="onAddNewClick($event)"></addnew-item>-->
+    </div>
+    <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12 box noshadow">
+        <div class="main_body">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p above_table">
+                <li class="active">
+                    <a>الكل</a>
+                </li>
+                <li class="opp" (click)="onTopActionClick({clicked:true,action:'EXPORTLIST'})"><a>تصدير القائمة <i class="fa fa-database"></i></a></li>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p table-rainbow top-rainbow" [hidden]="__hideLists">
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td width="40px"><input type="checkbox" class="parentcheckbox option-input checkbox"></td>
+                        <td (click)="OnOrderBy('register_id')" [ngClass]="{'active' : __order === 'register_id'}">المسجل#الجلسة</td>
+                        <td (click)="OnOrderBy('name')" [ngClass]="{'active' : __order === 'name'}">التاريخ</td>
+                        <td (click)="OnOrderBy('sales')" [ngClass]="{'active' : __order === 'sales'}">المبيعات</td>
+                        <td (click)="OnOrderBy('counted')" [ngClass]="{'active' : __order === 'counted'}">المحصل</td>
+                        <td (click)="OnOrderBy('expected')" [ngClass]="{'active' : __order === 'expected'}">المتوقع</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _list">
+                        <td width="40px">
+                            <span>
+                                <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
+                            </span>        
+                        </td>
+                        <td>{{ item.register }}#{{ item.closure }}</td>
+                        <td>{{ item.openedAt | date:'medium' }}</td>
+                        <td>{{ item.sales }}</td>
+                        <td>{{ item.counted | myCurrency }}</td>
+                        <td>{{ item.expected | myCurrency }}</td>
+                        <td class="actions">
+                            <dashboard-actions
+                                [obj]="_actionsObjs" [item]="item" (onAction)="onAction($event)">
+                            </dashboard-actions>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="main_footer">
+            <dashboard-footer 
+                [pages]="__pages"
+                [count]="__count" 
+                [pageUrl]="_controller"
+                [filterObj]="_filtersObjs"
+                [searchObj]="_searchObjs"
+                (pageChanging)="onPageChanging($event)"
+                (onAction)="onTopActionClick($event)">
+            </dashboard-footer>
+        </div>
+    </div>
+</div>
+

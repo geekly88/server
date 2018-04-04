@@ -1,0 +1,64 @@
+<div class="col-md-12" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 no-p" [ngClass]="{'box allpage-with-sidebar' : !isDynamic}">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <!--<div class="col-md-12" #pdfViewer>Hello</div>
+            <div class="col-md-12"><button type="button" (click)="test()">pdf</button></div>-->
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head">ازالة صنف</p>
+                    </div>
+                    <div class="col-md-12 first">
+                        <div class="form-group col-md-12 col-xs-12 col-sm-12">
+                            <label class="col-md-12 col-form-label">اسم الصنف</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="min2,max25" [formControl]="formObject.controls['product_name']" name="product_name"
+                                type="text" class="form-control" placeholder="الصنف أو الكود" [ngClass]="{'errors': validateControl('product_name')}"/>
+                                <autocomplete
+                                        [field]="['name' , 'sku']"
+                                        [template]="'#name'"
+                                        [searchFields]="['name','sku']"
+                                        [control]="formObject.controls.product_name"
+                                        [search]="formObject.controls.product_name.value"
+                                        [url]="'products/?logic=||'"
+                                        [class]="'product_name'"
+                                        [appendTosearch]="['is_product' , 'is_product=true']"
+                                        (onsetvalue)="autocompletevaluechanged($event)"
+                                        >
+                                </autocomplete>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 last">
+                        <div class="col-md-6 col-xs-12 col-sm-12 form-group">
+                            <label for="" class="col-md-12 col-form-label">الكمية ({{ formObject.value.unit }})</label>
+                            <div class="col-md-12">
+                                <input data-rules="float" [formControl]="formObject.controls['quantity']" name="quantity"
+                                    type="text" class="form-control" placeholder="الكمية" [ngClass]="{'errors': validateControl('quantity')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-xs-12 col-sm-12">
+                            <label class="col-form-label col-md-12 col-sm-12">السبب</label>
+                            <div class="col-md-12 col-sm-12">
+                                <select class="form-control" name="reason" [formControl]="formObject.controls['reason']">
+                                    <option value="unknown">غير معروف</option>
+                                    <option value="damaged">تلف</option>
+                                    <option value="expired">انتهاء الصلاحية</option>
+                                    <option value="unavaliable">غير متوفر</option>
+                                    <option value="other">غير ذلك</option>
+                                </select>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

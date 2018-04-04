@@ -1,0 +1,75 @@
+<div class="col-md-12 padding-20" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 no-p" [ngClass]="{'box allpage-with-sidebar' : !isDynamic}">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head">اضافة وحدة جديدة</p>
+                    </div>
+                    <div class="col-md-12 first">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-lg-12 col-form-label">الوحدة</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,alph,max50" [formControl]="formObject.controls['name']" name="name" 
+                                type="text" class="form-control autofocus" placeholder="الوحدة" [ngClass]="{'errors': validateControl('name')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 last">
+                        <div class="form-group col-md-8 col-sm-6">
+                            <label class="col-lg-12 col-form-label">جزء من / مثال : الجرام جزء من الكيلوجرام</label>
+                            <div class="col-md-12 col-xs-12">
+                                <select class="form-control" name="father_id" (change)="onSelectItem($event)" [formControl]="formObject.controls['father_id']">
+                                    <option value=""></option>
+                                    <!--<option value="__ADDONE__" name="__ADDONE__">أضف جديد</option>-->
+                                    <option *ngFor="let option of __typesArray"
+                                        [value]="option.id" value="{{ option.id }}" >{{ option.name }}</option>
+                                </select>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-6">
+                            <label class="col-lg-12 col-form-label">المقدار</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="float" [formControl]="formObject.controls['child_quantity']" name="child_quantity" 
+                                type="text" class="form-control" placeholder="الوحدة" [ngClass]="{'errors': validateControl('child_quantity')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="!!formObject.value.child_quantity && !!formObject.value.father && !!formObject.value.name">
+                            <p class="units_eq">
+                                <span class="float_exac">1*{{ formObject.value.father }}</span>
+                                <span class="center">=</span>
+                                <span class="float_opp">{{ formObject.value.child_quantity }}*{{ formObject.value.name }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="action_bar hidden-md-down" [hidden]="isDynamic">
+    <div class="col-md-12 no-p">
+        <div class="col-xs-2 bg1 top_colors float_exac"></div>
+        <div class="col-xs-2 bg3 top_colors float_exac"></div>
+        <div class="col-xs-2 bg5 top_colors float_exac"></div>
+        <div class="col-xs-2 bg8 top_colors float_exac"></div>
+        <div class="col-xs-2 bg9 top_colors float_exac"></div>
+        <div class="col-xs-2 bg10 top_colors float_exac"></div>
+    </div>
+    <p class="title"></p>
+    <p class="note"></p>
+    <p class="rules_title"></p>
+    <div class="field"></div>
+    <div class="rules"></div>
+    <div class="col-sm-12 no-p foot">
+        <button (click)="OnSubmitForm(formObject.value, formObject.valid)" 
+                type="submit" class="btn btn-primary"> <img src="assets/img/price-tag.svg" />حفظ البيانات</button>
+    </div>
+</div>

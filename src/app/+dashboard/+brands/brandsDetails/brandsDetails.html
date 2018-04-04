@@ -1,0 +1,27 @@
+<div class="col-md-12" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 no-p">
+        <div class="col-md-12 main_body white">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head">اضافة ماركة جديد</p>
+                    </div>
+                    <div class="col-md-12 first last">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-md-12 col-sm-12 col-form-label">اسم الماركة</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,alph,max50" [formControl]="formObject.controls['name']" name="name" 
+                                type="text" class="form-control autofocus" placeholder="اسم الماركة" [ngClass]="{'errors': validateControl('name')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

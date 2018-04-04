@@ -1,0 +1,17 @@
+.navbar{
+    background: $dashboard_navbar;
+    height: $navbar_height;
+    width: 100%;
+    float : if($float_dir == left , right , left);
+    border-bottom : $dashboard_brdr_width solid $dashboard_brdr;
+    li{
+        list-style: none;
+        a{
+            color:$main_color;
+            font-weight: bold;
+            &:hover{
+                text-decoration: none;
+            }
+        }
+    }
+}

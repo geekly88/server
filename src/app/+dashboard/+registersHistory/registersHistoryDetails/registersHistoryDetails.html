@@ -1,0 +1,247 @@
+<div class="col-md-12 col-xs-12 padding-20">
+    <div class="col-md-12 col-xs-12 headtitle">
+        <p class="col-md-6 col-xs-6 col-sm-6 no-p">نشاطات المسجل</p>
+        <p class="col-md-6 col-xs-6 col-sm-6 no-p" (click)="_global.navigatePanel('registersHistory')">
+            <span class="float_opp gotoregistry">الذهاب لقائمة النشاطات</span>
+        </p>
+    </div>
+    
+    <div class="col-md-12 col-xs-12 box noshadow">
+        <div class="main_body col-md-12 col-xs-12 no-p register-container">
+            <div class="col-md-12 col-xs-12 expl bounceInDown" *ngIf="(!editItem) || (editItem.case === 'close' && !__hasParam)">
+                
+                <p><img src="/assets/img/expl/close.svg" width="100px" /></p>
+
+                <div class="col-md-12 col-xs-12">
+                    <select class="select-register" (change)="onChangeRegisterSelected()" [(ngModel)]="__registerSelected">
+                        <option [ngValue]="item" *ngFor="let item of __registersList">{{ item.name }}</option>
+                    </select>
+                    <h2 class="center" style="color : #FFF">المسجل مغلق حاليا</h2>
+                    <p class="shade">يجب تفعيل المسجل للبدء فى عملية البيع</p>
+                </div>
+
+                <button class="btn btn-primary register-activate" (click)="onPerpareOpenRegister()">تفعيل المسجل</button>
+            </div>
+            <div class="col-md-12 col-xs-12 expl bounceInDown" *ngIf="editable && editItem && editItem.case === 'open'">
+                <p><img src="/assets/img/expl/sell.svg" width="100px" /></p>
+
+                <div class="col-md-12 col-xs-12">
+                    <h2 class="center">المسجل مفعل حاليا</h2>
+                    <!--<br *ngIf="editItem && editItem.open_note" />
+                    <br *ngIf="editItem && editItem.open_note" />
+                    <h2 class="center" *ngIf="editItem && editItem.open_note">editItem.open_note</h2>-->
+                    <div class="col-md-6 col-sm-6 col-lg-6 shortdet">
+                        <span class="col-md-12 col-sm-12 top">دخل الى المسجل</span>
+                        <span class="col-md-12 col-sm-12 bottom">{{ __in | myCurrency }}</span>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6 shortdet">
+                        <span class="col-md-12 col-sm-12 top">خرج من المسجل</span>
+                        <span class="col-md-12 col-sm-12 bottom">{{ __out | myCurrency }}</span>
+                    </div>
+                    <p class="shade">يمكنك الذهاب للمبيعات</p>
+                </div>
+
+                <button class="btn btn-primary register-activate" (click)="_global.navigatePanel('sells/details')">الذهاب للمبيعات</button>
+            </div>
+            <div class="col-md-12 col-xs-12 expl bounceInDown" *ngIf="__hasParam && editItem && editItem.case === 'close'">
+                <p><img src="/assets/img/expl/sell.svg" width="100px" /></p>
+
+                <div class="col-md-12 col-xs-12">
+                    <h2 class="center">بيانات الجلسة رقم #{{ editItem.closure }}</h2>
+                    <!--<p class="shade">يمكنك الذهاب للمبيعات</p>-->
+                </div>
+                <!--<button class="btn btn-primary register-activate" (click)="_global.navigatePanel('sells/details')">الذهاب للمبيعات</button>-->
+            </div>
+            <div class="col-md-12 col-xs-12 no-p register-header" *ngIf="editItem">
+                <div class="col-md-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-xs-12 no-p title" *ngIf="!editable"><p>نشاطات أخر عملية تفعيل للمسجل</p></div>
+                    <div class="col-md-12 col-xs-12 no-p title" *ngIf="editable"><p>نشاطات المسجل حاليا</p></div>
+                    <div class="col-md-12 col-xs-12 no-p details">
+                        <div class="col-md-3 col-sm-6 no-p">
+                            <p class="shade">الحساب</p>
+                            <p>{{ _global.getToken()['account']['name'] }}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6 no-p">
+                            <p class="shade">المسجل</p>
+                            <p>{{ editItem.register }}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6 no-p">
+                            <p class="shade">رقم التفعيل</p>
+                            <p>#{{ editItem.closure }}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6 no-p">
+                            <p class="shade">الموظف</p>
+                            <p><a (click)="_global.navigatePanel('employees/details/' + editItem.employee_id)">{{ editItem.employee }}</a></p>
+                        </div>
+                        <div class="col-md-3 col-sm-6 no-p">
+                            <p class="shade">تاريخ التفعيل</p>
+                            <p *ngIf="editable">{{ formObject.value.openedAt | date:'dd/MM/yyyy - h:mm' }}</p>
+                            <p *ngIf="!editable">{{ editItem.openedAt | date:'dd/MM/yyyy - h:mm' }}</p>
+                        </div>
+                        <div class="col-md-3 col-sm-6 no-p">
+                            <p class="shade">تاريخ الاغلاق</p>
+                            <p *ngIf="!editable">{{ editItem.closedAt | date:'dd/MM/yyyy - h:mm' }}</p>
+                            <p *ngIf="editable">الحالة مفعل</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form class="form no-p col-md-12 col-xs-12" (ngSubmit)="onCloseRegister()" [formGroup]="formObject" novalidate 
+                  *ngIf="editItem">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>طريقة الدفع</td>
+                            <td>المتوقع</td>
+                            <td>المحصل</td>
+                            <td>الفارق</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td (click)="__showDetails = !__showDetails">الدفع كاش</td>
+                            <td (click)="__showDetails = !__showDetails">{{ editItem.cash_expected | myCurrency }}</td>
+                            <td (click)="__showDetails = !__showDetails" *ngIf="editItem.case === 'close'">{{ editItem.cash_counted | myCurrency }}</td>
+                            <td *ngIf="editItem.case === 'open'">
+                                <div class="form-group col-md-12 col-xs-12">
+                                    <div class="col-md-12 col-xs-12">
+                                        <input (change)="onUpdateValues()" data-rules="price" [formControl]="formObject.controls['cash_counted']" name="cash_counted"
+                                        type="text" class="form-control" placeholder="0.00" [ngClass]="{'errors': validateControl('cash_counted')}">
+                                    </div>
+                                </div>
+                            </td>
+                            <td (click)="__showDetails = !__showDetails">{{ (editItem.cash_counted - editItem.cash_expected) | myCurrency }}</td>
+                        </tr>
+                        <!--<tr></tr>
+                        <tr [hidden]="!__showDetails" class="cash-details">
+                            <td colspan="4">
+                                <div class="col-md-12 col-xs-12 padding-20 details">
+                                    <div class="col-md-3 col-xs-3 col-sm-3">
+                                        
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>-->
+                        <tr>
+                            <td>الدفع ببطاقة الدفع</td>
+                            <td>{{ editItem.credit_card_expected | myCurrency }}</td>
+                            <td *ngIf="editItem.case === 'close'">{{ editItem.credit_card_counted | myCurrency }}</td>
+                            <td *ngIf="editItem.case === 'open'">
+                                <div class="form-group col-md-12 col-xs-12">
+                                    <div class="col-md-12 col-xs-12">
+                                        <input (change)="onUpdateValues()" data-rules="req,price" [formControl]="formObject.controls['credit_card_counted']" name="credit_card_counted"
+                                        type="text" class="form-control" placeholder="0.00" [ngClass]="{'errors': validateControl('credit_card_counted')}">
+                                    </div>
+                                </div>    
+                            </td>
+                            <td>{{ (editItem.credit_card_expected - editItem.credit_card_counted) | myCurrency }}</td>
+                        </tr>
+                        <tr>
+                            <td>الدفع بالشيك</td>
+                            <td>{{ editItem.cheque_expected | myCurrency }}</td>
+                            <td *ngIf="editItem.case === 'close'">{{ editItem.cheque_counted | myCurrency }}</td>
+                            <td *ngIf="editItem.case === 'open'">
+                                <div class="form-group col-md-12 col-xs-12">
+                                    <div class="col-md-12 col-xs-12">
+                                        <input (change)="onUpdateValues()" data-rules="req,price" [formControl]="formObject.controls['cheque_counted']" name="cheque_counted"
+                                        type="text" class="form-control" placeholder="0.00" [ngClass]="{'errors': validateControl('cheque_counted')}">
+                                    </div>
+                                </div>    
+                            </td>
+                            <td>{{ (editItem.cheque_expected - editItem.cheque_counted) | myCurrency }}</td>
+                        </tr>
+
+                        <tr>
+                            <td>التحويلات المصرفية</td>
+                            <td>{{ editItem.bank_counted | myCurrency }}</td>
+                            <td>------</td>
+                            <td>------</td>
+                        </tr>
+                        <tr>
+                            <td><b>الاجمالى</b></td>
+                            <td>{{ editItem.expected | myCurrency }}</td>
+                            <td *ngIf="editItem.case === 'close'">{{ editItem.counted | myCurrency }}</td>
+                            <td *ngIf="editItem.case === 'open'">------</td>
+                            <td *ngIf="editItem.case === 'open'">------</td>
+                            <td *ngIf="editItem.case === 'close'">{{ (editItem.expected - editItem.counted) | myCurrency }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--<fieldset *ngIf="editable && editItem && editItem.case === 'open'">
+                    <div class="col-md-12 col-xs-12 no-p">
+                        <div class="form-group no-p col-md-12 col-xs-12">
+                            <div class="col-md-12 col-xs-12 no-p">
+                                <textarea data-rules="note" [formControl]="formObject.controls['close_note']" name="close_note" 
+                                type="text" class="form-control autofocus space_note" placeholder="الملاحظة" [ngClass]="{'errors': validateControl('close_note')}"
+                                ></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>-->
+                <div class="col-md-12 col-xs-12 form-group no-p" *ngIf="editable && editItem && editItem.case === 'open'">
+                    <button class="col-md-12 col-xs-12 no-p btn btn-primary">اغلاق المسجل</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="fade modal" id="show-register-modal" tabondex="-1" role="dialog"
+    aria-labelledby="myRegisterModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 col-xs-12 white">
+                <form [formGroup]="formObject" (ngSubmit)="onOpenRegister()" novalidate
+                    class="form col-md-12 col-xs-12 no-p">
+                    <fieldset>
+                        <div class="col-xl-12 form_paraphraph">
+                            <p class="title head">تفعيل المسجل</p>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <div class="form-group col-md-12 col-xs-12">
+                                <label class="col-lg-12 col-form-label">المبلغ الموجود فى المسجل</label>
+                                <div class="col-md-12 col-xs-12 ">
+                                    <input data-rules="req,price" [formControl]="formObject.controls['employee']" name="employee" 
+                                    type="text" class="form-control autofocus" placeholder="الموظف خلف المسجل" [ngClass]="{'errors': validateControl('employee')}"/>
+                                    <autocomplete
+                                        [field]="['name' , 'code']"
+                                        [template]="'#name'"
+                                        [searchFields]="['name','code']"
+                                        [control]="formObject.controls.employee"
+                                        [search]="formObject.controls.employee.value"
+                                        [url]="'employees/?logic=||&contains=true'"
+                                        [class]="'employee'"
+                                        (onsetvalue)="autocompletevaluechanged($event)"
+                                        >
+                                    </autocomplete>
+                                    <div class="errors"></div>    
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12 col-xs-12">
+                                <label class="col-lg-12 col-form-label">المبلغ الافتتاحى للمسجل</label>
+                                <div class="col-md-12 col-xs-12 ">
+                                    <input data-rules="req,price" [formControl]="formObject.controls['open_amount']" name="open_amount" 
+                                    type="text" class="form-control" placeholder="0.00" [ngClass]="{'errors': validateControl('open_amount')}"/>
+                                </div>
+                            </div>
+                            <!--<div class="form-group col-md-12 col-xs-12">
+                                <label class="col-lg-12 col-form-label">ملاحظة تفعيل المسجل</label>
+                                <div class="col-md-12 col-xs-12 ">
+                                    <input data-rules="note,max150" [formControl]="formObject.controls['open_note']" name="open_note" 
+                                    type="text" class="form-control" placeholder="الملاحظة" [ngClass]="{'errors': validateControl('open_note')}"/>
+                                </div>
+                            </div>-->
+                        </div>
+                        <div class="col-md-12 col-xs-12" style="margin-top:20px;">
+                            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

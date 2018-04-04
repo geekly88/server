@@ -1,0 +1,150 @@
+<div class="col-md-12 padding-20" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 col-lg-10 offset-lg-1 no-p" [ngClass]="{'box' : !isDynamic}">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-md-12 form_paraphraph">
+                        <p class="title head">اضافة حساب جديد</p>
+                    </div>
+                    <div class="col-md-12 first">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">اسم الحساب</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,alph,min2,max25" [formControl]="formObject.controls['name']" name="name" 
+                                type="text" class="form-control autofocus" placeholder="اسم الحساب" [ngClass]="{'errors': validateControl('name')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">البريد الالكترونى</label>
+                            <div class="col-md-12">
+                                <input data-rules="email" [formControl]="formObject.controls['email']" name="email" 
+                                type="text" class="form-control" placeholder="البريد الالكترونى" [ngClass]="{'errors': validateControl('email')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 last">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">رقم الهاتف</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="phone" [formControl]="formObject.controls['phone']" name="phone" 
+                                type="text" class="form-control" placeholder="رقم الهاتف" [ngClass]="{'errors': validateControl('phone')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 last">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">النقال</label>
+                            <div class="col-md-12">
+                                <input data-rules="phone" [formControl]="formObject.controls['mobile']" name="mobile" 
+                                type="text" class="form-control" placeholder="رقم الهاتف النقال" [ngClass]="{'errors': validateControl('mobile')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                <div class="col-md-12 form_paraphraph">
+                    <p class="title">معلومات اضافية</p>
+                    <p class="note">المعلومات الاضافية غير ضرورية ... يمكنك تخطيها</p>
+                </div>
+
+                <div class="col-md-12 first">
+                    <div class="form-group col-md-6">
+                        <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">البلد</label>
+                        <div class="col-md-12 ">
+                            <input data-rules="alph,min2,max25" [formControl]="formObject.controls['country']" 
+                            type="text" class="form-control" placeholder="البلد" [ngClass]="{'errors': validateControl('country')}"/>
+                                <div class="errors"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">المدينة/المنطقة</label>
+                        <div class="col-md-12">
+                            <input data-rules="alph,min2,max25" [formControl]="formObject.controls['city']" 
+                                   type="text" class="form-control" placeholder="المدينة" [ngClass]="{'errors': validateControl('city')}">
+                            <div class="errors"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 last">
+                    <div class="form-group col-md-6">
+                        <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">الشارع 1</label>
+                        <div class="col-md-12">
+                            <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address1']" 
+                            type="text" class="form-control" placeholder="الشارع 1" [ngClass]="{'errors': validateControl('address1')}">
+                            <div class="errors"></div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">الشارع 2</label>
+                        <div class="col-md-12">
+                            <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address2']" 
+                            type="text" class="form-control" placeholder="الشارع 2" [ngClass]="{'errors': validateControl('address2')}">
+                            <div class="errors"></div>
+                        </div>
+                    </div>
+                </div>
+                </fieldset>
+                <fieldset>
+                    <div class="col-md-12 form_paraphraph">
+                        <p class="title">شبكات التواصل الاجتماعى</p>
+                        <p class="note">يمكنك اضافة صفحات التواصل الاجتماعى الخاصة بالحسابات لسهولة الوصول اليهم</p>
+                    </div>
+                    <div class="col-md-12 first">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">الموقع الالكترونى</label>
+                            <div class="col-md-12">
+                                <input data-rules="url" [formControl]="formObject.controls['website']" name="website" 
+                                type="text" class="form-control" placeholder="الموقع الالكترونى" [ngClass]="{'errors': validateControl('website')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">فيس بوك</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="url" [formControl]="formObject.controls['facebook']" name="facebook" 
+                                type="text" class="form-control" placeholder="فيس بوك" [ngClass]="{'errors': validateControl('facebook')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">لينكدين</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="url" [formControl]="formObject.controls['linkedin']" name="linkedin" 
+                                type="text" class="form-control" placeholder="لينكدين" [ngClass]="{'errors': validateControl('linkedin')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">تويتر</label>
+                            <div class="col-md-12">
+                                <input data-rules="url" [formControl]="formObject.controls['twitter']" name="twitter" 
+                                type="text" class="form-control" placeholder="تويتر" [ngClass]="{'errors': validateControl('twitter')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 last">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">ملاحظات</label>
+                            <div class="col-md-12 ">
+                                <textarea data-rules="note" [formControl]="formObject.controls['description']" name="description" 
+                                type="text" class="form-control textarea" placeholder="ملاحظات" [ngClass]="{'errors': validateControl('description')}"></textarea>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+                <fieldset></fieldset>
+            </form>
+            <!--div class="main_footer col-md-12"></div-->
+        </div>
+    </div>
+</div>

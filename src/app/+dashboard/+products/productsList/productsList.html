@@ -1,0 +1,151 @@
+
+<div class="fade modal" id="show-pro-details-model" tabindex="1" role="dialog"
+    aria-labelledby="myDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white" *ngIf="__modal === 'products'">
+                <products-details [isDynamic]="true" (onAction)="OnDetailsAction($event)"
+                [param]="param" [editable]="editable" [editItem]="editItem"></products-details>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-20 list">
+    <div class="col-md-12 headtitle">
+        <p>الأصناف و الخدمات</p>
+    </div>
+    <div class="main_action clearfix">
+        <p class="title">قائمة تضم الأصناف و الخدمات المقدمة من قبل الشركة و الخاصة بهذا الحساب</p>
+        <p>...</p>
+        <p class="title __expl" (click)="__explain = !__explain">اعرف أكثر <i class="fa fa-life-saver"></i></p>
+        <addnew-item (onAddNewClick)="onAddNewClick($event)"></addnew-item>
+    </div>
+    <div class="col-md-12 padding-20 expl bounceInDown" *ngIf="__explain || __hideLists">
+        <p>
+            قائمة تحوى الأصناف و الخدمات المقدمات من قبل الحساب و أسعارها و بعض المعلومات عن كل صنف ... كما يمكن ملاحظة التنبيهات لضرورة اعادة التعبئة لصنف أو نوع معين
+        </p>
+        <p><img src="/assets/img/expl/products.svg" width="100px" /></p>
+        <p class="add" (click)="onAddNewClick({})">أضف صنف أو خدمة جديدة</p>
+    </div>
+    <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12 box noshadow">
+        <div class="main_body">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p above_table" [hidden]="__hideLists">
+                <li (click)="OnChangeActiveType('ACTIVE')" [ngClass]="{'active' : __activeType === 'ACTIVE'}">
+                    <a>المفعلة</a>
+                </li>
+                <li (click)="OnChangeActiveType('NOT')" [ngClass]="{'active' : __activeType === 'NOT'}">
+                    <a>غير المفعلة</a>
+                </li>
+                <li (click)="OnChangeActiveType('ALL')" [ngClass]="{'active' : __activeType === 'ALL'}">
+                    <a>الكل</a>
+                </li>
+                <li class="opp" (click)="onTopActionClick({clicked:true,action:'EXPORTLIST'})"><a>تصدير القائمة <i class="fa fa-database"></i></a></li>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p table-rainbow top-rainbow" [hidden]="__hideLists">
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+            </div>
+            <table class="table" [hidden]="__hideLists">
+                <thead>
+                    <tr>
+                        <td width="40px"><input type="checkbox" class="parentcheckbox option-input checkbox"></td>
+                        <td class="hidden-lg-down image pro_img"></td>
+                        <td (click)="OnOrderBy('name')" [ngClass]="{'active' : __order === 'name'}">الاسم</td>
+                        <td (click)="OnOrderBy('storage')" class="hidden-md-down"  [ngClass]="{'active' : __order === 'storage'}">المخزن</td>
+                        <td (click)="OnOrderBy('supplier')" class="hidden-md-down"  [ngClass]="{'active' : __order === 'supplier'}">المورد</td>
+                        <td (click)="OnOrderBy('tags')" class="hidden-lg-down" [ngClass]="{'active' : __order === 'tags'}">الكلمات</td>
+                        <td (click)="OnOrderBy('brand')" class="hidden-lg-down" [ngClass]="{'active' : __order === 'brand'}">الماركة</td>
+                        <td (click)="OnOrderBy('collection')" class="hidden-lg-down" [ngClass]="{'active' : __order === 'collection'}">المجموعة</td>
+                        <!--<td class="hidden-lg-down">المجموعة</td>-->
+                        <td (click)="OnOrderBy('stock')" class="hidden-sm-down" [ngClass]="{'active' : __order === 'stock'}">الكمية</td>
+                        <td (click)="OnOrderBy('price')" class="hidden-sm-down" [ngClass]="{'active' : __order === 'price'}">السعر</td>
+                        <!--<td>نشط</td>-->
+                        <td width="50px">تفعيل</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _list" class="__product_{{ item.id.toString() }}">
+                        <td width="40px" [ngClass]="{'reorder' : item.is_trackable && (item.diffrence <= 0 && item.stock_order_amount > 0) }">
+                            <span>
+                                <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
+                            </span>        
+                        </td>
+                        <td class="hidden-lg-down pro_img image" >
+                            <img 
+                            *ngIf="item.imgs && item.imgs.length > 0" src="{{ _global.config['serverPath']+'uploads/proimg/'+ item.imgs[0] }}"  id="img_{{ item.id }}"/>
+                            <img *ngIf="!item.imgs || item.imgs.length === 0" src="/assets/img/noimage.png"/>
+                            <input name="file" (change)="onUploadImage(item)" enctype="multipart/form-data" type="file" id="myFileInputField_{{ item.id }}" />
+                        </td>
+
+                        <td *ngIf="item.is_variaty" class="__product_{{ item.id }}">
+                            <a class="pro_var col-md-12" (click)="onShowVariaties(item)">
+                                <p>{{ item.name }}</p> 
+                                <p class="variaty_count">({{item.variaty_count}})</p>
+                            </a>
+                            <span class="small-shade" *ngIf="item.sku && item.sku !== ''">{{item.sku}}</span>
+                        </td>
+                        <td *ngIf="!item.is_variaty">
+                            <a class="pro_var col-md-12" (click)="_global.navigatePanel('products/details/' + item.id)">{{ item.name }}</a>
+                            <span class="small-shade" *ngIf="item.sku && item.sku !== ''">{{item.sku}}</span>
+                        </td>
+                        
+                        <td class="hidden-md-down">{{ item.storage }}
+                            <!--<a (click)="_global.navigatePanel('storages/details/' + item.storage_id)" 
+                            *ngIf="item.storage && item.storage_id ">{{ item.storage }}</a>-->
+                        </td>
+                        <td class="hidden-md-down">
+                            <a (click)="_global.navigatePanel('suppliers/details/' + item.supplier_id)" 
+                            *ngIf="item.supplier && item.supplier_id ">{{ item.supplier }}</a>
+                        </td>
+                        <td class="hidden-lg-down" *ngIf="!item.tags || item.tags.length === 0"></td>
+                        <td class="hidden-lg-down" *ngIf="item.tags && item.tags.length > 0">
+                            <a *ngFor="let tag of item.tags.split(',')" (click)="onChangeItemsSearch('tags' , tag , true)">{{ tag }} </a>
+                        </td>
+                        <td class="hidden-lg-down">
+                            <a *ngIf="item.brand" (click)="onChangeItemsSearch('brand' , item.brand)">{{ item.brand }}</a>
+                        </td>
+                        <td class="hidden-lg-down">
+                            <a *ngIf="item.collection" 
+                            (click)="onChangeItemsSearch('collection' , item.collection)">{{ item.collection }}</a>
+                        </td>
+                        <td *ngIf="item.is_trackable" class="hidden-sm-down"><span [ngClass]="{'error' : (item.stock <= item.limit_quantity || item.quantity === 0) 
+                            , 'refill' : item.diffrence <= 0 && item.stock_order_amount > 0 }"
+                            (click)="OnReOrderProduct(item)" >{{ item.stock }} {{ item.type }}</span></td>
+                        <td *ngIf="!item.is_trackable" class="hidden-sm-down">غير محدود</td>
+                        <td  class="hidden-sm-down">{{ item.price | myCurrency:3 }}</td>
+                        <td>
+                            <input type="checkbox" data-id="{{ item.id }}" id="changexhkbx_{{ item.id }}" class="ios-toggle" 
+                                   [checked]="item.is_active"
+                                   (change)="OnChangeActivity(item)"/>
+                            <label for="changexhkbx_{{ item.id }}" class="checkbox-label"></label>
+                        </td>
+                        <td class="actions">
+                            <dashboard-actions
+                                [obj]="_actionsObj" [item]="item" (onAction)="onAction($event)">
+                            </dashboard-actions>
+                        </td>
+                    </tr>
+                </tbody>                
+            </table>
+        </div>
+        <div class="main_footer">
+            <dashboard-footer 
+                [pages]="__pages"
+                [count]="__count" 
+                [pageUrl]="_controller"
+                [filterObj]="_filtersObjs"
+                [searchObj]="_searchObjs"
+                (pageChanging)="onPageChanging($event)"
+                (onAction)="onTopActionClick($event)"
+                ></dashboard-footer>
+        </div>
+    </div>
+</div>
+<!--<show-item [showItemFields]="_showItemFields" [showItem]="_showItem" [isShowItem]="__modal === 'show'" (onShowItem)="onShowItem($event)"></show-item>-->
+

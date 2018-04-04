@@ -1,0 +1,67 @@
+<div class="fade modal" id="show-details-model" tabondex="-1" role="dialog"
+    aria-labelledby="myDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <bookKepping-details *ngIf="__addType === 'BKeep'" [isDynamic]="true" (onAction)="OnDetailsAction($event)"
+                [param]="param" [editable]="editable" [editItem]="editItem" 
+                [addEditData]="__addEditData"></bookKepping-details>
+
+                <booksTree-details *ngIf="__addType === 'BTree'" [isDynamic]="true" (onAction)="OnDetailsAction($event)"
+                [param]="param" [editable]="editable" [editItem]="editItem" 
+                [addEditData]="__addEditData"></booksTree-details>
+
+                <!--<bookepping-report *ngIf="__addType === 'Report'" [isHTTP]='false' [data]="__reportData"
+                    [changable]="__reportChangable"
+                ></bookepping-report>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 padding-20 list">
+    <div class="col-md-12 headtitle">
+        <p>دليل الحسابات</p>
+    </div>
+    <div class="main_action clearfix">
+        <p class="title">شجرة الحسابات الخاصة بالشركة</p>
+        <p>...</p>
+        <p class="title __expl" (click)="__explain = !__explain">اعرف أكثر <i class="fa fa-life-saver"></i></p>
+        <addnew-item (onAddNewClick)="onAddNewClick($event)"></addnew-item>
+    </div>
+    <div class="col-md-12 padding-20 expl bounceInDown" *ngIf="__explain || __hideLists">
+        <p>
+        شجرة الحسابات تساعدك على حساب ارباحك و خسائرك و الديون و المستحقات اللتى لك أو عليك بشكل محاسبى
+        </p>
+        <p><img src="/assets/img/expl/booksTree.svg" width="100px" /></p>
+        <!--<p class="add" (click)="onAddNewClick({})">أضف دليل جديد</p>-->
+    </div>
+    <div class="col-xl-12 col-sm-12 col-xs-12 col-md-12 box noshadow">
+        <div class="main_body">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p table-rainbow top-rainbow" [hidden]="__hideLists">
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p box" [hidden]="__hideLists">
+                <books-tree [list]="_list" [component]="__component"></books-tree>
+            </div>
+        </div>
+    </div>
+     <div class="main_footer">
+        <dashboard-footer 
+            [includeOnly]="{ search : true }"
+            [pages]="__pages"
+            [count]="__count" 
+            [pageUrl]="_controller"
+            [filterObj]="_filtersObjs"
+            (pageChanging)="onPageChanging($event)"
+            (onAction)="onTopActionClick($event)">
+        </dashboard-footer>
+    </div>
+</div>
+

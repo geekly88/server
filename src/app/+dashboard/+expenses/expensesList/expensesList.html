@@ -1,0 +1,100 @@
+<div class="fade modal" id="show-details-model" tabondex="-1" role="dialog"
+    aria-labelledby="myDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <expenses-details [isDynamic]="true" (onAction)="OnDetailsAction($event)"
+                [param]="param" [editable]="editable" [editItem]="editItem"></expenses-details>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 padding-20 list">
+    <div class="col-md-12 headtitle">
+        <p>المصاريف</p>
+    </div>
+    <div class="main_action clearfix">
+        <p class="title">قائمة تضم جميع المصاريف لهذا الحساب </p>
+        <p>...</p>
+        <p class="title __expl" (click)="__explain = !__explain">اعرف أكثر <i class="fa fa-life-saver"></i></p>
+        <addnew-item (onAddNewClick)="onAddNewClick($event)"></addnew-item>
+    </div>
+    <div class="col-md-12 padding-20 expl bounceInDown" *ngIf="__explain || __hideLists">
+        <p>
+            المصاريف المكلفة الخاصة بالحساب من مصاريف ثابتة كعمليات النقل أو الاجار
+        </p>
+        <p><img src="/assets/img/expl/expenses.svg" width="100px" /></p>
+        <p class="add" (click)="onAddNewClick({})">أضف مصاريف جديدة</p>
+    </div>
+    <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12 box noshadow">
+        <div class="main_body">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p above_table" [hidden]="__hideLists">
+                <li class="active">
+                    <a>الكل</a>
+                </li>
+                <li class="opp" (click)="onTopActionClick({clicked:true,action:'EXPORTLIST'})"><a>تصدير القائمة <i class="fa fa-database"></i></a></li>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p table-rainbow top-rainbow" [hidden]="__hideLists">
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+            </div>
+            <table class="table" [hidden]="__hideLists">
+                <thead>
+                    <tr>
+                        <td width="40px"><input type="checkbox" class="parentcheckbox option-input checkbox"></td>
+                        <td (click)="OnOrderBy('number')" width="50px" [ngClass]="{'active' : __order === 'number'}">#</td>
+                        <td (click)="OnOrderBy('title')" [ngClass]="{'active' : __order === 'title'}">العنوان</td>
+                        <td (click)="OnOrderBy('paid_date')" class="hidden-sm-down" [ngClass]="{'active' : __order === 'paid_date'}">التاريخ</td>
+                        <td (click)="OnOrderBy('amount')" [ngClass]="{'active' : __order === 'amount'}">المبلغ</td>
+                        <!--<td (click)="OnOrderBy('tax')" class="hidden-md-down" [ngClass]="{'active' : __order === 'tax'}">الضريبة</td>
+                        <td (click)="OnOrderBy('payment_way')" class="hidden-sm-down" [ngClass]="{'active' : __order === 'payment_way'}">طريقة الدفع</td>
+                        <td (click)="OnOrderBy('to')" class="hidden-md-down" [ngClass]="{'active' : __order === 'to'}">موجه الى</td>-->
+                        <td (click)="OnOrderBy('reference')" class="hidden-md-down" [ngClass]="{'active' : __order === 'reference'}">المرجع</td>
+                        <td max-width="60px"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _list">
+                        <td width="40px">
+                            <span>
+                                <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
+                            </span>        
+                        </td>
+                        <td width="50px">{{ item.number }}</td>
+                        <td>{{ item.title }}</td>
+                        <td class="hidden-sm-down">{{ item.paid_date | date:'dd/MM/yyyy' }}</td>
+                        <td>{{ item.amount | myCurrency }}</td>
+                        <!--<td class="hidden-md-down">{{ item.tax | myCurrency }}</td>
+                        <td class="hidden-sm-down">{{ item.payment_way }}</td>
+                        <td class="hidden-md-down">{{ item.to }}</td>-->
+                        <td class="hidden-md-down">{{ item.refrence }}</td>
+                        <td class="actions" max-width="60px">
+                            <dashboard-actions
+                                [obj]="_actionsObj" [item]="item" (onAction)="onAction($event)">
+                            </dashboard-actions>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="main_footer">
+            <dashboard-footer 
+                [pages]="__pages"
+                [count]="__count" 
+                [pageUrl]="_controller"
+                [filterObj]="_filtersObjs"
+                [searchObj]="_searchObjs"
+                (pageChanging)="onPageChanging($event)"
+                (onAction)="onTopActionClick($event)">
+            </dashboard-footer>
+        </div>
+    </div>
+</div>
+<show-item [showItemFields]="_showItemFields" [showItem]="_showItem" [isShowItem]="_isShowItem" ></show-item>
+

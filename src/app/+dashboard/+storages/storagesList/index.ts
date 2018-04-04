@@ -1,0 +1,1 @@
+export * from './storagesList.component';

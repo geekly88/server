@@ -1,0 +1,299 @@
+<div class="hidden-md-down main_sidebar-wrapper">
+    <div class="sidebar">
+        <!--<div class="btns-wrapper">
+            <button class="btn-close"><i class="ti-close"></i></button>
+            <button class="btn-min"><i class="ti-minus"></i></button>
+        </div>-->
+        <!--<div class="col-md-12 no-p top">
+            <div class="img-wrp">
+                <img *ngIf="_global.getToken()['account']['img']" src="{{ _global.config['serverPath']+'images/uploaded/' +_global.getToken()['account']['img'] }}" />
+                <img *ngIf="!_global.getToken()['account']['img']" src="/assets/icon/logo.png" />
+            </div>
+            <p class="comp_name col-md-12 no-p">{{ _global.getToken()['account']['name'] }}</p>
+        </div>-->
+        <ul>
+            <li (click)="OnLinkClicked('index')"><a><i class="ti-pie-chart"></i> لوحة التحكم</a></li>
+            <li (click)="OnLinkClicked('sells')"><a><i class="ti-receipt"></i> المبيعات</a></li>
+            <li (click)="OnLinkClicked('invoices')"><a><i class="ti-files"></i> فواتير الشراء</a></li>
+            <li (click)="OnLinkClicked('products')"><a><i class="ti-package"></i> الأصناف و الخدمات</a></li>
+            <li (click)="OnLinkClicked('agents')"><a><i class="ti-user"></i> أشخاص و مؤسسات</a></li>
+            <li (click)="OnLinkClicked('money')"><a><i class="ti-wallet"></i> المصاريف و المدفوعات</a></li>
+            <li (click)="OnLinkClicked('more')"><a><i class="ti-more"></i> المزيد</a></li>
+        </ul>
+        <div class="col-md-12 above-links no-p"><a class="gosell" (click)="_global.navigatePanel('sells/details')">الذهاب للمبيعات</a></div>
+        <div class="col-md-12 no-p links">
+            <li class="col-md-3 no-p" (click)="_lab.__setLogout__(_http)" data-toggle="tooltip" tooltipPlacement="top" tooltip="الخروج"><i class="ti-power-off"></i></li>
+            <li class="col-md-3 no-p" (click)="_global.navigatePanel('settings')" data-toggle="tooltip" tooltipPlacement="top" tooltip="الأعدادات"><i class="ti-settings"></i></li>
+            <li class="col-md-3 no-p" (click)="onShowSorthcuts()" data-toggle="tooltip" tooltipPlacement="top" tooltip="الاختصارات"><i class="ti-book"></i></li>
+            <li class="col-md-3 no-p" (click)="_global.navigatePanel('reports')" data-toggle="tooltip" tooltipPlacement="top" tooltip="التقارير"><i class="ti-stats-up"></i></li>
+            <ranbow-colors [class]="'col-md-12 col-sm-12 col-xs-12 side-rainbow'"></ranbow-colors>
+        </div>
+    </div>
+    <div class="sub_sidebar" *ngIf="__show">
+        <ul *ngIf="IsVisibile('more') && !__slide">
+            <li (click)="OnNavigateClicked('booksTree',false)"><a> دليل الحسابات</a></li>
+            <li (click)="OnNavigateClicked('bookKepping',false)"><a> القيود المحاسبية</a></li>
+            <li (click)="OnNavigateClicked('storages',false)"><a> المخازن</a></li>
+            <li (click)="OnNavigateClicked('banks',false)"><a> المصارف</a></li>
+            <li (click)="OnNavigateClicked('gifts',false)"><a> الكوبونات</a></li>
+            <li (click)="OnNavigateClicked('trash',false)"><a>ازالة الأصناف</a></li>
+            <li (click)="OnNavigateClicked('history',false)"><a>التأريخ</a></li>
+        </ul>
+        <ul *ngIf="IsVisibile('agents') && !__slide">
+            <li (click)="OnNavigateClicked('suppliers',false)"><a> الموردين</a></li>
+            <li (click)="OnNavigateClicked('suppliers/details' , false)"><a> اضافة مورد جديد</a></li>
+            <li class="separator"></li>
+            <li (click)="OnNavigateClicked('customers',false)"><a> الزبائن</a></li>
+            <li (click)="OnNavigateClicked('customers/details' , false)"><a> اضافة زبون جديد</a></li>
+            <li class="separator"></li>
+            <li (click)="OnNavigateClicked('employees',false)"><a> الموظفين</a></li>
+            <li (click)="OnNavigateClicked('employees/details' , false)"><a> اضافة موظف جديد</a></li>
+            <li class="separator"></li>
+        </ul>
+        <ul *ngIf="IsVisibile('products') && !__slide">
+            <li (click)="OnNavigateClicked('')"><a>عرض الأصناف</a></li>
+            <li (click)="OnNavigateClicked('/details')"><a>اضافة صنف جديد</a></li>
+            <li class="separator"></li>
+            <li (click)="OnNavigateClicked('collections' , false)"><a> المجموعات</a></li>
+            <li (click)="OnNavigateClicked('brands' , false)"><a> الماركات</a></li>
+            <li (click)="OnNavigateClicked('options' , false)"><a> الخيارات</a></li>
+            <li (click)="OnNavigateClicked('types' , false)"><a> الوحدات</a></li>
+            <li (click)="OnNavigateClicked('taxes' , false)"><a> الضرائب</a></li>
+        </ul>
+        <ul *ngIf="IsVisibile('money') && !__slide">
+            <li (click)="OnNavigateClicked('expenses',false)"><a>المصاريف</a></li>
+            <li (click)="OnNavigateClicked('paids' , false)"><a>ايصالات الدفع و القبض</a></li>
+        </ul>
+        <ul *ngIf="IsVisibile('invoices') && !__slide">
+            <li (click)="OnNavigateClicked('buys' , false)"><a>فواتير الشراء</a></li>
+            <li (click)="OnNavigateClicked('buys/details' , false)"><a>اضافة فاتورة شراء</a></li>
+        </ul>
+        <ul *ngIf="IsVisibile('sells') && !__slide">
+            <li (click)="OnNavigateClicked('')"><a>المبيعات</a></li>
+            <li (click)="OnNavigateClicked('/details')"><a>اضافة مبيعات</a></li>
+            <li class="separator"></li>
+            <li (click)="OnNavigateClicked('registers',false)"><a> المسجلات</a></li>
+            <li (click)="OnNavigateClicked('registersHistory/details',false)"><a> نشاط المسجل</a></li> 
+        </ul>
+    </div>
+    <div class="shaddow" *ngIf="__show">
+        <button (click)="OnCloseShadow()">x</button>
+    </div>
+</div>
+<div class="second-wrapper zoomInRight">
+    <div class="sidebar second_sidebar">
+        <!--<div class="btns-wrapper">
+            <button class="btn-close"><i class="ti-close"></i></button>
+            <button class="btn-min"><i class="ti-minus"></i></button>
+        </div>-->
+        <div class="col-md-12 no-p top">
+            <a (click)="OnCloseShadow()"><span class="close"><i class="ti-close"></i></span></a>
+            </div>
+        <!--<div class="img-wrp">
+                <img *ngIf="_global.getToken()['account']['img']" src="{{ _global.config['serverPath']+'images/uploaded/' +_global.getToken()['account']['img'] }}" />
+                <img *ngIf="!_global.getToken()['account']['img']" src="/assets/icon/logo.png" />
+            </div>
+            <p class="comp_name col-md-12 no-p">{{ _global.getToken()['account']['name'] }}</p>
+        </div>-->
+        <ul>
+            <li (click)="OnLinkClicked('index')"><a><i class="ti-pie-chart"></i> لوحة التحكم</a></li>
+            <li (click)="OnLinkClicked('sells')"><a><i class="ti-receipt"></i> المبيعات</a></li>
+            <li (click)="OnLinkClicked('invoices')"><a><i class="ti-files"></i> فواتير الشراء</a></li>
+            <li (click)="OnLinkClicked('products')"><a><i class="ti-package"></i> الأصناف و الخدمات</a></li>
+            <li (click)="OnLinkClicked('agents')"><a><i class="ti-user"></i> أشخاص و مؤسسات</a></li>
+            <li (click)="OnLinkClicked('money')"><a><i class="ti-wallet"></i> المصاريف و المدفوعات</a></li>
+            <li (click)="OnLinkClicked('more')"><a><i class="ti-more"></i> المزيد</a></li>
+        </ul>
+        <div class="col-md-12 above-links no-p"><a class="gosell" (click)="_global.navigatePanel('sells/details')">الذهاب للمبيعات</a></div>
+        <div class="col-md-12 no-p links">
+            <li class="col-md-3 no-p" (click)="_lab.__setLogout__(_http)" data-toggle="tooltip" tooltipPlacement="top" tooltip="الخروج"><i class="ti-power-off"></i></li>
+            <li class="col-md-3 no-p" (click)="_global.navigatePanel('settings')" data-toggle="tooltip" tooltipPlacement="top" tooltip="الأعدادات"><i class="ti-settings"></i></li>
+            <li class="col-md-3 no-p" (click)="onShowSorthcuts()" data-toggle="tooltip" tooltipPlacement="top" tooltip="الاختصارات"><i class="ti-book"></i></li>
+            <li class="col-md-3 no-p" (click)="_global.navigatePanel('reports')" data-toggle="tooltip" tooltipPlacement="top" tooltip="التقارير"><i class="ti-stats-up"></i></li>
+            <ranbow-colors [class]="'col-md-12 col-sm-12 col-xs-12 side-rainbow'"></ranbow-colors>
+        </div>
+    </div>
+    <div class="sub_sidebar" *ngIf="__show">
+        <ul *ngIf="IsVisibile('more') && !__slide">
+            <li (click)="OnNavigateClicked('booksTree',false)"><a> دليل الحسابات</a></li>
+            <li (click)="OnNavigateClicked('bookKepping',false)"><a> القيود المحاسبية</a></li>
+            <li (click)="OnNavigateClicked('storages',false)"><a> المخازن</a></li>
+            <li (click)="OnNavigateClicked('banks',false)"><a> المصارف</a></li>
+            <li (click)="OnNavigateClicked('gifts',false)"><a> الكوبونات</a></li>
+            <li (click)="OnNavigateClicked('trash',false)"><a>ازالة الأصناف</a></li>
+            <li (click)="OnNavigateClicked('history',false)"><a>التأريخ</a></li>
+        </ul>
+        <ul *ngIf="IsVisibile('agents') && !__slide">
+            <li (click)="OnNavigateClicked('suppliers',false)"><a> الموردين</a></li>
+            <li (click)="OnNavigateClicked('suppliers/details' , false)"><a> اضافة مورد جديد</a></li>
+            <li class="separator"></li>
+            <li (click)="OnNavigateClicked('customers',false)"><a> الزبائن</a></li>
+            <li (click)="OnNavigateClicked('customers/details' , false)"><a> اضافة زبون جديد</a></li>
+            <li class="separator"></li>
+            <li (click)="OnNavigateClicked('employees',false)"><a> الموظفين</a></li>
+            <li (click)="OnNavigateClicked('employees/details' , false)"><a> اضافة موظف جديد</a></li>
+            <li class="separator"></li>
+        </ul>
+        <ul *ngIf="IsVisibile('products') && !__slide">
+            <li (click)="OnNavigateClicked('')"><a>عرض الأصناف</a></li>
+            <li (click)="OnNavigateClicked('/details')"><a>اضافة صنف جديد</a></li>
+            <li class="separator"></li>
+            <li (click)="OnNavigateClicked('collections' , false)"><a> المجموعات</a></li>
+            <li (click)="OnNavigateClicked('brands' , false)"><a> الماركات</a></li>
+            <li (click)="OnNavigateClicked('options' , false)"><a> الخيارات</a></li>
+            <li (click)="OnNavigateClicked('types' , false)"><a> الوحدات</a></li>
+            <li (click)="OnNavigateClicked('taxes' , false)"><a> الضرائب</a></li>
+        </ul>
+        <ul *ngIf="IsVisibile('money') && !__slide">
+            <li (click)="OnNavigateClicked('expenses',false)"><a>المصاريف</a></li>
+            <li (click)="OnNavigateClicked('paids' , false)"><a>ايصالات الدفع و القبض</a></li>
+        </ul>
+        <ul *ngIf="IsVisibile('invoices') && !__slide">
+            <!--<li (click)="OnNavigateClicked('')" *ngIf="(_global.getToken()['settings']['sell_type'] === 'both' 
+                || _global.getToken()['settings']['sell_type'] === 'invoice')"><a>فواتير المبيعات</a></li>
+            <li (click)="OnNavigateClicked('/details')"  *ngIf="(_global.getToken()['settings']['sell_type'] === 'both' 
+                || _global.getToken()['settings']['sell_type'] === 'invoice')"><a>اضافة فاتورة مبيعات</a></li>
+            <li class="separator"  *ngIf="(_global.getToken()['settings']['sell_type'] === 'both' 
+                || _global.getToken()['settings']['sell_type'] === 'invoice')"></li>-->
+            <li (click)="OnNavigateClicked('buys' , false)"><a>فواتير الشراء</a></li>
+            <li (click)="OnNavigateClicked('buys/details' , false)"><a>اضافة فاتورة شراء</a></li>
+        </ul>
+        <ul *ngIf="IsVisibile('sells') && !__slide">
+            <li (click)="OnNavigateClicked('')"><a>المبيعات</a></li>
+            <li (click)="OnNavigateClicked('/details')"><a>اضافة مبيعات</a></li>
+            <li class="separator"></li>
+            <li (click)="OnNavigateClicked('registers',false)"><a> المسجلات</a></li>
+            <li (click)="OnNavigateClicked('registersHistory/details',false)"><a> نشاط المسجل</a></li>
+        </ul>
+    </div>
+    <div class="shaddow" *ngIf="__show">
+        <button (click)="OnCloseShadow()">x</button>
+    </div>
+</div>
+<div class="fade modal" id="show-shortcuts-model" tabondex="-1" role="dialog"
+    aria-labelledby="myShortcutsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <form class="form col-md-12 no-p" novalidate>
+                    <fieldset>
+                        <div class="col-xl-12 form_paraphraph">
+                            <p class="title head">اختصارات لوحة المفاتيح للصفحة الحالية</p>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="col-md-12 col-sm-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + Home</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">الذهاب للرئيسية</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">F5</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">تحديث الصفحة الحالية</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + backspace</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">الرجوع للصفحة السابقة</p>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 no-p" *ngIf="__pageType === 'LIST'">
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">السهم الأيمن</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">عرض نتائج القائمة التالية</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">السهم الأيسر</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">عرض نتائج القائمة السابقة</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + N</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">اضافة جديد</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + R</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">تحديث القائمة</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + D</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">حذف العناصر المحددة فى القائمة</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + E</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">تصدير القائمة الحالية</p>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 no-p" *ngIf="__pageType === 'FORM'">
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + S</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">حفظ البيانات الحالية</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + R</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">اعادة تهيئة بيانات الحقول</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + Q</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">الذهاب لصفحة عرض القوائم</p>
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 col-xs-12 no-p" *ngIf="__pageType === 'ORDERS'">
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">السهم الأيمن</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">عرض نتائج القائمة التالية</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">السهم الأيسر</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">عرض نتائج القائمة السابقة</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + D</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">اضافة تخفيض للطلبية</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + P</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">الذهاب لعملية الدفع</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + M</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">عرض عمليات الدفع التامة</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + O</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">عرض البيانات الرئيسية للطلب</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + N</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">عرض ملاحظة ركن الطلب ان وجدت</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + S</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">عرض بيانات الشحن</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + U</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">عرض بيانات العميل و الموظف</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + B</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">الرجوع من عملية الدفع للقائمة</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + F</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">حذف الطلبات المضافة للقائمة</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + R</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">اعادة تهيئة جميع الحقول</p>
+                    </div>
+                    <div class="col-md-12 col-sm-12 item_field">
+                        <p class="field_name col-md-3 col-sm-3 col-xs-6">CTRL + L</p>
+                        <p class="field_data col-md-9 col-sm-9 col-xs-6">اظهار القائمة الجانبية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

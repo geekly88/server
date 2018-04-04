@@ -1,0 +1,173 @@
+<div class="col-md-12 no-p">
+    <div class="col-md-12 padding-20">
+        <!--<div class="col-md-12 headtitle">
+            <p>فواتير المبيعات</p>
+        </div>-->
+        <div class="col-md-12 dashboard">
+            <div class="col-md-12 no-p col-xs-12">
+                <div class="col-md-12 col-xs-12 datarange">
+                    <div class="col-md-6 col-sm-6 col-xs-6 no-p">
+                        <p class="fromto">من تاريخ <span class="date">{{ __fromDate | date: 'dd/MM/yyyy' }}</span> <span class="pill">الى</span> <span class="date">{{ __toDate | date: 'dd/MM/yyyy' }}</span></p>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 no-p">
+                        <a class="duration" (click)="__initRangeDate__('DAY')" [ngClass]="{'active' : __durationStr === 'DAY'}">24ساعة</a>
+                        <a class="duration" (click)="__initRangeDate__('WEEK')" [ngClass]="{'active' : __durationStr === 'WEEK'}">7أيام</a>
+                        <a class="duration" (click)="__initRangeDate__('MONTH')" [ngClass]="{'active' : __durationStr === 'MONTH'}">30يوم</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 top-stat no-p">
+                <div class="col-md-12 col-xs-12 col-sm-12 top-stat-cover box no-p">
+                    <div class="col-md-3 col-sm-6 col-xs-6 no-p">
+                        <div class="item col-md-12 col-sm-12 col-xs-12 padding-10">
+                            <div class="icon"><i class="ti-receipt"></i></div>
+                            <div class="data">
+                                <div class="number">{{ __topData['sells']['total'] | myCurrency }}</div>
+                                <div class="desc">اجمالى المبيعات</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6 no-p">
+                        <div class="item col-md-12 col-sm-12 col-xs-12 padding-10 lighter">
+                            <div class="icon"><i class="ti-money"></i></div>
+                            <div class="data">
+                                <div class="number">{{ __topData['expenses']['total'] | myCurrency }}</div>
+                                <div class="desc">اجمالى المصاريف</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6 no-p">
+                        <div class="item col-md-12 col-sm-12 col-xs-12 padding-10">
+                            <div class="icon">
+                                <i *ngIf=" __topData['paids']['paid'] > __topData['paids']['recive']" class="ti-angle-double-down"></i>
+                                <i *ngIf=" __topData['paids']['paid'] <= __topData['paids']['recive']" class="ti-angle-double-up"></i>
+                            </div>
+                            <div class="data">
+                                <div class="number" [ngClass]="{ 'loss' : __topData['paids']['paid'] > __topData['paids']['recive'] }">{{ (__topData['paids']['recive'] - __topData['paids']['paid']) | myCurrency }}</div>
+                                <div class="desc">المدفوع و المقبوض</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6 no-p">
+                        <div class="item col-md-12 col-sm-12 col-xs-12 padding-10 lighter">
+                            <div class="icon"><i class="ti-truck"></i></div>
+                            <div class="data">
+                                <div class="number">{{ __topData['buys']['total'] | myCurrency }}</div>
+                                <div class="desc">اجمالى المشتريات</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 line-charty no-p">
+                <div class="col-md-6 col-sm-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-p item-wrp">
+                        <div class="col-md-12 col-sm-12 col-xs-12 no-p item box">
+                            <div class="col-md-12 no-p header">
+                                <p class="float_exac">المبيعات</p>
+                                <a class="float_opp" (click)="__prepareUrlAndProperty('sells' , 'by_high')"><i class="ti-reload"></i></a>
+                            </div>
+                            <div class="col-md-12 no-p body">
+                                <div class="testshadow" [hidden]="!__sellsDataTest"></div>
+                                <div class="col-md-12 col-xs-12 no-p dash-chart">
+                                    <canvas id="__sellsData"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-12 no-p footer">
+                                نتائج أخر {{ __durationStrArray[__durationStr] }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-p item-wrp">
+                        <div class="col-md-12 col-sm-12 col-xs-12 no-p item box">
+                            <div class="col-md-12 no-p header">
+                                <p class="float_exac">فواتير الشراء</p>
+                                <a class="float_opp" (click)="__prepareUrlAndProperty('buys' , 'by_high')"><i class="ti-reload"></i></a>
+                            </div>
+                            <div class="col-md-12 no-p body">
+                                <div class="testshadow" [hidden]="!__buysDataTest"></div>
+                                <div class="col-md-12 col-xs-12 no-p dash-chart">
+                                    <canvas id="__buysData"></canvas>
+                                </div>
+                            </div>
+                            <div class="col-md-12 no-p footer">نتائج أخر {{ __durationStrArray[__durationStr] }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        
+
+            <div class="col-md-12 col-xs-12 col-sm-12 pie-charty no-p">
+                <div class="col-md-6 col-sm-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-p item-wrp">
+                        <div class="col-md-12 col-sm-12 col-xs-12 no-p item box">
+                            <div class="col-md-12 no-p header">
+                                <p class="float_exac">الزبائن الأكثر نشاطا</p>
+                                <a class="float_opp" (click)="__prepareUrlAndProperty('products' , 'by_high')"><i class="ti-reload"></i></a>
+                            </div>
+                            <div class="col-md-12 no-p body">
+                                <!--<div class="testshadow" [hidden]="!__productsDataTest"></div>-->
+                                <div class="col-md-6 col-md-6 col-xs-12 no-p dash-chart">
+                                    <canvas id="__productsData"></canvas>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 no-p list">
+                                    <ul class="col-md-12 col-md-6 col-sm-12 col-xs-12 no-p">
+                                        <li *ngFor="let color of __doughnutColors,let i = index">
+                                            <span class="color" style="background : {{ color }}"></span>
+                                            <p *ngIf="__productsData && __productsData[i]">{{ __productsData[i].name }} / {{ __productsData[i].sells_count }}</p>
+                                            <p  class="shadow" *ngIf="!__productsData || !__productsData[i]">لايوجد منتج لهذا الترتيب</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-p item-wrp">
+                        <div class="col-md-12 col-sm-12 col-xs-12 no-p item box">
+                            <div class="col-md-12 no-p header">
+                                <p class="float_exac">الزبائن الأكثر نشاطا</p>
+                                <a class="float_opp" (click)="__prepareUrlAndProperty('customers' , 'by_high')"><i class="ti-reload"></i></a>
+                            </div>
+                            <div class="col-md-12 no-p body">
+                                <!--<div class="testshadow" [hidden]="!__customersDataTest"></div>-->
+                                <div class="col-md-6 col-md-6 col-xs-12 no-p dash-chart">
+                                    <canvas id="__customersData"></canvas>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6 no-p list">
+                                    <ul class="col-md-12 col-md-6 col-sm-12 col-xs-12 no-p">
+                                        <li *ngFor="let color of __doughnutColors,let i = index" class="col-md-12 col-sm-12 col-xs-12">
+                                            <span class="color" style="background : {{ color }}"></span>
+                                            <p *ngIf="__customersData && __customersData[i]">{{ __customersData[i].name }} / {{ __customersData[i].sells_count }}</p>
+                                            <p class="shadow" *ngIf="!__customersData || !__customersData[i]">لايوجد زبون لهذا الترتيب</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-md-4 col-sm-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-sm-12 col-xs-12 no-p item-wrp">
+                        <div class="col-md-12 col-sm-12 col-xs-12 no-p item box">
+                            <div class="col-md-12 no-p header">
+                                <p class="float_exac">الموزعين الأكثر شراءا</p>
+                                <a class="float_opp" (click)="__prepareUrlAndProperty('suppliers' , 'by_high')"><i class="ti-reload"></i></a>
+                            </div>
+                            <div class="col-md-12 no-p body">
+                                <div class="testshadow" [hidden]="!__suppliersDataTest"></div>
+                                <div class="col-md-12 col-xs-12 no-p dash-chart">
+                                    <canvas id="__suppliersData"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>

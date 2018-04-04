@@ -1,0 +1,173 @@
+@mixin action_btn_image($img) {
+    background-size: 20px 20px;
+    background-image : url($img);
+    background-position: 7px center;;
+    background-repeat: no-repeat;
+}
+
+@mixin brdr_radius($radius : 6px) {
+    -webkit-border-radius: $radius;
+       -moz-border-radius: $radius;
+        -ms-border-radius: $radius;
+         -o-border-radius: $radius;
+            border-radius: $radius;
+}
+
+@mixin hide_placeholder($opacity){
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        opacity:  $opacity;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+        opacity:  $opacity;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+       opacity:  $opacity;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+        opacity:  $opacity;
+    }
+}
+
+@mixin box_shadow($color : #D1D6DE , $distribution : 6 , $top : 1 , $right:0){
+    -webkit-box-shadow: #{$right}px #{$top}px #{$distribution}px $color;
+       -moz-box-shadow: #{$right}px #{$top}px #{$distribution}px $color;
+        -ms-box-shadow: #{$right}px #{$top}px #{$distribution}px $color;
+         -o-box-shadow: #{$right}px #{$top}px #{$distribution}px $color;
+            box-shadow: #{$right}px #{$top}px #{$distribution}px $color;
+}
+
+@mixin gradient_linear($color1,$color2:#fff , $direction : right) {
+    background: $color1; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient($direction,$color1,$color2); /*Safari 5.1-6*/
+    background: -o-linear-gradient($direction,$color1,$color2); /*Opera 11.1-12*/
+    background: -moz-linear-gradient($direction,$color1,$color2); /*Fx 3.6-15*/
+    background: linear-gradient(to $direction, $color1, $color2); /*Standard*/
+}
+
+@mixin transation($time) {
+    -webkit-transition: all $time ease-in-out infinity;
+       -moz-transition: all $time ease-in-out infinity;
+        -ms-transition: all $time ease-in-out infinity;
+         -o-transition: all $time ease-in-out infinity;
+            transition: all $time ease-in-out infinity;
+}
+
+@mixin rotate_infinity() {
+    -webkit-transition: rotate(360deg);
+       -moz-transition: rotate(360deg);
+        -ms-transition: rotate(360deg);
+         -o-transition: rotate(360deg);
+            transition: rotate(360deg);
+}
+
+@mixin list_actions(){
+    background: rgba(42,44,66,.98);
+    cursor:pointer;
+    margin:0px;
+    padding: 0px 4px;
+    min-width: 0px;
+    right: -9px;
+    top : 24px;
+    li{
+        float : $float_dir;
+        list-style: none;
+        padding : 10px 12px;
+        max-width: 38px;
+        border:0px;
+        a{
+            color : #FFF;
+            font-size: 14px;
+        }
+        &:hover{ 
+            background-color: $primary;
+        }
+    }
+}
+
+@mixin action_btn($width : 140, $height : 35 , $radius : 6px , $bg : $thirdly){
+    cursor:pointer;
+    position: relative;
+    transition: all 0.3s ease-out;
+    color: $main_color;
+    text-align: center;
+    text-decoration: none;
+    background: $bg;
+    line-height: #{$height}px;
+    padding : 0px;
+    width: #{$width}px;
+    height: #{$height}px;
+    border: #{$dashboard_brdr_width}px solid $bg;
+    @include brdr_radius($radius);
+    @include box_shadow(rgba(0,0,0,0.30) , 23 , 10 , -6 );
+    &.sm{
+        width: 38px;
+    }
+    &.ico{
+        padding:0px;
+    }
+    &:hover,&:focus{
+        @include gradient_linear(#E91E63 , #F3A556);
+        color:$white;
+        box-shadow : none;
+    }
+}
+
+@mixin animated_btn($width : 140px, $height : 33 , $radius : 6px){
+    line-height: 25px;
+    background-color: $primary;
+    background: $primary;
+    width: $width;
+    height: #{$height}px;
+    border: #{$dashboard_brdr_width}px solid $primary;
+    @include brdr_radius($radius);
+    @include transation(0.3s);
+    img{
+        width:24px;
+        height: 24px;
+        transform: scale(0);
+    }
+    &:hover{
+        img{
+            width: 50px;
+            transform: scale(1);
+            @include rotate_infinity();
+        }
+    }
+}
+
+@mixin form_control(){
+    background: white;
+    color: $primary;
+    height: 40px;
+    padding: 0px 20px;
+    font-size: 12px;
+    border:1px solid transparent;
+    margin-bottom: 5px;
+    box-sizing : border-box;
+    direction: ltr;
+    text-align: $float_dir;
+    @include brdr_radius(0px);
+    @include box_shadow(#CDCFE4 , 4 , 0 , 0);
+    &.textarea{
+        height: 40px;
+        padding-top: 10px;
+        resize: none;
+        text-align: $float_dir_opp;
+    }
+    &select{
+        text-align: $float_dir_opp;
+    }
+    &.opp_align_with_padd{
+        text-align: $float_dir_opp;
+        padding-#{$float_dir_opp} : calc(50% + 12px);
+    }
+    &:focus{
+        // @include box_shadow($primary , 5 , 0);
+        color:$primary;
+        border-color: $primary;
+    }
+    &.errors{
+        border-color: $error;
+        color : $error;
+    }
+}

@@ -1,0 +1,1 @@
+export * from './paidsList.component';

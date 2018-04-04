@@ -1,0 +1,84 @@
+<div class="top-msg"></div>
+<div class="LoginPages">
+    <div class="top_color col-md-6 col-xs-6 col-sm-6 float_exac no-p">
+        <div class="col-xs-3 bg1 top_colors float_exac"></div>
+        <div class="col-xs-1 bg2 top_colors float_exac"></div>
+        <div class="col-xs-1 bg3 top_colors float_exac"></div>
+        <div class="col-xs-1 bg4 top_colors float_exac"></div>
+        <div class="col-xs-1 bg5 top_colors float_exac"></div>
+        <div class="col-xs-1 bg6 top_colors float_exac"></div>
+        <div class="col-xs-1 bg7 top_colors float_exac"></div>
+        <div class="col-xs-1 bg8 top_colors float_exac"></div>
+        <div class="col-xs-1 bg9 top_colors float_exac"></div>
+        <div class="col-xs-1 bg10 top_colors float_exac"></div>
+    </div>
+    <div class="top_color col-md-6 col-xs-6 col-sm-6 float_exac no-p">
+        <div class="col-xs-3 bg1 top_colors float_exac"></div>
+        <div class="col-xs-1 bg2 top_colors float_exac"></div>
+        <div class="col-xs-1 bg3 top_colors float_exac"></div>
+        <div class="col-xs-1 bg4 top_colors float_exac"></div>
+        <div class="col-xs-1 bg5 top_colors float_exac"></div>
+        <div class="col-xs-1 bg6 top_colors float_exac"></div>
+        <div class="col-xs-1 bg7 top_colors float_exac"></div>
+        <div class="col-xs-1 bg8 top_colors float_exac"></div>
+        <div class="col-xs-1 bg9 top_colors float_exac"></div>
+        <div class="col-xs-1 bg10 top_colors float_exac"></div>
+    </div>
+    <div class="col-md-12 no-p main_body">
+        <form *ngIf="__completeLogin && !__isExpire" 
+        [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+            class="form col-md-12 no-p col-xs-12">
+            <fieldset>
+                <div class="col-md-12 col-xs-12 form_paraphraph">
+                    <p class="title head">تسجيل الدخول 
+                        <a *ngIf="__isNotActivated" class="activation float_opp" (click)="__completeLogin = false">تفعيل البرنامج</a>
+                    </p>
+                </div>
+                <div class="col-md-12 first">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-12 col-xs-12 col-form-label">اسم المستخدم</label>
+                        <div class="col-md-12 ">
+                            <input [formControl]="formObject.controls['username']" name="username" 
+                            type="text" class="form-control autofocus" placeholder="اسم المستخدم"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="col-md-12 col-xs-12 col-form-label">كلمة المرور</label>
+                        <div class="col-md-12 ">
+                            <input [formControl]="formObject.controls['password']" name="password" 
+                            type="password" class="form-control" placeholder="كلمة المرور"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary" style="width:100%;">الدخول</button>
+                </div>
+            </fieldset>
+        </form>
+        <form *ngIf="!__completeLogin || __isExpire" 
+        [formGroup]="activateObject" (ngSubmit)="OnActivateForm(activateObject.value , activateObject.valid)" novalidate
+            class="form col-md-12 no-p col-xs-12">
+            <fieldset>
+                <div class="col-md-12 col-xs-12 form_paraphraph">
+                    <p class="title head">تفعيل البرنامج
+                        <a *ngIf="!__isExpire" class="activation float_opp" (click)="__completeLogin = true">الدخول</a>
+                    </p>
+                    <p class="title2">مازلت فى الفترة التحريبية و يمكنك التفعيل للدخول واستخدام النسخة بشكل دائم</p>
+                </div>
+                <div class="col-md-12 first">
+                    <div class="form-group col-md-12">
+                        <label class="col-md-12 col-xs-12 col-form-label">الرقم التسلسلى</label>
+                        <div class="col-md-12 ">
+                            <input [formControl]="activateObject.controls['serialnumber']" name="serialnumber" 
+                            type="text" class="form-control autofocus" placeholder="الرقم التسلسلى"/>
+                            <div class="error"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary" style="width:100%;">تفعيل</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+html,body{
+    // @include gradient_linear(#bfe9ff , #ff5858);
+    // background: #87D37C;
+}
+.RegisterPage,.LoginPages{
+    background: #FFF;
+    font-family: $font_family;
+    font-size: $font_size;
+    color : $main_color;
+    margin-top:10%;
+    width:600px;
+    float:$float_dir;
+    margin-#{$float_dir} : calc(50% - 300px);
+    @include brdr_radius(4px);
+    overflow: hidden;
+    @media (max-width: 768px){
+        margin-top: 50px;
+        width : calc(100% - 20px);
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+}
+.RegisterPage{
+    margin-top:50px;
+}
+a.activation{
+    color: white;
+    font-size: 11px;
+    background: $dark_main_color;
+    padding: 4px 10px;
+    cursor: pointer;
+    @include brdr_radius(25px);
+    @include box_shadow($dashboard_brdr, 7, 6, -4);
+}
+
+

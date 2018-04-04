@@ -1,0 +1,125 @@
+<div class="col-md-12" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 no-p box" [ngClass]="{'allpage-with-sidebar' : !isDynamic}">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head">اضافة مصاريف جديد</p>
+                    </div>
+                    <div class="col-md-12 first">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-8 col-xs-8 col-form-label">البيان</label>
+                            <label class="col-md-4 col-xs-4 col-form-label">رقم الايصال</label>
+                            <div class="col-md-8 col-xs-8 inline-first">
+                                <input data-rules="req,name,min2,max100" [formControl]="formObject.controls['title']" name="title" 
+                                type="text" class="form-control" placeholder="البيان" [ngClass]="{'errors': validateControl('title')}">
+                                <div class="errors"></div>
+                            </div>
+                            <div class="col-md-4 col-xs-4 inline-last">
+                                <input data-rules="req,num" [formControl]="formObject.controls['number']" name="number" 
+                                type="text" class="form-control" placeholder="رقم الايصال" [ngClass]="{'errors': validateControl('number')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <!--<div class="form-group col-md-6" *ngIf="_global.getToken()['settings']['is_bookKepping']">
+                            <label class="col-md-6 col-xs-6 col-form-label">#مرجع</label>
+                            <label class="col-md-6 col-xs-6 col-form-label">رقم دفتر المحاسبة</label>
+                            <div class="col-md-6 col-xs-6 inline-first">
+                                <input data-rules="num" [formControl]="formObject.controls['reference']" name="reference" 
+                                type="text" class="form-control" placeholder="#مرجع" [ngClass]="{'errors': validateControl('reference')}">
+                                <div class="errors"></div>
+                            </div>
+                            <div class="col-md-6 col-xs-6 inline-last">
+                                <input data-rules="req,num" [formControl]="formObject.controls['page']" name="page" 
+                                type="text" class="form-control" placeholder="رقم دفتر المحاسبة اليومى" [ngClass]="{'errors': validateControl('page')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>-->
+                        <div class="form-group col-md-12">
+                            <label class="col-md-8 col-sm-8 col-sx-8 col-form-label">تاريخ الصرف</label>
+                            <label class="col-md-4 col-sm-4 col-xs-4 col-form-label">#مرجع</label>
+                            <div class="col-md-8 col-sm-8 col-xs-8 inline-first">
+                                <input data-rules="date" ng2-datetime-picker name="paid_date" [(ngModel)]="__paymentDate"
+                                [formControl]="formObject.controls['paid_date']" [close-on-select]="false" 
+                                type="text" class="form-control" placeholder="تاريخ الصرف" readonly/>
+                                <div class="errors"></div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4 inline-last">
+                                <input data-rules="num" [formControl]="formObject.controls['reference']" name="reference" 
+                                type="text" class="form-control" placeholder="#مرجع" [ngClass]="{'errors': validateControl('reference')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-xs-12 col-form-label">صرف الى</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input data-rules="req,alph,min2,max100" [formControl]="formObject.controls['debitor']" name="debitor" 
+                                type="text" class="form-control autofocus" placeholder="صرف الى" [ngClass]="{ 'error' : validateControl('debitor') }"/>
+                                <autocomplete
+                                        [field]="['name_ar' , 'name']"
+                                        [template]="'#name_ar'"
+                                        [searchFields]="['name_ar','name']"
+                                        [search]="formObject.controls['debitor'].value"
+                                        [class]="'debitor'"
+                                        [isLocal]="true"
+                                        [dataToSearchFrom]="__booksTreeArray"
+                                        (onsetvalue)="autocompletevaluechanged($event)"
+                                        >
+                                </autocomplete>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="col-md-12 col-form-label">طريقة الدفع</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12 inline-first">
+                                <select class="form-control" [formControl]="formObject.controls.payment_way">
+                                    <option value="REGISTER" *ngIf="_global.getToken()['settings']['is_registered']">{{ _global.config.payment_ways['REGISTER'] }}</option>
+                                    <option value="CASH">{{ _global.config.payment_ways['CASH'] }}</option>
+                                    <option value="REGISTER" *ngIf="!_global.getToken()['settings']['is_registered']">{{ _global.config.payment_ways['REGISTER'] }}</option>
+                                    <option value="CREDIT">{{ _global.config.payment_ways['CREDIT'] }}</option>
+                                    <option value="CHEQUE">{{ _global.config.payment_ways['CHEQUE'] }}</option>
+                                    <option value="BANK">{{ _global.config.payment_ways['BANK'] }}</option>
+                                </select>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label class="col-md-12 col-form-label">المبلغ المالى</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12  inline-last">
+                                <input data-rules="req,price" [formControl]="formObject.controls['amount_of_exp']" name="amount_of_exp" 
+                                type="text" class="form-control" placeholder="المبلغ المالى" [ngClass]="{'errors': validateControl('amount_of_exp')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group col-md-12" *ngIf="formObject.value.payment_way === 'BANK'">
+                            <label class="col-form-label col-md-12">اختر البنك البنك</label>
+                            <div class="col-md-12">
+                                <select class="form-control" [formControl]="formObject.controls.bank_id">
+                                    <option *ngFor="let bank of __banksArray" 
+                                            value="{{ bank.id }}">{{ bank.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12" *ngIf="formObject.value.payment_way === 'REGISTER'">
+                            <label class="col-form-label col-md-12">اختر المسجل أو الكاشير</label>
+                            <div class="col-md-12">
+                                <select class="form-control" [formControl]="formObject.controls.register_id">
+                                    <option *ngFor="let register of __registersArray" 
+                                            value="{{ register.id }}">{{ register.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

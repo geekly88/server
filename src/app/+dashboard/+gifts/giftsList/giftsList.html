@@ -1,0 +1,109 @@
+<div class="fade modal" id="show-details-model" tabondex="-1" role="dialog"
+    aria-labelledby="myDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <gifts-details [isDynamic]="true" (onAction)="OnDetailsAction($event)"
+                [param]="param" [editable]="editable" [editItem]="editItem"></gifts-details>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 padding-20 list">
+    <div class="col-md-12 headtitle">
+        <p>المصاريف</p>
+    </div>
+    <div class="main_action clearfix">
+        <p class="title">قائمة تضم جميع المصاريف لهذا الحساب </p>
+        <p>...</p>
+        <p class="title __expl" (click)="__explain = !__explain">اعرف أكثر <i class="fa fa-life-saver"></i></p>
+        <addnew-item (onAddNewClick)="onAddNewClick($event)"></addnew-item>
+    </div>
+    <div class="col-md-12 padding-20 expl bounceInDown" *ngIf="__explain || __hideLists">
+        <p>
+            المصاريف المكلفة الخاصة بالحساب من مصاريف ثابتة كعمليات النقل أو الاجار
+        </p>
+        <p><img src="/assets/img/expl/gifts.svg" width="100px" /></p>
+        <p class="add" (click)="onAddNewClick({})">أضف مصاريف جديدة</p>
+    </div>
+    <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12 box noshadow">
+        <div class="main_body">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p above_table" [hidden]="__hideLists">
+                <li (click)="OnChangeActiveType('ACTIVE')" [ngClass]="{'active' : __activeType === 'ACTIVE'}">
+                    <a>المفعلة</a>
+                </li>
+                <li (click)="OnChangeActiveType('NOT')" [ngClass]="{'active' : __activeType === 'NOT'}">
+                    <a>غير المفعلة</a>
+                </li>
+                <li (click)="OnChangeActiveType('ALL')" [ngClass]="{'active' : __activeType === 'ALL'}">
+                    <a>الكل</a>
+                </li>
+                <li class="opp" (click)="onTopActionClick({clicked:true,action:'EXPORTLIST'})"><a>تصدير القائمة <i class="fa fa-database"></i></a></li>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p table-rainbow top-rainbow" [hidden]="__hideLists">
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+            </div>
+            <table class="table" [hidden]="__hideLists">
+                <thead>
+                    <tr>
+                        <td width="40px"><input type="checkbox" class="parentcheckbox option-input checkbox"></td>
+                        <td (click)="OnOrderBy('name')" width="50px" [ngClass]="{'active' : __order === 'name'}">العنوان</td>
+                        <td (click)="OnOrderBy('coupon')" [ngClass]="{'active' : __order === 'coupon'}">الكوبون</td>
+                        <td (click)="OnOrderBy('expire_date')" class="hidden-sm-down" [ngClass]="{'active' : __order === 'expire_date'}">الصلاحية</td>
+                        <td (click)="OnOrderBy('type')" class="hidden-md-down" [ngClass]="{'active' : __order === 'type'}">نوع الهدية</td>
+                        <td (click)="OnOrderBy('amount')" class="hidden-md-down" [ngClass]="{'active' : __order === 'tax'}">المقدار</td>
+                        <td width="50px">تفعيل</td>
+                        <td max-width="60px"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _list">
+                        <td width="40px">
+                            <span>
+                                <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
+                            </span>        
+                        </td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.coupon }}</td>
+                        <td class="hidden-md-down">{{ item.expire_date | date:'dd/MM/yyyy' }}</td>
+                        <td class="hidden-sm-down" *ngIf="item.type === 'discount' && item.is_percentage">{{ _global.config['gift_types']['discount_percent'] }}</td>
+                        <td class="hidden-sm-down" *ngIf="item.type === 'discount' && !item.is_percentage">{{ _global.config['gift_types']['discount_money'] }}</td>
+                        <td class="hidden-sm-down" *ngIf="item.type !== 'discount'">{{ _global.config['gift_types'][item.type] }}</td>
+                        <td class="hidden-sm-down">{{ item.amount }}</td>
+                        <td>
+                            <input type="checkbox" data-id="{{ item.id }}" id="changexhkbx_{{ item.id }}" class="ios-toggle" 
+                                   [checked]="item.is_active"
+                                   (change)="OnChangeActivity(item)"/>
+                            <label for="changexhkbx_{{ item.id }}" class="checkbox-label"></label>
+                        </td>
+                        <td class="actions">
+                            <dashboard-actions
+                                [obj]="_actionsObj" [item]="item" (onAction)="onAction($event)">
+                            </dashboard-actions>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="main_footer">
+            <dashboard-footer 
+                [pages]="__pages"
+                [count]="__count" 
+                [pageUrl]="_controller"
+                [filterObj]="_filtersObjs"
+                [searchObj]="_searchObjs"
+                (pageChanging)="onPageChanging($event)"
+                (onAction)="onTopActionClick($event)">
+            </dashboard-footer>
+        </div>
+    </div>
+</div>
+<show-item [showItemFields]="_showItemFields" [showItem]="_showItem" [isShowItem]="_isShowItem" ></show-item>
+

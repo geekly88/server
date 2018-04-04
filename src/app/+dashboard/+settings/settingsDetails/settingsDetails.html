@@ -1,0 +1,663 @@
+<div class="col-md-10 padding-20 offset-md-1">
+    <div class="no-p col-md-12 col-xs-12">
+        <div class="col-md-12 col-xs-12 headtitle">
+            <p (click)="__switchTab('GEN')" class="clkable" [ngClass]="{ 'active' :  __generalSettings }">الاعدادات العامة</p>
+            <!--<p (click)="__switchTab('LTY')" class="clkable" [ngClass]="{ 'active' :  __loyaltySettings }">نظام ولاء الزبائن</p>-->
+            <!--<p (click)="__switchTab('ACC')" class="clkable" [ngClass]="{ 'active' :  __accountingSettings }">المحاسبة</p>-->
+            <p (click)="__switchTab('DB')" class="clkable" [ngClass]="{ 'active' : __databaseSettings }">قاعدة البيانات</p>
+        </div>
+        <div class="col-md-12 col-xs-12 no-p white" [ngClass]="{ 'noshadow' : __databaseSettings }">
+            <div class="main_body">
+
+                <div class="col-md-12 col-sm-12 col-xs-12 no-p settings-rainbow top-rainbow" [hidden]="__hideLists || __databaseSettings">
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                </div>
+                <form [hidden]="!__loyaltySettings" [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                    class="form col-md-12 col-xs-12 no-p">
+                    <div class="col-md-12 form_paraphraph">
+                        <p class="title head">اعدادات نظام ولاء الزبائن</p>
+                    </div>
+                    <div class="col-md-12 last">
+                        <div class="form-group col-md-12 first">
+                            <div class="col-md-12 col-md-12">
+                                <div class="col-md-2 col-sm-3">
+                                    <input type="checkbox" id="loyaltychkbx" class="ios-toggle" 
+                                    [formControl]="formObject.controls['loyalty_active']"/>
+                                    <label for="loyaltychkbx" class="checkbox-label"></label>    
+                                </div>  
+                                <div class="col-md-10 col-sm-9">
+                                    <p class="h2">تفعيل خاصية ولاء الزبائن</p>
+                                    <p>يمكنك هذا النظام من اعطاء النقاط لزبائنك ليتم تحويلها الى جائزة مالية للزبائن الأكثر نشاطا</p>
+                                    <p>كما يساعد على تنشيط حركة البيع و تحفيز الزبائن على الحصوال على المزايا المقدمة</p>
+                                </div>
+                            </div> 
+                        </div>  
+                    </div>
+                    <div class="col-md-12 col-xs-12 no-p first">
+                        <fieldset class="col-md-12 col-xs-12 col-xs-12 no-p">
+                            <div class="form-group col-md-6 col-xs-12 col-sm-12">
+                                <label class="col-lg-12 col-form-label">نوع النظام</label>
+                                <div class="col-md-12 col-xs-12 ">
+                                    <select [formControl]="formObject.controls['loyalty_by']" class="form-control"
+                                    name="loyalty_by" [ngClass]="{'error' : validateControl('loyalty_by')}">
+                                        <option value="money">نقطة لكل مقدار لمبلغ مالى</option>
+                                        <option value="sells">نقطة لكل عملية شراء مسجلة للزبون</option>
+                                        <option value="products">نقطة لشراء منتجات معينة</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-12 col-xs-12" >
+                                <label class="col-md-12 col-xs-12 col-form-label" *ngIf="formObject.value.loyalty_by === 'money'">المبلغ للحصول على نقطة</label>
+                                <label class="col-md-12 col-xs-12 col-form-label" *ngIf="formObject.value.loyalty_by === 'sells'">عدد مرات الشراء للحصول على نقطة</label>
+                                <label class="col-md-12 col-xs-12 col-form-label" *ngIf="formObject.value.loyalty_by === 'products'">مرات طلب المنتج للحصول على نقطة</label>
+                                <div class="col-md-12 col-xs-12">
+                                    <input type="text" data-rules="req,num" [formControl]="formObject.controls['loyalty_nedded_for_point']" class="form-control" 
+                                    name="loyalty_nedded_for_point" [ngClass]="{'error' : validateControl('loyalty_nedded_for_point')}"/>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                <label class="col-md-12 col-xs-12 col-form-label">مقدار النقطة</label>
+                                <div class="col-md-12 col-xs-12">
+                                    <input type="text" data-rules="req,num" [formControl]="formObject.controls['loyalty_money_for_point']" class="form-control" 
+                                    name="loyalty_money_for_point" [ngClass]="{'error' : validateControl('loyalty_money_for_point')}"/>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                <label class="col-md-12 col-xs-12 col-form-label">الحد الأعلى للنقاط</label>
+                                <div class="col-md-12 col-xs-12">
+                                    <input type="text" data-rules="req,num" [formControl]="formObject.controls['loyalty_max_points']" class="form-control" 
+                                    name="loyalty_max_points" [ngClass]="{'error' : validateControl('loyalty_max_points')}"/>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                                <label class="col-md-12 col-xs-12 col-form-label">احتساب النقاط ابتدءا من</label>
+                                <div class="col-md-12 col-xs-12">
+                                    <input type="text" data-rules="req,num" [formControl]="formObject.controls['loyalty_start_point']" class="form-control" 
+                                    name="loyalty_start_point" [ngClass]="{'error' : validateControl('loyalty_start_point')}"/>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12" *ngIf="formObject.value.loyalty_by === 'products'">
+                                <button type="button" (click)="onShowAddProducts()" class="btn btn-primary" [hidden]="!__isAuth">اضافة منتج أو خدمة</button>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-12" *ngIf="formObject.value.loyalty_by === 'products'">
+                                <button type="submit" class="btn btn-primary" [hidden]="!__isAuth">حفظ كل التغييرات</button>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12"  *ngIf="formObject.value.loyalty_by !== 'products'">
+                                <button type="submit" class="btn btn-primary" [hidden]="!__isAuth">حفظ كل التغييرات</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+                <!--<form [hidden]="!__accountingSettings" [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                    class="form col-md-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-xs-12 no-p">
+                        <fieldset class="col-md-12 col-xs-12 col-xs-12 no-p">
+                            <div class="col-md-12 form_paraphraph">
+                                <p class="title head">اعدادات دفاتر الحسابات</p>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">حساب ايرادات البيع</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['sales_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('sales')">
+                                        <option value="{{ formObject.value['sales_code'] }}">{{ formObject.value['sales_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name_ar }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">حساب المشتريات</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['buys_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('buys')">
+                                        <option value="{{ formObject.value['buys_code'] }}">{{ formObject.value['buys_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name_ar }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">حساب الضرائب</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['income_taxes_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('income_taxes')">
+                                        <option value="{{ formObject.value['income_taxes_code'] }}">{{ formObject.value['income_taxes_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">حساب أول المدة</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['beginning_inventory_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('beginning_inventory')">
+                                        <option value="{{ formObject.value['beginning_inventory_code'] }}">{{ formObject.value['beginning_inventory_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name_ar }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">حساب أخر المدة</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['storage_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('storage')">
+                                        <option value="{{ formObject.value['storage_code'] }}">{{ formObject.value['storage_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name_ar }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">حساب صندوق النقدية</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['cash_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('cash')">
+                                        <option value="{{ formObject.value['cash_code'] }}">{{ formObject.value['cash_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name_ar }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">حساب الزبائن</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['customers_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('customers')">
+                                        <option value="{{ formObject.value['customers_code'] }}">{{ formObject.value['customers_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name_ar }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">حساب الموردين</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['suppliers_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('suppliers')">
+                                        <option value="{{ formObject.value['suppliers_code'] }}">{{ formObject.value['suppliers_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name_ar }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">الحسابات البنكية</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['banks_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('banks')">
+                                        <option value="{{ formObject.value['banks_code'] }}">{{ formObject.value['banks_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name_ar }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="col-lg-12 col-form-label">حساب الديون الهالكة</label>
+                                <div class="col-md-12 col-xs-12 col-sm-12">
+                                    <select [formControl]="formObject.controls['bad_debt_code']" class="form-control" 
+                                        (change)="onChangeBookAccount('bad_debt')">
+                                        <option value="{{ formObject.value['bad_debt_code'] }}">{{ formObject.value['bad_debt_book'] }}</option>
+                                        <option *ngFor="let book of __accountingBooks" value="{{ book.code }}">
+                                        {{ book.name_ar }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <button type="submit" class="btn btn-primary" [hidden]="!__isAuth">حفظ كل التغييرات</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>-->
+                <form [hidden]="!__generalSettings" [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                    class="form col-md-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-xs-12 no-p">
+                        <fieldset class="col-md-12 col-xs-12 no-p float_exac">
+                            <div class="col-md-12 form_paraphraph">
+                                <p class="title head">الاعدادات العامة</p>
+                            </div>
+                            <div class="col-md-6 premessions_parent">
+                                <div class="col-md-12 col-xs-12 no-p">
+                                    <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['is_tax']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="is_tax">
+                                        <label class="col-form-label">تفعيل خاصية الضرائب</label>
+                                    </div>
+                                    <div class="form-group col-md-6 premessions">
+                                        <label class="col-form-label">تفعيل خاصية تنوع الأصناف</label>
+                                        <input [formControl]="formObject.controls['is_variaty']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="is_variaty">
+                                    </div>
+                                    <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['is_append_products']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="is_append_products">
+                                        <label class="col-form-label">زيادة الكمية فى حال اضافة المنتج فى قائمة الطلبات</label>
+                                    </div>
+                                    <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['is_show_invoice_details']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="is_show_invoice_details">
+                                        <label class="col-form-label">عرض تفاصيل الفاتورة عند اضافة فاتورة جديدة</label>
+                                    </div>
+                                    <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['is_show_invoice']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="is_show_invoice">
+                                        <label class="col-form-label">عرض الفاتورة عند الانتهاء</label>
+                                    </div>
+                                     <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['is_notify_expired']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="is_notify_expired">
+                                        <label class="col-form-label">التنبيه فى حالة انتهاء الصلاحية</label>
+                                    </div>
+                                    <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['is_ask_qty']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="is_ask_qty">
+                                        <label class="col-form-label">السؤال عند نفاذ كمية الصنف فى حالة البيع</label>
+                                    </div>
+                                    <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['is_trackable']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="is_trackable">
+                                        <label class="col-form-label">تفعيل خاصية تتبع الكمية</label>
+                                    </div>
+                                    <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['is_registered']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="is_registered">
+                                        <label class="col-form-label">تفعيل السحب و الايداع من والى الخزينة (المسجل)</label>
+                                    </div>
+                                    <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['free_shipping']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="free_shipping">
+                                        <label class="col-form-label">شحن المنتجات مجانا - افتراضيا</label>
+                                    </div>
+                                    <div class="form-group col-md-6 premessions">
+                                        <input [formControl]="formObject.controls['supplier_required']" type="checkbox" 
+                                            class="parentcheckbox option-input checkbox" name="supplier_required">
+                                        <label class="col-form-label">وجوب اختيار المورد لفاتورة الشراء</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 first">
+                                <div class="form-group col-md-6">
+                                    <label class="col-lg-12 col-form-label">البيع بواسطة</label>
+                                    <div class="col-md-12 col-xs-12 ">
+                                        <select [formControl]="formObject.controls['sell_type']" class="form-control"
+                                        name="sell_type" [ngClass]="{'error' : validateControl('sell_type')}">
+                                            <option value="invoice">البيع بالأجل و الفواتير</option>
+                                            <option value="receipt">البيع الفورى</option>
+                                            <option value="both">كلاهما</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-lg-12 col-form-label">نتائج القائمة</label>
+                                    <div class="col-md-12 col-xs-12 ">
+                                        <select [formControl]="formObject.controls['perpage']" class="form-control"
+                                                name="perpage" [ngClass]="{'error' : validateControl('perpage')}">
+                                            <option value="10">10</option>
+                                            <option value="15">15</option>
+                                            <option value="30">30</option>
+                                            <option value="50">50</option>
+                                            <option value="50">100</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-md-12 col-xs-12 last">
+                                 <div class="form-group col-md-6">
+                                    <label class="col-lg-12 col-form-label">اللغة</label>
+                                    <div class="col-md-12 col-xs-12 ">
+                                        <select [formControl]="formObject.controls['language']" class="form-control"
+                                                name="language" [ngClass]="{'error' : validateControl('language')}">
+                                            <option value="ar">العربية</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-lg-12 col-form-label">القالب</label>
+                                    <div class="col-md-12 col-xs-12 ">
+                                        <select [formControl]="formObject.controls['theme']" class="form-control"
+                                        name="theme" [ngClass]="{'error' : validateControl('theme')}">
+                                            <option value="default">الافتراضى</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                            </div>  -->
+                            <div class="col-md-12 col-xs-12" *ngIf="formObject.value.is_tax">
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12 col-xs-12 col-form-label">الضريبة الافتراضية</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <select-cmp
+                                            [addnew]="'أضف قيمة ضريبة'"
+                                            [name]="__obj.select.default_tax.name"
+                                            [optionString]="__obj.select.default_tax.optionString"
+                                            [searchField]="__obj.select.default_tax.searchField"
+                                            [optionItems]="__obj.select.default_tax.optionItems"
+                                            [options]="__obj.select.default_tax.options"
+                                            [defaultValueId]="__obj.select.default_tax.defaultValueId"
+                                            (onSelectItem)="onSelectItem($event)"
+                                            (onAddSelectItem)="onAddSelectItem($event)"
+                                        ></select-cmp>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12 col-xs-12 col-form-label">موضع حساب الضريبة</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <select [formControl]="formObject.controls['tax_position']" class="form-control"
+                                        name="tax_position" [ngClass]="{'error' : validateControl('tax_position')}">
+                                            <option value="after">حساب الضريبة بعد التخفيض</option>
+                                            <option value="before">حساب الضريبة قبل التخفيض</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12 col-xs-12 col-form-label">بلد العملة</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <select [formControl]="formObject.controls['currency_country']" class="form-control"
+                                        name="currency_country" [ngClass]="{'error' : validateControl('currency_country')}">
+                                            <option value="LY">ليبيا</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="col-md-12 col-xs-12 col-form-label">موضع الرمز</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <select [formControl]="formObject.controls['currency_position']" class="form-control"
+                                        name="currency_position" [ngClass]="{'error' : validateControl('currency_position')}">
+                                            <option value="after">بعد السعر</option>
+                                            <option value="before">قبل السعر</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="col-md-12 col-xs-12 col-form-label">رمز العملة</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <input type="text" name="currency" [ngClass]="{'error' : validateControl('currency')}" 
+                                        data-rules="req,min2,max3,alphnumdashed" [formControl]="formObject.controls['currency']" class="form-control" />
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12 col-xs-12 col-form-label">الاعداد الكسرية للعملة</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <select [formControl]="formObject.controls['fraction_degree']" class="form-control"
+                                        name="fraction_degree" [ngClass]="{'error' : validateControl('fraction_degree')}">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-6">
+                                    <label class="col-md-12 col-xs-12 col-form-label">فاصلة العلامة العشرية</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <input type="text" data-rules="req,min1,max1,alphnumdashed" [formControl]="formObject.controls['fraction_comma']" class="form-control" 
+                                        name="fraction_comma" [ngClass]="{'error' : validateControl('fraction_comma')}"/>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3 col-sm-6">
+                                    <label class="col-md-12 col-xs-12 col-form-label">فاصلة الالاف</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <input type="text" data-rules="req,min1,max1,alphnumdashed" [formControl]="formObject.controls['money_comma']" class="form-control" 
+                                        name="money_comma" [ngClass]="{'error' : validateControl('money_comma')}"/>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 col-sm-12">
+                                    <label class="col-md-12 col-xs-12 col-form-label">شروط الاتفاق - تظهر الشروط اسفل كل فاتورة</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <input type="text" data-rules="note,min1,max150" [formControl]="formObject.controls['sell_terms']" class="form-control" 
+                                        name="sell_terms" [ngClass]="{'error' : validateControl('sell_terms')}"
+                                        placeholder="شروط الاتفاق - تظهر الشروط اسفل كل فاتورة"/>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div class="col-md-12 col-xs-12">
+                                <div class="form-group col-md-6">
+                                    <label class="col-md-12 col-xs-12 col-form-label">التعامل متع تعدد سعر التكلفة</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <select [formControl]="formObject.controls['handle_costs']" class="form-control"
+                                        name="handle_costs" [ngClass]="{'error' : validateControl('handle_costs')}">
+                                            <option value="avrage">حساب متوسط السعر و الكمية المتبقية و المضافة</option>
+                                            <option value="original">بقاء السعر الأصلى للمنتج</option>
+                                            <option value="newest">اختيار سعر التكلفة الجديد</option>
+                                            <option value="multiple">عرض اسعار التكلفة للاختيار فى البيع و الشراء</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                            </div>-->
+                            <div class="col-md-12 col-xs-12">
+                                <button type="submit" class="btn btn-primary" [hidden]="!__isAuth">حفظ كل التغييرات</button>
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+                <div class="col-md-12 no-p database-wrapper" [hidden]="!__databaseSettings">
+                    <p class="database-title">
+                        فى حالة أخذ النسخة الاحتياطية يرجى حفظها فى مكان امن لتتمكن من استعادة بيانات فى اى وقت
+                    </p>
+                    <div class="center img-center">
+                        <img src="assets/img/expl/database.svg" />
+                    </div>
+                    <button class="database-btn" (click)="__showModalDetails('database')" [hidden]="!__isAuth">تصدير قاعدة البيانات</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="fade modal" id="show-dynamic-model" tabondex="-1" role="dialog"
+    aria-labelledby="myDynamicModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal"><span>x</span></button>
+        </div>
+        <div class="modal-content">
+            <div class="modal-body col-md-12 col-xs-12 white">
+                <div class="col-md-12 col-xs-12 no-p" *ngIf="__modal === 'taxes'">
+                    <taxes-details [isDynamic]="true"></taxes-details>
+                </div>
+                <div class="col-md-12 col-xs-12 no-p" *ngIf="__modal === 'database'">
+                    <form [formGroup]="dbFormObject" (ngSubmit)="onExportDatabase(dbFormObject.value , dbFormObject.valid)" novalidate
+                    class="form col-md-12 col-xs-12 no-p">
+                        <div class="col-xl-12 form_paraphraph">
+                            <p class="title">أخذ نسخة احتياطية لقاعدة البيانات</p>
+                            <p>أختر الجداول اللتى تريد أخذ نسخة احتياطية لها</p>
+                        </div>
+                        <div class="col-md-12 col-xs-12 no-p">
+                            <fieldset class="col-md-12 col-xs-12 no-p float_exac">
+                                <div class="col-md-12 col-xs-12 col-sm-12 premessions_parent">
+                                    <div class="col-md-12 col-xs-12 no-p">
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['customers']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="customers">
+                                            <label class="col-form-label">الزبائن</label>
+                                        </div>
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['employees']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="employees">
+                                            <label class="col-form-label">الموظفين</label>
+                                        </div>
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12 col-xs-12 no-p">-->
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['suppliers']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="suppliers">
+                                            <label class="col-form-label">الموردين</label>
+                                        </div>
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['products']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="products">
+                                            <label class="col-form-label">الأصناف</label>
+                                        </div>
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12 col-xs-12 no-p">-->
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['sells']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="sells">
+                                            <label class="col-form-label">المبيعات</label>
+                                        </div>
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['buys']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="buys">
+                                            <label class="col-form-label">المشتريات</label>
+                                        </div>
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12 col-xs-12 no-p">-->
+
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['paids']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="paids">
+                                            <label class="col-form-label">المدفوعات و المقبوضات</label>
+                                        </div>
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['expenses']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="expenses">
+                                            <label class="col-form-label">المصاريف</label>
+                                        </div>
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12 col-xs-12 no-p">-->
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['taxes']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="taxes">
+                                            <label class="col-form-label">الضرائب</label>
+                                        </div>
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['collections']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="collections">
+                                            <label class="col-form-label">المجموعات</label>
+                                        </div>
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12 col-xs-12 no-p">-->
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['types']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="types">
+                                            <label class="col-form-label">الوحدات</label>
+                                        </div>
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['options']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="options">
+                                            <label class="col-form-label">الخيارات</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 no-p">
+                                        <!--<div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['users']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="users">
+                                            <label class="col-form-label">المستخدمين</label>
+                                        </div>-->
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['gifts']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="gifts">
+                                            <label class="col-form-label">الكوبونات</label>
+                                        </div>
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12 col-xs-12 no-p">-->
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['bookKepping']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="bookKepping">
+                                            <label class="col-form-label">القيود المحاسبية</label>
+                                        </div>
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['booksTree']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="booksTree">
+                                            <label class="col-form-label">دليل الحسابات</label>
+                                        </div>
+                                    <!--</div>-->
+                                    <!--<div class="col-md-12 col-xs-12 no-p">-->
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['brands']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="brands">
+                                            <label class="col-form-label">الماركات</label>
+                                        </div>
+                                        <div class="form-group col-md-6 premessions">
+                                            <input [formControl]="dbFormObject.controls['ALL']" type="checkbox" 
+                                                class="parentcheckbox option-input checkbox" name="ALL">
+                                            <label class="col-form-label">الكل</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12">
+                                    <button type="submit" class="btn btn-primary" [hidden]="!__isAuth">حفظ كل التغييرات</button>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-12 col-sm-12 col-xs-12 no-p" *ngIf="__modal === 'addingProducts'">
+                    <form [formGroup]="searchForm" (ngSubmit)="null" class="col-md-12 col-xs-12 no-p form autocomplete">
+                        <div class="col-md-12 form_paraphraph">
+                            <p class="title head">اضافة منتجات و خدمات للنظام</p>
+                        </div>
+                        <div class="form-group col-md-12 col-xs-12 first">
+                            <div class="col-md-12 col-xs-12 no-p">
+                                <input [formControl]="searchForm.controls['search']" name="search" data-rules="noroles"
+                                type="text" class="form-control order-search autofocus" placeholder="ابحث عن منتج أو خدمة"
+                                autocomplete="off"/>
+                                <autocomplete
+                                        [field]="['name' , 'sku']"
+                                        [template]="'<p class=\'auto-name-top\'>#name</p><p class=\'auto-name-bottom small\'>#sku</p>'"
+                                        [searchFields]="['name','sku']"
+                                        [control]="searchForm.controls.search"
+                                        [search]="searchForm.controls.search.value"
+                                        [url]="'products/?contains=true&logic=||'"
+                                        [class]="'products'"
+                                        (onsetvalue)="autocompletevaluechanged($event)"
+                                        >
+                                </autocomplete>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-md-12 col-xs-12 lighty products_list_noresize">
+                        <div class="square_list_item" *ngFor="let __product of __productsArray">
+                            <div class="col-md-12 col-xs-12 no-p" *ngIf="__product && __product.id">
+                                    <a class="product_info trash" (click)="__removeProduct(__product)"><i class="ti-trash"></i></a>
+                                    <button *ngIf="__product.imgs && __product.imgs.length !== 0"> 
+                                            <img src="{{ _global.config['serverPath']+'images/products/'+ __product.imgs[0] }}" />
+                                        <p class="_name">{{ __product.name }}</p>
+                                    </button>
+                                <button *ngIf="!__product.imgs || __product.imgs.length === 0">{{ __product.name }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

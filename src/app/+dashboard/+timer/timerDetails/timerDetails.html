@@ -1,0 +1,45 @@
+<div class="col-md-12" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 no-p" [ngClass]="{'box allpage-with-sidebar' : !isDynamic}">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <!--<div class="col-md-12" #pdfViewer>Hello</div>
+            <div class="col-md-12"><button type="button" (click)="test()">pdf</button></div>-->
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head" *ngIf="editable">عرض بيانات المهمة</p>
+                        <p class="title head" *ngIf="!editable && item && item.time">حفظ المهمة بتوقيت : {{ item.time | timer }}</p>
+                    </div>
+                    <div class="col-md-12 first last">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-md-12 col-sm-12 col-form-label">المهمة</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,alph,max50" [formControl]="formObject.controls['task']" name="task" 
+                                type="text" class="form-control autofocus" placeholder="المهمة" [ngClass]="{'errors': validateControl('task')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-md-12 col-sm-12 col-form-label">ملاحظة</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="alph,max100" [formControl]="formObject.controls['note']" name="note" 
+                                type="text" class="form-control autofocus" placeholder="ملاحظة" [ngClass]="{'errors': validateControl('note')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12 col-sm-12">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input [formControl]="formObject.controls['is_done']"
+                                        class="parentcheckbox option-input checkbox float_exac" type="checkbox">
+                                <p class="float_exac">تم انجاز المهمة</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

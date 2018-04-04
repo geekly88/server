@@ -1,0 +1,103 @@
+<div class="fade modal" id="show-dynamic-model" tabondex="-1" role="dialog"
+    aria-labelledby="myDynamicModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <button class="close" data-dismiss="modal"><span>x</span></button>
+            <div class="modal-body col-md-12 white">
+                <div class="col-md-12 no-p" *ngIf="__modal === 'taxes'">
+                    <taxes-details [isDynamic]="true"></taxes-details>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-12 col-xs-12 col-sm-12" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 no-p" [ngClass]="{'box allpage-with-sidebar' : !isDynamic}">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head">اضافة مصاريف جديد</p>
+                    </div>
+                    <div class="col-md-12 first">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">العنوان</label>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <input data-rules="max100,name" [formControl]="formObject.controls['name']" name="name" 
+                                type="text" class="form-control" placeholder="العنوان" [ngClass]="{'errors': validateControl('name')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-sm-12 col-xs-12 col-form-label">كود الكوبون</label>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <input data-rules="max100,name" [formControl]="formObject.controls['coupon']" name="coupon" 
+                                type="text" class="form-control" placeholder="كود الكوبون" [ngClass]="{'errors': validateControl('coupon')}">
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <div class="col-md-4 col-xs-4 col-sm-4">
+                            <button type="button" class="btn_box" (click)="formObject.controls['type'].setValue('discount')" [ngClass]="{'active' : formObject.value.type === 'discount'}">
+                                <i class="ti-cut"></i>
+                                <span>تخفيض</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4">
+                            <button type="button" class="btn_box" (click)="formObject.controls['type'].setValue('cash')" [ngClass]="{'active' : formObject.value.type === 'cash'}">
+                                <i class="ti-money"></i>
+                                <span>مبلغ مالى</span>
+                            </button>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4">
+                            <button type="button" class="btn_box" (click)="formObject.controls['type'].setValue('loyalty')" [ngClass]="{'active' : formObject.value.type === 'loyalty'}">
+                                <i class="ti-star"></i>
+                                <span>نقاط</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="formObject.value.type === 'discount'">
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <button type="button" class="btn_box" (click)="formObject.controls.is_percentage.setValue(true)" [ngClass]="{'active' : formObject.value.is_percentage }">
+                                <i class="ti-404">%</i>
+                                <span>تخفيض نسبة مئوية</span>
+                            </button>
+                        </div>
+                        <div class="col-md-6 col-xs-6 col-sm-6">
+                            <button type="button" class="btn_box" (click)="formObject.controls.is_percentage.setValue(false)" [ngClass]="{'active' : !formObject.value.is_percentage }">
+                                <i class="ti-money"></i>
+                                <span>تخفيض مبلغ مالى</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-form-label">مقدار الجائزة</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="req,price" [formControl]="formObject.controls['amount']" name="amount" 
+                                type="text" class="form-control" placeholder="0.00" [ngClass]="{'errors': validateControl('amount')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="col-md-12 col-form-label">تاريخ الانتهاء</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="date" ng2-datetime-picker name="expire_date" [(ngModel)]="__expireDate"
+                                [formControl]="formObject.controls['expire_date']" [close-on-select]="false" 
+                                type="text" class="form-control" placeholder="تاريخ الانتهاء" readonly/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

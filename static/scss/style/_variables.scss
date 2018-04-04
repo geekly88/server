@@ -1,0 +1,87 @@
+
+// $bg_1 : #3A4953; /*#34465D*/
+// $bg_2 : #AD0EB3;
+// $bg_3 : #2F8DDB;
+// $bg_4 : #00E136;
+// $bg_5 : #FFb800;
+// $bg_6 : #F47214;
+// $bg_7 : #F8332b;
+// $bg_8 : #CF0023;
+// $bg_9 : #9C27B0;
+// $bg_10 : #8BC34A;
+$bg_1 : #3Fa2E3; /*#34465D*/
+$bg_2 : #8FC9EF;
+$bg_3 : #E6E83E;
+$bg_4 : #E6E83E;
+$bg_5 : #ECA944;
+$bg_6 : #A7ACD6;
+$bg_7 : #E895B2;
+$bg_8 : #A6D4DE;
+$bg_9 : #BE7CCA;
+$bg_10 : #8FC9EF;
+$gold : #E2CC5E;
+
+
+$direction : rtl;
+$float_dir : right;
+$float_dir_opp : if($float_dir == right , left , right);
+// $secondary : #2196F3;
+// $secondary_brdr : #2196F3;
+// $secondary_hover : #2196F3;
+// $secondary_disable: lighten($secondary, 30%) !default;
+$secondary : #4CAF50;
+$secondary_brdr : #37903B;
+$secondary_hover : rgb(84, 144, 17);
+$secondary_disable: lighten($secondary, 30%) !default;
+// $secondary : #8BC34A;
+// $secondary_brdr : #3F8C46;
+// $secondary_hover : #50be5a;
+// $secondary_disable: lighten($secondary, 30%) !default;
+$primary : #0073CE;
+$primary_brdr : #3F51B5;
+$primary_hover : #2196F3;
+$primary_disable: lighten($primary, 30%) !default;
+
+$thirdly : #35EA7F;
+$fourthy : #B421CE;
+$white : #FFFFFF;
+$orangy : #FF5722;
+$dark_main_color : #606F78;
+$main_color : $white;
+$html_bg : $primary;// $gold;// #A7E8AC; // $main_color;
+$error : #F54782;
+$error_brdr :#F54782;
+$success : #8BC34A;
+$success_brdr : #8BC34A;
+$warn :  #EABA31;
+$warn_brdr : #EABA31;
+$font_size : 11px;
+$font_family : 'NEO';
+
+
+
+$dashboard_bg : #EEEFF7;/**#ECEFF5**/;
+$dashboard_brdr : #EEEFF7;
+$dashboard_brdr_hover : #EEEFF7;
+$dashboard_brdr_width : 1;
+$navbar_bg : trasnparent;
+$input_brdr : #DEE1EC;
+/*=================NAVBAR===================*/
+$navbar_height : 50;
+/*=================SIDEBAR===================*/
+$sidebar_width : 220;
+$subsidebar_width : 220;
+$action_bar_width : 250px;
+$sidebar_bg : white;
+$sidebar_color : $main_color;
+$sidebar_active_bg : $dashboard_bg;
+$sidebar_active_fg : $primary;
+/*==================BOX======================*/
+$box_bg : white;
+
+$login_bg: $white;
+$index_bg : $white;
+/*================ RADIO & CHECKBOX ===========*/
+$radio_size: 20px !default;
+$checkbox_size: 20px !default;
+$dot_size: 8px !default;

@@ -1,0 +1,117 @@
+<div class="col-md-12 padding-20" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 no-p" [ngClass]="{'box allpage-with-sidebar' : !isDynamic}">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head">اضافة قيد محاسبى جديد</p>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12 first">
+                        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-12 col-xs-12 col-form-label">البيان</label>
+                            <div class="col-md-12 col-xs-12">
+                                <input data-rules="req,alph,min2,max100" [formControl]="formObject.controls['title']" name="title" 
+                                type="text" class="form-control autofocus" placeholder="البيان" [ngClass]="{'errors': validateControl('title')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-12 col-form-label">التاريخ</label>
+                            <div class="col-md-12 ">
+                                <input data-rules="date" ng2-datetime-picker name="book_date" [(ngModel)]="__date"
+                                [formControl]="formObject.controls['book_date']" [close-on-select]="false" 
+                                type="text" class="form-control" placeholder="تاريخ" readonly/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div> 
+                    <div class="col-md-12 col-xs-12 col-sm-12">
+                        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-12 col-xs-12 col-form-label">الحساب الدائن</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input data-rules="req,alph,min2,max100" [(ngModel)]="creditor_account" name="creditor_account" 
+                                type="text" class="form-control autofocus" placeholder="الى ح/" [ngModelOptions]="{standalone: true}"/>
+                                <autocomplete
+                                        [field]="['name_ar' , 'name']"
+                                        [template]="'#name_ar'"
+                                        [searchFields]="['name_ar','name']"
+                                        [search]="creditor_account"
+                                        [class]="'creditor_account'"
+                                        [isLocal]="true"
+                                        [dataToSearchFrom]="__booksTreeArray"
+                                        (onsetvalue)="autocompletevaluechanged($event)"
+                                        >
+                                </autocomplete>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-12 col-form-label">الحساب المدين</label>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <input data-rules="req,alph,min2,max100" [(ngModel)]="debitor_account" name="debitor_account" 
+                                type="text" class="form-control autofocus" placeholder="من ح/" [ngModelOptions]="{standalone: true}"/>
+                                <autocomplete
+                                        [field]="['name_ar' , 'name']"
+                                        [template]="'#name_ar'"
+                                        [searchFields]="['name_ar','name']"
+                                        [search]="debitor_account"
+                                        [class]="'debitor_account'"
+                                        [isLocal]="true"
+                                        [dataToSearchFrom]="__booksTreeArray"
+                                        (onsetvalue)="autocompletevaluechanged($event)"
+                                        >
+                                </autocomplete>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12 books_list"  *ngIf="__debitors__.length > 0 || __creditors__.length > 0">
+                        <div class="form-group creditors col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-md-12 col-xs-12 col-sm-12 wrper">
+                                <div class="col-md-12 col-xs-12 col-sm-12 no-p" *ngFor="let book of formObject.value.creditor_account;let i = index">
+                                    <div class="col-md-7 col-xs-7 col-sm-7 book_name">{{ book.name_ar }}</div>
+                                    <div class="col-md-3 col-xs-3 col-sm-3 book_price">
+                                        <input type="text" class="form-control" rule="price" [(ngModel)]="__creditors__[i]" [ngModelOptions]="{standalone: true}"/>
+                                    </div>
+                                    <a class="float_opp book_remove" (click)="onRemoveBookFromList(i , 'creditor')"><i class="ti-trash"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group debitors col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-md-12 col-xs-12 col-sm-12 wrper">
+                                <div class="col-md-12 col-xs-12 col-sm-12 no-p" *ngFor="let book of formObject.value.debitor_account;let i = index">
+                                    <div class="col-md-7 col-xs-7 col-sm-7 book_name">{{ book.name_ar }}</div>
+                                    <div class="col-md-3 col-xs-3 col-sm-3 book_price">
+                                        <input type="text" class="form-control" rule="price" [(ngModel)]="__debitors__[i]" [ngModelOptions]="{standalone: true}"/>
+                                    </div>
+                                    <a class="float_opp book_remove" (click)="onRemoveBookFromList(i , 'debitor')"><i class="ti-trash"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+                    <!--<div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+                            <label class="col-md-12 col-xs-12 col-form-label">المبلغ الدائن</label>
+                            <div class="col-md-12 col-xs-12">
+                                <input data-rules="req,num" [formControl]="formObject.controls['balance']" name="balance" 
+                                type="text" class="form-control autofocus" placeholder="المبلغ الدائن" [ngClass]="{'errors': validateControl('balance')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-6 col-xs-12">
+                            <label class="col-md-12 col-xs-12 col-form-label">صفحة الاستاذ</label>
+                            <div class="col-md-12 col-xs-12">
+                                <input data-rules="req,num" [formControl]="formObject.controls['page']" name="page" 
+                                type="text" class="form-control autofocus" placeholder="صفحة الاستاذ" [ngClass]="{'errors': validateControl('page')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

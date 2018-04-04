@@ -1,0 +1,523 @@
+<div class="col-md-12 padding-20" [ngClass]="{ 'grayer' : _global.getToken()['settings']['theme'] === 'grayer' }">
+    <div class="col-md-12 headtitle" *ngIf="_global.getToken()['settings']['theme'] === 'grayer'">
+        <p>التقارير</p>
+    </div>
+    <div class="col-md-12 no-p reports" [hidden]="__showReport__">
+        <!--<div class="col-md-12 no-p reports_header">
+        </div>
+
+        <div class="col-md-12 no-p reports_body" [hidden]="!__showCharts">
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'invoices'">
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'اجمالى المبيعات'" 
+                                [data]="__invoicesChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'total'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'عدد المبيعات'" 
+                                [data]="__invoicesChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'count'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'الضرائب'" 
+                                [data]="__invoicesChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'tax'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'التخفيضات'" 
+                                [data]="__invoicesChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'discount'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'invoices'">
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'اجمالى المبيعات'" 
+                                [data]="__invoicesChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'total'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'عدد المبيعات'" 
+                                [data]="__invoicesChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'count'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'الضرائب'" 
+                                [data]="__invoicesChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'tax'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'التخفيضات'" 
+                                [data]="__invoicesChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'discount'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'sells'">
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'اجمالى المبيعات'" 
+                                [data]="__sellsChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'total'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'عدد المبيعات'" 
+                                [data]="__sellsChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'count'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'الضرائب'" 
+                                [data]="__sellsChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'tax'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'التخفيضات'" 
+                                [data]="__sellsChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'discount'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'sells'">
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'اجمالى المبيعات'" 
+                                [data]="__sellsChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'total'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'عدد المبيعات'" 
+                                [data]="__sellsChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'count'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'الضرائب'" 
+                                [data]="__sellsChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'tax'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'التخفيضات'" 
+                                [data]="__sellsChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'discount'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'buys'">
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'اجمالى المبيعات'" 
+                                [data]="__buysChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'total'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'عدد المبيعات'" 
+                                [data]="__buysChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'count'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'الضرائب'" 
+                                [data]="__buysChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'tax'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'التخفيضات'" 
+                                [data]="__buysChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'discount'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'buys'">
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'اجمالى المبيعات'" 
+                                [data]="__buysChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'total'"
+                                [isPrice]="true"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'عدد المبيعات'" 
+                                [data]="__buysChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'count'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'الضرائب'" 
+                                [data]="__buysChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'tax'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 no-p">
+                    <div class="charts_item">
+                        <charts [title]="'التخفيضات'" 
+                                [data]="__buysChartsData"
+                                [outlet]="_global.getToken()['register']['name']" 
+                                [summationField]="'discount'"
+                                [isPrice]="false"></charts>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <div class="col-md-12 no-p reports_body" [hidden]="__showCharts">
+            <div class="col-md-12 no-p reports_item">
+                <div class="col-md-8 reports_box_wrapper">
+                    <div class="col-md-12 reports_box brdr">
+                        <div class="reports_content center">
+                            <p class="top_title">أرباح مبيعاتك</p>
+                            <img src="assets/img/expl/expenses.svg" />
+                            <p class="bottom">الأرباح حسب طريقة بيعك</p>
+                            <a class="botn" (click)="prepareReport('RESULTS' , 'chose')">عرض التقرير</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 reports_box_wrapper">
+                    <div class="col-md-12 reports_box brdr">
+                        <div class="reports_content center">
+                            <p class="top_title">الأصناف</p>
+                            <img src="assets/img/expl/products.svg" />
+                            <p class="bottom">اجمالى أسعارها تكلفتها و الفارق</p>
+                            <a class="botn" (click)="prepareReport('ZAKAT' , 'all')">عرض التقرير</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 no-p reports_item">
+                <div class="col-md-6 reports_box_wrapper">
+                    <div class="col-md-12 reports_box">
+                        <div class="col-md-12 no-p reports_title">
+                            <h3>تقارير المبيعات</h3>
+                        </div>
+                        <div class="reports_content">
+                            <ul>
+                                <li><a (click)="prepareReport('SELLS','all')">تقارير كل المبيعات</a></li>
+                                <li><a (click)="prepareReport('SELLS','customer')">تقارير المبيعات حسب الزبون</a></li>
+                                <li><a (click)="prepareReport('SELLS','employee')">تقارير المبيعات حسب البائع</a></li>
+                                <li><a (click)="prepareReport('SELLS','author')">تقارير المبيعات حسب المستخدم</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 reports_box_wrapper">
+                    <div class="col-md-12 reports_box">
+                        <div class="col-md-12 no-p reports_title">
+                            <h3>تقارير فواتير الشراء</h3>
+                        </div>
+                        <div class="reports_content">
+                            <ul>
+                                <li><a (click)="prepareReport('BUYS','all')">تقارير كل المشتريات</a></li>
+                                <li><a (click)="prepareReport('BUYS','supplier')">تقارير المشتريات حسب المورد</a></li>
+                                <li><a (click)="prepareReport('BUYS','employee')">تقارير المشتريات حسب البائع</a></li>
+                                <li><a (click)="prepareReport('BUYS','author')">تقارير المشتريات حسب المستخدم</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 no-p reports_item">
+                <div class="col-md-6 reports_box_wrapper">
+                    <div class="col-md-12 reports_box">
+                        <div class="col-md-12 no-p reports_title">
+                            <h3>تقارير المدفوعات و المقبوضات و المصاريف</h3>
+                        </div>
+                        <div class="reports_content">
+                            <ul>
+                                <li><a (click)="prepareReport('WALLET','paids')">تقارير المدفوعات</a></li>
+                                <li><a (click)="prepareReport('WALLET','recives')">تقارير المقبوضات</a></li>
+                                <li><a (click)="prepareReport('WALLET','expenses')">تقارير المصاريف</a></li>
+                                <li><a (click)="prepareReport('WALLET','total')">تقارير الاجمالية</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 reports_box_wrapper">
+                    <div class="col-md-12 reports_box">
+                        <div class="col-md-12 no-p reports_title">
+                            <h3>تقارير معلومات وتفاصيل</h3>
+                        </div>
+                        <div class="reports_content">
+                            <ul>
+                                <li><a (click)="prepareReport('CONTACTS','customers')">تقارير معلومات الزبائن</a></li>
+                                <li><a (click)="prepareReport('CONTACTS','suppliers')">تقارير معلومات الموردين</a></li>
+                                <li><a (click)="prepareReport('CONTACTS','employees')">تقارير معلومات الموظفين</a></li>
+                                <li><a (click)="prepareReport('CONTACTS','users')">تقارير معلومات المستخدمين</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 no-p reports_item">
+                <div class="col-md-6 reports_box_wrapper">
+                    <div class="col-md-12 reports_box">
+                        <div class="col-md-12 no-p reports_title">
+                            <h3>تقارير الأصناف</h3>
+                        </div>
+                        <div class="reports_content">
+                            <ul>
+                                <li><a (click)="prepareReport('PRODUCTS','purches')">تقارير الأصناف حسب المشتريات</a></li>
+                                <li><a (click)="prepareReport('PRODUCTS','orders')">تقارير الأصناف حسب فواتير المبيعات</a></li>
+                                <!--<li><a (click)="prepareReport('PRODUCTS','sellorders')">تقارير الأصناف حسب المبيعات الفورية</a></li>-->
+                                <li><a (click)="prepareReport('PRODUCTS','traffic')">تقارير حركة صنف</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 reports_box_wrapper">
+                    <div class="col-md-12 reports_box">
+                        <div class="col-md-12 no-p reports_title">
+                            <h3>تقارير المحاسبة</h3>
+                        </div>
+                        <div class="reports_content">
+                            <ul>
+                                <li><a (click)="prepareReport('BOOKKEPPING','all')">تقارير المحاسبة</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="col-md-12 no-p" [hidden]="!__showReport__">
+        <!--<invoices-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'INVOICES'"></invoices-report>-->
+        <sells-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'SELLS'"></sells-report>
+        <buys-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'BUYS'"></buys-report>
+        <products-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'PRODUCTS'"></products-report>
+        <contacts-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'CONTACTS'"></contacts-report>
+        <wallet-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'WALLET'"></wallet-report>
+        <results-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'RESULTS'"></results-report>
+        <bookkepping-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'BOOKKEPPING'" [data]="__booksArray"></bookkepping-report>
+    </div>
+</div>
+<div class="fade modal" id="show-reports-modal" tabindex="1" role="dialog"
+    aria-labelledby="myReportDetailsModalLabel" aria-hidden="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-header">
+            <button class="close closeReport" data-dismiss="modal"><span>x</span></button>
+        </div>
+        <iframe id="pdf_viewer" type="application/pdf" src="" width="100%" height="500px"></iframe>
+    </div>
+</div>
+
+<div class="fade modal" id="show-filters" tabindex="1" role="dialog"
+    aria-labelledby="myReportDetailsModalLabel" aria-hidden="false">
+    <div class="modal-dialog" [ngClass]="{'modal-lg' : __oldDepart === 'RESULTS'}">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal"><span>x</span></button>
+        </div>
+
+        <div class="col-md-12 no-p" *ngIf="__oldDepart === 'ZAKAT' && __oldBy === 'all'">
+            <div class="col-md-12 main_body white">
+                <form class="form col-md-12 no-p" novalidate>
+                    <fieldset>
+                        <div class="col-xl-12 form_paraphraph">
+                            <p class="title head">اجمالى الأصناف المتوفرة</p>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 first" *ngIf="!__zakat || __products.length === 0">
+                            <p class="col-md-12 col-xs-12 col-sm-12 padding-20">
+                                لم يتم جلب أى أصناف لعرض نتائجها
+                            </p>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12 padding-20" *ngIf="__zakat && __products.length > 0">
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <p class="h2">عدد الأصناف : {{ __products.length }}</p>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <p class="col-md-12 col-xs-12 col-sm-12">اجمالى أسعار جميع كميات الأصناف المتوفرة</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <p class="col-md-12 col-xs-12 col-sm-12">{{ __zakat.prices | myCurrency }}</p>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <p class="col-md-12 col-xs-12 col-sm-12">اجمالى تكلفة جميع كميات الأصناف المتوفرة</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <p class="col-md-12 col-xs-12 col-sm-12">{{ __zakat.costs | myCurrency }}</p>
+                            </div>
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <p class="col-md-12 col-xs-12 col-sm-12">اجمالى الفارق</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <p class="col-md-12 col-xs-12 col-sm-12">{{ __zakat.prices - __zakat.costs | myCurrency }}</p>
+                            </div>
+
+                            <div class="col-md-8 col-sm-8 col-xs-8">
+                                <p class="col-md-12 col-xs-12 col-sm-12">مقدار الزكاة 2.5%</p>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-4">
+                                <p class="col-md-12 col-xs-12 col-sm-12">{{ __zakat.prices * (2.5/100) }}%</p>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 center">
+                                <a class="allproductsreport" (click)="prepareReport('PRODUCTS' , 'all')">جرد الأصناف</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-12 no-p" *ngIf="__oldDepart === 'PRODUCTS' && __oldBy === 'traffic'">
+            <div class="col-md-12 main_body white">
+                <form [formGroup]="formObject" (ngSubmit)="onSubmitForm()" novalidate
+                    class="form col-md-12 no-p">
+                    <fieldset>
+                        <div class="col-xl-12 form_paraphraph">
+                            <p class="title head">فلترة حركة الأصناف</p>
+                        </div>
+                        <div class="col-md-12 first last">
+                            <div class="form-group col-md-12 col-xs">
+                                <label class="col-md-12 col-form-label">اسم الصنف</label>
+                                <div class="col-md-12 inline-first">
+                                    <input data-rules="req,min1,max100,name" [formControl]="formObject.controls['product_name']" name="product_name" 
+                                    type="text" class="form-control autofocus" placeholder="اسم الصنف" [ngClass]="{'errors': validateControl('product_name')}"/>
+                                    <!--<div class="errors"></div>-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <button type="submit" class="btn btn-primary">اظهار النتائج</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-12 no-p" *ngIf="__oldDepart === 'BOOKKEPPING'">
+            <div class="col-md-12 main_body white">
+                <form [formGroup]="formObject" (ngSubmit)="onSubmitForm()" novalidate
+                    class="form col-md-12 no-p">
+                    <fieldset>
+                        <div class="col-xl-12 form_paraphraph">
+                            <p class="title head">اختر الحساب</p>
+                        </div>
+                        <div class="col-md-12 first last">
+                            <div class="form-group col-md-12 col-xs">
+                                <label class="col-md-12 col-form-label">اسم الحساب</label>
+                                <div class="col-md-12 inline-first">
+                                    <select class="form-control" [formControl]="formObject.controls['book']">
+                                        <option value="all">جميع الحسابات</option>
+                                        <option *ngFor="let option of __booksArray"
+                                                [value]="option.code" value="{{ option.code }}" >{{ option.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12">
+                            <button type="submit" class="btn btn-primary">اظهار النتائج</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-12 padding-20 bg" *ngIf="__oldDepart === 'RESULTS' && __oldBy === 'chose'">
+            <div class="col-md-4 reports_box_wrapper">
+                <div class="col-md-12 reports_box no_bg brdr">
+                    <div class="reports_content center">
+                        <p class="top_title">أرباح مبيعاتك</p>
+                        <img src="assets/img/expl/expenses.svg" />
+                        <p class="bottom">صافى الأرباح من المبيعات الكلية</p>
+                        <a class="botn" (click)="prepareReport('RESULTS','sellwins')">عرض التقرير</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 reports_box_wrapper">
+                <div class="col-md-12 reports_box no_bg brdr">
+                    <div class="reports_content center">
+                        <p class="top_title">أرباح حسابك مفصلة</p>
+                        <img src="assets/img/expl/expenses.svg" />
+                        <p class="bottom">اجمالى الأرباح و المصاريف و المدفوعات</p>
+                        <a class="botn" (click)="prepareReport('RESULTS','wins')">عرض التقرير</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 reports_box_wrapper">
+                <div class="col-md-12 reports_box no_bg brdr">
+                    <div class="reports_content center">
+                        <p class="top_title">أرباح المبيعات و المشتريات</p>
+                        <img src="assets/img/expl/expenses.svg" />
+                        <p class="bottom">تقرير المشتريات و المبيعات و المصاريف و المدفوعات</p>
+                        <a class="botn" (click)="prepareReport('RESULTS','allwins')">عرض التقرير</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

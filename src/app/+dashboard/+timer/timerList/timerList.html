@@ -1,0 +1,93 @@
+<div class="fade modal" id="show-details-model" tabondex="-1" role="dialog"
+    aria-labelledby="myDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <timer-details [isDynamic]="true" (onAction)="OnDetailsAction($event)"
+                [param]="param" [editable]="editable" [editItem]="editItem"></timer-details>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12 padding-20 list">
+    <div class="col-md-12 headtitle">
+        <p>التوقيت</p>
+    </div>
+    <div class="main_action clearfix">
+        <p class="title">قائمة تضم جميع سجلات التوقيت للمهام</p>
+        <p>...</p>
+        <p class="title __expl" (click)="__explain = !__explain">اعرف أكثر <i class="fa fa-life-saver"></i></p>
+        <!--<addnew-item (onAddNewClick)="onAddNewClick($event)"></addnew-item>-->
+    </div>
+    <div class="col-md-12 padding-20 expl bounceInDown" *ngIf="__explain || __hideLists">
+        <p>
+            قائمة تضم جميع سجلات التوقيت للمهام المنفذة بشكل كلى أو جزئى و حساب الوقت اللازم لتنفيذ مهمة عمل لهذا الحساب
+        </p>
+        <p><img src="/assets/img/expl/timer.svg" width="100px" /></p>
+        <!--<p class="add" (click)="onAddNewClick({})">أضف توقيت جديدة</p>-->
+    </div>
+    <div class="col-xl-12 col-md-12 col-sm-12 col-xs-12 box noshadow">
+        <div class="main_body">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p above_table" [hidden]="__hideLists">
+                <li class="active">
+                    <a>التوقيت</a>
+                </li>
+                <li class="opp" (click)="onTopActionClick({clicked:true,action:'EXPORTLIST'})"><a>تصدير القائمة <i class="fa fa-database"></i></a></li>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p table-rainbow top-rainbow" [hidden]="__hideLists">
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+            </div>
+            <table class="table" [hidden]="__hideLists">
+                <thead>
+                    <tr>
+                        <td width="40px"><input type="checkbox" class="parentcheckbox option-input checkbox"></td>
+                        <td (click)="OnOrderBy('task')">المهمة</td>
+                        <td>الوقت</td>
+                        <td>اتمام المهمة</td>
+                        <td>ملاحظة</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _list">
+                        <td width="40px">
+                            <span>
+                                <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
+                            </span>        
+                        </td>
+                        <td>{{ item.task }}</td>
+                        <td>{{ item.time | timer }}</td>
+                        <td *ngIf="item.is_done"><p class="paid"></p> تم انجاز المهمة</td>
+                        <td *ngIf="!item.is_done"><p class="partially"></p> لم يتم الانتهاء من المهمة</td>
+                        <td>{{ item.note }}</td>
+                        <td class="actions">
+                            <dashboard-actions
+                                [obj]="_actionsObjs" [item]="item" (onAction)="onAction($event)">
+                            </dashboard-actions>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="main_footer">
+            <dashboard-footer 
+                [pages]="__pages"
+                [count]="__count" 
+                [pageUrl]="_controller"
+                [filterObj]="_filtersObjs"
+                [searchObj]="_searchObjs"
+                (pageChanging)="onPageChanging($event)"
+                (onAction)="onTopActionClick($event)">
+            </dashboard-footer>
+        </div>
+    </div>
+</div>
+<!--<show-item [showItemFields]="_showItemFields" [showItem]="_showItem" [isShowItem]="_isShowItem" (onShowItem)="onShowItem($event)"></show-item>-->
+

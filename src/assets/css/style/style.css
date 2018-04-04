@@ -1,0 +1,73 @@
+/* IMPORTS */
+/*=================NAVBAR===================*/
+/*=================SIDEBAR===================*/
+/* line 1, ../../../../static/scss/style/_navbar.scss */
+.navbar {
+  background: #FFFFFF;
+  height: 50px;
+  width: 100%;
+  float: left;
+  border-bottom: 1px solid #E3E8E9;
+}
+/* line 7, ../../../../static/scss/style/_navbar.scss */
+.navbar li {
+  list-style: none;
+}
+/* line 9, ../../../../static/scss/style/_navbar.scss */
+.navbar li a {
+  color: #444;
+  font-weight: bold;
+}
+/* line 12, ../../../../static/scss/style/_navbar.scss */
+.navbar li a:hover {
+  text-decoration: none;
+}
+
+/* line 1, ../../../../static/scss/style/_sidebar.scss */
+.sidebar {
+  position: absolute;
+  top: 50px;
+  right: 0%;
+  left: 100%;
+  width: 250px;
+  background: #32353D;
+  height: 650px;
+  padding-top: 40px;
+  border-left: 1px solid #E3E8E9;
+}
+/* line 11, ../../../../static/scss/style/_sidebar.scss */
+.sidebar ul {
+  width: 100%;
+}
+/* line 13, ../../../../static/scss/style/_sidebar.scss */
+.sidebar ul li {
+  list-style: none;
+  padding: 10px 10px;
+  width: 100%;
+}
+/* line 17, ../../../../static/scss/style/_sidebar.scss */
+.sidebar ul li a {
+  color: #00CE7F;
+  background: #32353D;
+}
+
+/* line 1, ../../../../static/scss/style/_dashboard.scss */
+main.main {
+  margin-right: 250px;
+  margin-left: 0;
+  width: calc(100% - 250px);
+}
+
+@font-face {
+  font-family: 'MainFont';
+  src: url("../fonts/DroidKufi-Regular.ttf");
+  src: url("../fonts/DroidKufi-Bold.ttf");
+}
+/* line 9, ../../../../static/scss/style/style.scss */
+html, body {
+  background: #F3F7F8;
+  direction: rtl;
+  font-family: 'MainFont';
+  font-size: 12px;
+  font-weight: normal;
+}

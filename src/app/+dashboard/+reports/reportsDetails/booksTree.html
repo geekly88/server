@@ -1,0 +1,70 @@
+<div class="col-md-12 no-p">
+    <div class="col-md-12 no-p">
+        <div class="col-md-12 main_body">
+            <div class="main_action clearfix">
+                <report-filter
+                    [pages]="1"
+                    (onAction)="onActionReport($event)">
+                </report-filter>
+            </div>
+            <div class="col-md-12 padding-20">
+                <div class="col-md-12 col-xs-12 col-sm-12 no-p reports_results" *ngIf="__list && __list.length > 0"
+                    style="height : auto;">
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                    <div class="col-md-12 col-xs-12 col-sm-12 no-p">
+                        <div class="col-md-12 no-p {{ i }}">
+                            <div class="col-md-12 col-xs-12 col-sm-12 no-p">
+                                <div class="col-md-12 no-p report_header">
+                                    <div class="col-md-12 no-p"><h2>{{ _global.getToken()['account']['name'] }}</h2></div>
+                                    <div class="col-md-12 no-p"><h3>تقارير الحسابات</h3></div>
+                                    <div class="col-md-12 no-p"><h5>من {{ from | date:'dd/MM/yyyy' }} الى {{ to | date:'dd/MM/yyyy' }}</h5></div>
+                                </div>
+                                <div class="col-md-12 no-p report_content">
+                                    <books-tree [list]="__list"></books-tree>
+                                </div>
+                            </div>
+                            <div class="col-md-12 no-p report_footer">
+                                <p class="reportDate">{{ __createdAt__ }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--=============================================
+                    =============================================
+                    =============================================-->
+                <div class="col-md-12 no-p reports_results notfound" *ngIf="!this.__list || this.__list.length === 0"> 
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                    <div class="col-md-12 col-xs-12 col-sm-12 no-p">
+                        <div class="col-md-12 no-p report_header">
+                            <div class="col-md-12 no-p"><h2>{{ _global.getToken()['account']['name'] }}</h2></div>
+                            <div class="col-md-12 no-p"><h3>تقارير الحسابات</h3></div>
+                            <div class="col-md-12 no-p"><h5>من {{ from | date:'dd/MM/yyyy' }} الى {{ to | date:'dd/MM/yyyy' }}</h5></div>
+                        </div>
+                        <div class="col-md-12 no-p report_content">
+                            <!--<table class="table">
+                                <thead >
+                                    <tr>
+                                        <td *ngFor="let key of __loopArray" [hidden]="!__lang[key]">{{ __lang[key] }}</td>
+                                    </tr>
+                                </thead>
+                            </table>-->
+                            <div class="col-md-12 no-p noreport">
+                                <img src="assets/img/expl/noresults.svg" />
+                                <p>لايوجد نتائج لعرضها حاليا</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-p report_footer">
+                        <p class="reportDate">{{ __createdAt__ }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,139 @@
+<div class="col-md-12 no-p">
+    <div class="col-md-12 no-p">
+        <div class="col-md-12 main_body">
+            <div class="main_action clearfix">
+                <report-filter
+                    [allowed]="null"
+                    [lang]="null"
+                    (onAction)="onActionReport($event)">
+                </report-filter>
+            </div>
+            <div class="col-md-12 padding-20">
+                <div class="col-md-12 no-p reports_results">
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                    <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                    <div class="col-md-12 no-p report_header">
+                        <div class="padding-20"></div>
+                        <div class="col-md-12 no-p"><h2>{{ _global.getToken()['account']['name'] }}</h2></div>
+                        <div class="col-md-12 no-p"><h3>{{ __byArray[by] }}</h3></div>
+                        <div class="col-md-12 no-p"><h5>من {{ from | date:'dd/MM/yyyy' }} الى {{ to | date:'dd/MM/yyyy' }}</h5></div>
+                    </div>
+                    <div class="report_content col-md-12 no-p">
+                        <div class="col-md-12 no-p results_report">
+                            <div class="results_item col-md-12 no-p">
+                                <div class="col-md-3 col-xs-3 no-p part head">
+                                    <p class="title">المبيعات</p>
+                                </div>
+                                <div class="col-md-9 col-xs-9 no-p">
+                                    <div class="col-md-2 col-xs-2 no-p part" [ngClass]="{'col-md-3 col-xs-3' : by === 'allwins'}">
+                                        <p class="title top">الاجمالى</p>
+                                        <p class="title bottom">{{ __data['SEL']['pos'] | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-2 col-xs-2 no-p part" [ngClass]="{'col-md-3 col-xs-3' : by === 'allwins'}">
+                                        <p class="title top">المدفوع</p>
+                                        <p class="title bottom">{{ __data['SEL']['pospaid'] | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-2 col-xs-2 no-p part" *ngIf="by !== 'allwins'">
+                                        <p class="title top">التكلفة</p>
+                                        <p class="title bottom">{{ __data['SEL']['poscost'] | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-2 col-xs-2 no-p part" [ngClass]="{'col-md-3 col-xs-3' : by === 'allwins'}">
+                                        <p class="title top">اجمالى المعادة</p>
+                                        <p class="title bottom">{{ __data['SEL']['neg'] | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-2 col-xs-2 no-p part" [ngClass]="{'col-md-3 col-xs-3' : by === 'allwins'}">
+                                        <p class="title top">مدفوع المعادة</p>
+                                        <p class="title bottom">{{ __data['SEL']['negpaid'] | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-2 col-xs-2 no-p part" *ngIf="by !== 'allwins'">
+                                        <p class="title top">تكلفة المعادة</p>
+                                        <p class="title bottom">{{ __data['SEL']['negcost'] | myCurrency }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="results_item col-md-12 no-p" *ngIf="by === 'allwins'">
+                                <div class="col-md-3 col-xs-3 no-p part head">
+                                    <p class="title">المشتريات</p>
+                                </div>
+                                <div class="col-md-9 col-xs-9 no-p">
+                                    <div class="col-md-3 col-xs-3 no-p part">
+                                        <p class="title top">الاجمالى</p>
+                                        <p class="title bottom">{{ __data['BUY']['pos'] | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3 no-p part">
+                                        <p class="title top">المدفوع</p>
+                                        <p class="title bottom">{{ __data['BUY']['pospaid'] | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3 no-p part">
+                                        <p class="title top">اجمالى المعادة</p>
+                                        <p class="title bottom">{{ __data['BUY']['neg'] | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-3 col-xs-3 no-p part">
+                                        <p class="title top">مدفوع المعادة</p>
+                                        <p class="title bottom">{{ __data['BUY']['negpaid'] | myCurrency }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="results_item col-md-12 no-p" *ngIf="by === 'allwins' || by === 'wins'">
+                                <div class="col-md-3 col-xs-3 no-p part head">
+                                    <p class="title">الدفع و القبض</p>
+                                </div>
+                                <div class="col-md-9 col-xs-9 no-p">
+                                    <div class="col-md-6 col-xs-6 no-p part">
+                                        <p class="title top">المقبوضات</p>
+                                        <p class="title bottom">{{ __data['PID']['pospaid'] | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6 no-p part">
+                                        <p class="title top">المدفوعات</p>
+                                        <p class="title bottom">{{ __data['PID']['negpaid'] | myCurrency }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="results_item col-md-12 no-p" *ngIf="by === 'allwins' || by === 'wins'">
+                                <div class="col-md-3 col-xs-3 no-p part head">
+                                    <p class="title">المصاريف</p>
+                                </div>
+                                <div class="col-md-9 col-xs-9 no-p">
+                                    <div class="col-md-12 col-xs-12 no-p part">
+                                        <p class="title top">الاجمالى</p>
+                                        <p class="title bottom">{{ __data['EXP']['negpaid'] | myCurrency }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="results_item col-md-12 no-p">
+                                <div class="col-md-3 col-xs-3 no-p part head">
+                                    <p class="title">الدائن و المديونية</p>
+                                </div>
+                                <div class="col-md-9 col-xs-9 no-p">
+                                    <div class="col-md-6 col-xs-6 no-p part">
+                                        <p class="title top">الدائن</p>
+                                        <p class="title bottom">{{ __plus | myCurrency }}</p>
+                                    </div>
+                                    <div class="col-md-6 col-xs-6 no-p part">
+                                        <p class="title top">المديونية</p>
+                                        <p class="title bottom">{{ __minus | myCurrency }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="results_item col-md-12 no-p">
+                                <div class="col-md-3 col-xs-3 no-p part head">
+                                    <p class="title">الأرباح</p>
+                                </div>
+                                <div class="col-md-9 col-xs-9 no-p">
+                                    <div class="col-md-12 col-xs-12 no-p part head">
+                                        <p class="title">{{ __WINS__ | myCurrency }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-p report_footer">
+                        <p class="reportDate">{{ __createdAt__ }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

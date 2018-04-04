@@ -1,0 +1,117 @@
+<div class="fade modal" id="show-details-model" tabondex="-1" role="dialog"
+    aria-labelledby="myDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <bookKepping-details [isDynamic]="true" (onAction)="OnDetailsAction($event)"
+                [param]="param" [editable]="editable" [editItem]="editItem"></bookKepping-details>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 padding-20 list">
+    <div class="col-md-12 headtitle">
+        <p>القيود المحاسبية</p>
+    </div>
+    <div class="main_action clearfix">
+        <p class="title">قائمة تضم جميع القيود المحاسبية الذين قد تم اضافتهم مسبقا فى حساب الشركة</p>
+        <p>...</p>
+        <p class="title __expl" (click)="__explain = !__explain">اعرف أكثر <i class="fa fa-life-saver"></i></p>
+        <addnew-item (onAddNewClick)="onAddNewClick($event)"></addnew-item>
+    </div>
+    <div class="col-md-12 padding-20 expl bounceInDown" *ngIf="__explain || __hideLists">
+        <p>
+        القيود المحاسبية تساعدك على تتبع الحركة المالية من حساب الى اخر و تلخيص الحركة لمعرفة الديون و الايرادات
+        </p>
+        <p><img src="/assets/img/expl/bookKepping.svg" width="100px" /></p>
+        <p class="add" (click)="onAddNewClick({})">أضف قيد محاسبى جديد</p>
+    </div>
+    <div class="col-xl-12 col-sm-12 col-xs-12 col-md-12 box noshadow">
+        <div class="main_body">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p above_table" [hidden]="__hideLists">
+                <li class="active">
+                    <a>الكل</a>
+                </li>
+                <li class="opp" (click)="onTopActionClick({clicked:true,action:'EXPORTLIST'})"><a>تصدير القائمة <i class="fa fa-database"></i></a></li>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p table-rainbow top-rainbow" [hidden]="__hideLists">
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+            </div>
+            <table class="table" [hidden]="__hideLists">
+                <thead>
+                    <tr>
+                        <td width="40px"><input type="checkbox" class="parentcheckbox option-input checkbox"></td>
+                        <td (click)="OnOrderBy('name')" [ngClass]="{'active' : __order === 'name'}">البيان</td>
+                        <td (click)="OnOrderBy('date')" [ngClass]="{'active' : __order === 'date'}"
+                        style="min-width : 110px;">التاريخ</td>
+                        <td>من حساب</td>
+                        <td>الى حساب</td>
+                        <td>دائن</td>
+                        <td>مدين</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _list">
+                        <td width="40px">
+                            <span>
+                                <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
+                            </span>        
+                        </td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.book_date | date:'dd/MM/yyyy H:mm' }}</td>
+                        <td><p *ngFor="let creditor of item.creditor_code" class="col-md-12 col-xs-12 col-sm-12 no-p creditor_name">
+                            <span *ngIf="__booksTreeByCode[creditor]">{{ __booksTreeByCode[creditor] }}</span>
+                            <span *ngIf="!__booksTreeByCode[creditor] && __booksTreeByCode[creditor.substr(0,creditor.length - 1)]">{{ __booksTreeByCode[creditor.substr(0,creditor.length - 1)] }}</span>
+                            <span *ngIf="!__booksTreeByCode[creditor] && !__booksTreeByCode[creditor.substr(0,creditor.length - 1)]">الحساب مجهول</span>
+                            <p>
+                        </td>
+
+                        <td><p *ngFor="let debitor of item.debitor_code" class="col-md-12 col-xs-12 col-sm-12 no-p debitor_name">
+                            <span *ngIf="__booksTreeByCode[debitor]">{{ __booksTreeByCode[debitor] }}</span>
+                            <span *ngIf="!__booksTreeByCode[debitor] && __booksTreeByCode[debitor.substr(0,debitor.length - 1)]">{{ __booksTreeByCode[debitor.substr(0,debitor.length - 1)] }}</span>
+                            <span *ngIf="!__booksTreeByCode[debitor] && !__booksTreeByCode[debitor.substr(0,debitor.length - 1)]">الحساب مجهول</span>
+                            <p>
+                        </td>
+                        
+                        <td><p *ngFor="let creditor of item.creditor" class="col-md-12 col-xs-12 col-sm-12 no-p creditor_amount">
+                            <span class="success">{{ creditor | myCurrency }}</span>
+                            <p>
+                        </td>
+
+                        <td><p *ngFor="let debitor of item.debitor" class="col-md-12 col-xs-12 col-sm-12 no-p debitor_amount">
+                            <span class="error">{{ debitor | myCurrency }}</span>
+                            <p>
+                        </td>
+                        <td class="actions">
+                            <dashboard-actions
+                                [obj]="_actionsObjs" [item]="item" (onAction)="onAction($event)">
+                            </dashboard-actions>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="main_footer">
+            <dashboard-footer 
+                [pages]="__pages"
+                [count]="__count" 
+                [pageUrl]="_controller"
+                [filterObj]="_filtersObjs"
+                [searchObj]="_searchObjs"
+                (pageChanging)="onPageChanging($event)"
+                (onAction)="onTopActionClick($event)">
+            </dashboard-footer>
+        </div>
+    </div>
+</div>
+<!--<show-item [showItemFields]="_showItemFields" [showItem]="_showItem" [isShowItem]="_isShowItem" (onShowItem)="onShowItem($event)"></show-item>-->
+

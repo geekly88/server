@@ -1,0 +1,244 @@
+<div class="top-msg"></div>
+<input type="hidden" class="prev-page" data-page="" />
+<input type="hidden" class="page-info"/>
+<nav class="navbar navbar-light">
+    <div class="col-md-12 col-sm-12 col-xs-12 no-p top-rainbow">
+        <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+        <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+        <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+        <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+    </div>
+    <div class="float_exac">
+        <a class="navbar-brand app-full">
+            <i class="ti-desktop"></i>
+        </a>
+        <a class="navbar-brand app-min">
+            <i class="ti-minus"></i>
+        </a>
+        <a class="navbar-brand" (click)="OnShowSidebar()">
+            <i class="ti-layout-grid2"></i>
+        </a>
+        <a class="navbar-brand app-close">
+            <i class="ti-close"></i>
+        </a>
+    </div>
+    <div class="timer float_exac">
+        <div class="col-md-12 col-sm-12 col-xs-12 no-p timer-wrapper">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p timer-outline">
+                <div class="timer-timer">
+                    {{ __timer | timer }}
+                </div>
+                <div class="timer-btns">
+                    <a class="timer-btn play" (click)="onTimerClicked('PLAY')" [hidden]="__showPauseBtn"><i class="ti-control-play"></i></a>
+                    <a class="timer-btn pause" (click)="onTimerClicked('PAUSE')" [hidden]="!__showPauseBtn" ><i class="ti-control-pause"></i></a>
+                    <a class="timer-btn stop"  (click)="onTimerClicked('STOP')"><i class="ti-control-stop"></i></a>
+                    <a class="timer-btn menu"  (click)="onTimerClicked('MENU')"><i class="ti-menu"></i></a>
+                </div>
+            </div>
+            <div class="timer-menu" [hidden]="!__showTimersList">
+                <div class="col-md-12 col-sm-12 no-p header">
+                    <div class="col-md-12 col-sm-12 no-p form">
+                    </div>
+                </div>
+                <div class="col-md-12 col-sm-12 no-p contents">
+                    <p class="center padding-20" *ngIf="__timersList.length === 0">لم تقم بتوقيت أى مهمة</p>
+                    <ul *ngIf="__timersList.length !== 0" class="col-md-12 no-p col-sm-12 col-xs-12">
+                        <li *ngFor="let item of __timersList">
+                            <span class="task">{{ item.task }}</span>
+                            <span class="time">{{ item.time | timer }}</span>
+                            <span class="ico" *ngIf="item.note"><i class="ti-file" (click)="onShowNoteEvent(item)"></i></span>
+                            <span class="col-md-12 col-sm-12 col-xs-12 no-p note note_{{ item.id }}">{{ item.note }}</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-12 col-sm-12 no-p footer">
+                    <button class="navigate btn" (click)="OnShowAllTasks()">عرض جميع المهام</button>
+                    <button class="refresh-list btn" (click)="__getTimersList()"><i class="ti-reload"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="float_opp">
+        <a 
+            class="dropdown accounts_menu"><span class="float_exac dropdown-toggle" id="AccountsMenu" data-toggle="dropdown">
+                {{ _global.getToken()['username'] }} 
+                <!--<img src="/assets/img/{{ _global.getToken()['img'] }}" *ngIf="_global.getToken()['img'] && _global.getToken()['img'] !== ''">-->
+                <!--<img src="/assets/icon/logo.ico" *ngIf="!_global.getToken()['img'] || _global.getToken()['img'] === ''">-->
+            </span>
+            <div class="dropdown-menu accounts_menu_box" role="menu" aria-labelledby="AccountsMenu">
+                <div class="main_body">
+                    <div class="col-md-12 no-p">
+                        <ul class="col-md-12 no-p">
+                            <li (click)="OnNavigateLinks('accounts')" *ngIf="_global.getToken()['super']"><a><i class="ti-home"></i>الحسابات و الشركات</a></li>
+                            <li (click)="OnNavigateLinks('users')"><a><i class="ti-shield"></i>المستخدمين</a></li>
+                            <li (click)="OnNavigateLinks('settings')"><a><i class="ti-settings"></i>الاعدادات</a></li>
+                            <li (click)="_lab.__modal('#show-style-model')"><a><i class="ti-panel"></i>العرض</a></li>
+                            <li (click)="_lab.__modal('#show-about-model')"><a><i class="ti-info"></i>البرنامج</a></li>
+                            <li (click)="_lab.__setLogout__(_http)"><a><i class="ti-power-off"></i>تسجيل الخروج</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</nav>
+
+<div class="fade modal" id="show-info-modal" tabondex="-1" role="dialog"
+    aria-labelledby="myInfoModalLabel" aria-hidden="true" 
+    data-query="" data-parse="0" data-lstget="/" data-ctrl="none">
+    <div class="modal-dialog downloadmodal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+               <div class="downloadtitle col-md-12 col-xs-12 no-p">
+                   <p class="title">معلومات الانشاء</p>
+               </div>
+               <div class="col-md-12 col-xs-12 col-sm-12 no-p info_content">
+                   
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fade modal" id="show-download-modal" tabondex="-1" role="dialog"
+    aria-labelledby="myDownloadModalLabel" aria-hidden="true" 
+    data-query="" data-parse="0" data-lstget="/" data-ctrl="none">
+    <div class="modal-dialog downloadmodal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+               <div class="downloadtitle col-md-12 col-xs-12 no-p">
+                   <p class="title">تصدير القائمة</p>
+               </div>
+               <div class="dwnldmsg">
+                   <span class="close"><i class="ti-close"></i></span>
+                   <p style="margin:0px; padding:0px;"></p>
+               </div>
+               <div class="downloadimages">
+                   <div class="col-md-4 col-sm-4 col-xs-4">
+                       <div class="col-md-12 col-xs-12 item">
+                           <img src="assets/img/expl/csv.svg" />
+                           <a class="dwnld" (click)="OnExport('CSV')">تحميل كCSV</a>
+                       </div>
+                   </div>
+                   <div class="col-md-4 col-sm-4 col-xs-4">
+                       <div class="col-md-12 col-xs-12 item">
+                           <img src="assets/img/expl/xls.svg" />
+                           <a class="dwnld" (click)="OnExport('XLS')">تحميل كXLS</a>
+                       </div>
+                   </div>
+                   <div class="col-md-4 col-sm-4 col-xs-4">
+                       <div class="col-md-12 col-xs-12 item">
+                           <img src="assets/img/expl/xml.svg" />
+                           <a class="dwnld" (click)="OnExport('XML')">تحميل كXML</a>
+                       </div>
+                   </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fade modal" id="show-timer-model" tabondex="-1" role="dialog"
+    aria-labelledby="myTimerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <timer-details [isDynamic]="true" (onAction)="OnTimerAddedAction($event)"
+                [param]="null" [editable]="false" [(editItem)]="__timerItem"></timer-details>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fade modal" id="show-style-model" tabondex="-1" role="dialog"
+    aria-labelledby="myStyleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <form [formGroup]="__styleFormObject" (ngSubmit)="OnSubmitStyleForm(__styleFormObject.value , __styleFormObject.valid)" novalidate
+                    class="form col-md-12 no-p">
+                    <fieldset>
+                        <div class="col-xl-12 form_paraphraph">
+                            <p class="title head">اعدادت العرض</p>
+                        </div>
+                        <div class="col-md-12 first last">
+                            <div class="form-group col-md-6 col-sm-6">
+                                <label class="col-lg-12 col-form-label">حجم الخط</label>
+                                <div class="col-md-12 col-xs-12">
+                                    <select class="form-control" name="father"  [formControl]="__styleFormObject.controls['fontsize']">
+                                        <option value=""></option>
+                                        <option [value]="10" value="{{ 10 }}" >10px</option>
+                                        <option [value]="11" value="{{ 11 }}" >11px</option>
+                                        <option [value]="12" value="{{ 12 }}" >12px</option>
+                                        <option [value]="13" value="{{ 13 }}" >13px</option>
+                                        <option [value]="14" value="{{ 14 }}" >14px</option>
+                                        <option [value]="15" value="{{ 15 }}" >15px</option>
+                                        <option [value]="16" value="{{ 16 }}" >16px</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6 col-sm-6">
+                                <label class="col-lg-12 col-form-label">حجم الخط</label>
+                                <div class="col-md-12 col-xs-12">
+                                    <select class="form-control" name="father"  [formControl]="__styleFormObject.controls['fontfamily']">
+                                        <option value=""></option>
+                                        <option [value]="'HELV'" value="{{ 'HELV' }}" >HELV</option>
+                                        <option [value]="'NEO'" value="{{ 'NEO' }}" >NEO</option>
+                                        <option [value]="'DROID'" value="{{ 'DROID' }}" >DROID ARABIC KUFI</option>
+                                        <option [value]="'JF'" value="{{ 'JF' }}" >JUZOR FLAT</option>
+                                        <option [value]="'SKY'" value="{{ 'SKY' }}" >SKY</option>
+                                        <option [value]="'NOTO'" value="{{ 'NOTO' }}" >NOTO</option>
+                                        <option [value]="'DIN'" value="{{ 'DIN' }}" >DIN</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="fade modal" id="show-about-model" tabondex="-1" role="dialog"
+    aria-labelledby="myAboutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+            </div>
+            <div class="modal-body col-md-12 white">
+                <form [formGroup]="__styleFormObject" (ngSubmit)="OnSubmitStyleForm(__styleFormObject.value , __styleFormObject.valid)" novalidate
+                    class="form col-md-12 no-p">
+                    <fieldset>
+                        <div class="col-xl-12 form_paraphraph">
+                            <p class="title head">حول البرنامج</p>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="col-md-12 col-sm-12 padding-20" style="text-align : center;">
+                    <h2>منظومة باركود للمبيعات</h2>
+                    <p>يساعد البرنامج أصحاب المتاجر الصغيرة و المتوسطة من مراقبة عمل المتجر وعمليات البيع و الشراء والمصاريف اللازمة . كما يمد المستخدم بعدد من التقارير اللتى تساعد على معرفة العائدات الخاصة بالمتجر و الأرباح الناتجة من ذلك</p>
+                    <p>للاتصال بنا</p>
+                    <p style="direction:ltr">(+218) 92-813-3710</p>
+                    <p>https://facebook.com/barcode.pos.software</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

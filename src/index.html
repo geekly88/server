@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>BarCode Point Of Sales</title>
+
+    <meta name="description" content="BarCode Point Of Sales">
+
+    <% if (webpackConfig.htmlElements.headTags) { %>
+    <!-- Configured Head Tags  -->
+    <%= webpackConfig.htmlElements.headTags %>
+    <% } %>
+   
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/style.min.css" />
+    <link rel="stylesheet" href="assets/css/themify-icons.css" />
+    <link rel="stylesheet" href="assets/css/print.min.css" />
+    <link rel="stylesheet" href="assets/css/ie7.min.css" />
+    <!-- base url -->
+    <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
+
+
+    </head>
+
+    <body>
+
+    <app>
+        <div class="spinner"></div>
+    </app>
+    <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
+    <!-- Webpack Dev Server reload -->
+    <script src="/webpack-dev-server.js"></script>
+    <% } %>
+
+    <!--<script>
+        if(window && window.require && process){
+            var ipcRenderer = window.require('electron').ipcRenderer;
+            var __cur = process.cwd();
+            var __path = __cur;
+            if(__cur.indexOf('.tmp') < 0){
+                __path += '/assets';
+            }
+            window.$ = window.jQuery = window.require(__path + '/assets/js/jquery-2.2.4.min.js');
+        }
+    </script>-->
+    <!--<script src="assets/js/env.js"></script>
+    <script src="assets/js/jquery-2.2.4.min.js"></script>
+    <script src="assets/js/tether.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/css/ie7.js"></script>
+    <script src="assets/js/html2pdf.js"></script>
+    <script src="assets/js/html2canvas.js"></script>
+    <script src="assets/js/jspdf.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>-->
+    <!--<script src="assets/js/filesaver.min.js"></script>-->
+    <!--<script src="assets/js/jquery.datetimepicker.min.js"></script>-->
+    
+    <script src="assets/js/main.min.js"></script>
+
+</body>
+</html>

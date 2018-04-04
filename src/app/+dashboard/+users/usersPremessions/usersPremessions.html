@@ -1,0 +1,810 @@
+<div class="col-md-12 padding-20">
+    <div class="col-md-12 col-lg-10 offset-lg-1 box no-p box noshadow">
+        <div class="col-md-12 main_body">
+            <form class="form col-md-12 no-p" (ngSubmit)="OnSubmitForm()">
+                <fieldset>
+                    <div class="col-md-12 form_paraphraph">
+                        <p class="note h2">تصاريح المستخدم</p>
+                    </div>
+                    
+
+                    <table class="table" *ngIf="__obj && __obj['admin'] && __premessionsObject">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>المسؤول</td>
+                                <td>المدير</td>
+                                <td>المستخدم</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{ __premessionsObject['dashboard'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض الصفحة الرئيسية للوحة التحكم</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['dashboard']['all']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{ __premessionsObject['settings'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>الوصول لاعدادات الحساب</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['settings']['all']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{ __premessionsObject['accountants'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اعطاء الصلاحيات المتعلقة بالمحاسبة و القيود المحاسبية</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['accountants']['all']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{ __premessionsObject['reports'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>صلاحيات مشاهدة و اعداد التقارير</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['reports']['all']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['sells'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم المبيعات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sells']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة المبيعات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sells']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل المبيعات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sells']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف المبيعات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sells']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['buys'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم المشتريات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['buys']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة المشتريات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['buys']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل المشتريات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['buys']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف المشتريات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['buys']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['products'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>الوصول لملحقات الأصناف</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['products']['all']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم الأصناف و الخدمات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['products']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة الأصناف و الخدمات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['products']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل الأصناف و الخدمات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['products']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف الأصناف و الخدمات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['products']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['expenses'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم المصاريف</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['expenses']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة المصاريف</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['expenses']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل المصاريف</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['expenses']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف المصاريف</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['expenses']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['paids'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم المدفوعات و المقبوضات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['paids']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة المدفوعات و المقبوضات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['paids']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل المدفوعات و المقبوضات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['paids']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف المدفوعات و المقبوضات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['paids']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['taxes'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم الضرائب</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['taxes']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة الضرائب</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['taxes']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل الضرائب</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['taxes']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف الضرائب</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['taxes']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['banks'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم البنوك</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['banks']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة البنوك</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['banks']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل البنوك</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['banks']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف البنوك</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['banks']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['storages'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم المخازن</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['storages']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة المخازن</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['storages']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل المخازن</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['storages']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف المخازن</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['storages']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['customers'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم الزبائن</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['customers']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة الزبائن</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['customers']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل الزبائن</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['customers']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف الزبائن</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['customers']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['suppliers'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم الموردين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['suppliers']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة الموردين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['suppliers']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل الموردين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['suppliers']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف الموردين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['suppliers']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['employees'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم الموظفين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['employees']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة الموظفين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['employees']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل الموظفين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['employees']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف الموظفين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['employees']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['users'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل صلاحيات المستخدمين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['users']['premessions']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم المستخدمين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['users']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة المستخدمين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['users']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل المستخدمين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['users']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف المستخدمين</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['users']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['accounts'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم الحسابات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['accounts']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>اضافة الحسابات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['accounts']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل الحسابات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['accounts']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف الحسابات</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['accounts']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{ __premessionsObject['history'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض سجلات الدخول و الخروج</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['history']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف سجلات الدخول و الخروج</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['history']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <!------------------------
+                            --------------------------
+                            --------------------------
+                            --------------------------
+                            ------------------------->
+                            <tr>
+                                <td colspan="5" class="premession-td">
+                                    <div class="col-md-12 no-p premession-title">
+                                        <p>{{  __premessionsObject['trash'] }}</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>عرض قوائم الأصناف المزالة</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['trash']['find']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ازالة اصناف</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['trash']['create']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>تعديل الأصناف المزالة</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['trash']['update']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>حذف الأصناف المزالة</td>
+                                <td *ngFor="let role of __roles">
+                                    <label class="label-item">
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['trash']['destroy']" />
+                                    <span class="label-mark"></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary" style="width:100%;">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

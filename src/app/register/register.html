@@ -1,0 +1,74 @@
+<div class="top-msg"></div>
+<div class="RegisterPage">
+    <div class="top_color col-xl-6 col-md-6 col-xs-6 float_exac no-p">
+        <div class="col-xs-3 bg1 top_colors float_exac"></div>
+        <div class="col-xs-1 bg2 top_colors float_exac"></div>
+        <div class="col-xs-1 bg3 top_colors float_exac"></div>
+        <div class="col-xs-1 bg4 top_colors float_exac"></div>
+        <div class="col-xs-1 bg5 top_colors float_exac"></div>
+        <div class="col-xs-1 bg6 top_colors float_exac"></div>
+        <div class="col-xs-1 bg7 top_colors float_exac"></div>
+        <div class="col-xs-1 bg8 top_colors float_exac"></div>
+        <div class="col-xs-1 bg9 top_colors float_exac"></div>
+        <div class="col-xs-1 bg10 top_colors float_exac"></div>
+    </div>
+    <div class="top_color col-xl-6 col-md-6 col-xs-6 float_exac no-p">
+        <div class="col-xs-3 bg1 top_colors float_exac"></div>
+        <div class="col-xs-1 bg2 top_colors float_exac"></div>
+        <div class="col-xs-1 bg3 top_colors float_exac"></div>
+        <div class="col-xs-1 bg4 top_colors float_exac"></div>
+        <div class="col-xs-1 bg5 top_colors float_exac"></div>
+        <div class="col-xs-1 bg6 top_colors float_exac"></div>
+        <div class="col-xs-1 bg7 top_colors float_exac"></div>
+        <div class="col-xs-1 bg8 top_colors float_exac"></div>
+        <div class="col-xs-1 bg9 top_colors float_exac"></div>
+        <div class="col-xs-1 bg10 top_colors float_exac"></div>
+    </div>
+    <div class="col-md-12 no-p">
+        <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                        class="form col-xs-12 col-md-12 no-p">
+            <fieldset>
+                <div class="col-md-12 form_paraphraph">
+                    <p class="title head">تسجيل الدخول</p>
+                </div>
+                <div class="col-md-12 first">
+                    <div class="form-group col-xs-12 col-md-12">
+                        <label class="col-md-12 col-xs-12 col-form-label">اسم المستخدم</label>
+                        <div class="col-md-12 ">
+                            <input [formControl]="formObject.controls['username']" name="username" 
+                            type="text" class="form-control autofocus" placeholder="اسم المستخدم"
+                            [ngClass]="{'errors' : validateControl('username')}"/>
+                        </div>
+                    </div>
+                    <!--<div class="form-group col-md-12">
+                        <label class="col-md-12 col-xs-12 col-form-label">البريد الالكترونى</label>
+                        <div class="col-md-12 ">
+                            <input [formControl]="formObject.controls['email']" name="email" 
+                            type="text" class="form-control" placeholder="البريد الالكترونى"
+                            [ngClass]="{'errors' : validateControl('email')}"/>
+                        </div>
+                    </div>-->
+                    <div class="form-group col-md-12">
+                        <label class="col-md-12 col-xs-12 col-form-label">كلمة المرور</label>
+                        <div class="col-md-12 ">
+                            <input [formControl]="formObject.controls['password']" name="password" 
+                            type="password" class="form-control" placeholder="كلمة المرور"
+                            [ngClass]="{'errors' : validateControl('password')}"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="col-md-12 col-xs-12 col-form-label">تأكيد كلمة المرور</label>
+                        <div class="col-md-12 ">
+                            <input [formControl]="formObject.controls['rePassword']" name="rePassword" 
+                            type="password" class="form-control" placeholder="تأكيد كلمة المرور"
+                            [ngClass]="{'errors' : validateControl('rePassword')}"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary col-md-12">الدخول</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

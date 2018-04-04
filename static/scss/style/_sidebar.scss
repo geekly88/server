@@ -1,0 +1,23 @@
+.sidebar{
+    position: absolute;
+    top : $navbar_height;
+    right : if($float_dir == left , 100% , 0%);
+    left  : if($float_dir == left , 0% , 100%);
+    width : $sidebar_width;
+    background: $sidebar_bg;
+    height: 650px;
+    padding-top: 40px;
+    border-left: $dashboard_brdr_width solid $dashboard_brdr;
+    ul{
+        width :100%;
+        li{
+            list-style: none;
+            padding: 10px 10px;
+            width:100%;
+            a{
+                color:$sidebar_color;
+                background: $sidebar_bg;
+            }
+        }
+    }
+}

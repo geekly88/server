@@ -1,0 +1,72 @@
+<div class="col-md-12 padding-20" [ngClass]="{'no-p' : isDynamic}">
+    <div class="col-md-12 no-p" [ngClass]="{'box allpage-with-sidebar' : !isDynamic}">
+        <div class="col-md-12 main_body" [ngClass]="{'white' : isDynamic}">
+            <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                class="form col-md-12 no-p">
+                <fieldset>
+                    <div class="col-xl-12 form_paraphraph">
+                        <p class="title head">اضافة حساب جديد</p>
+                    </div>
+                    <div class="col-md-12 first">
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label class="col-md-12 col-xs-12 col-form-label">اسم الحساب بالعربى</label>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <input data-rules="req,alph,min2,max25" [formControl]="formObject.controls['name_ar']" name="name_ar" 
+                                type="text" class="form-control autofocus" placeholder="اسم الحساب بالعربى" [ngClass]="{'errors': validateControl('name_ar')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label class="col-md-12 col-xs-12 col-sm-12 col-form-label">اسم الحساب باللاتينى</label>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <input data-rules="req,alph,min2,max25" [formControl]="formObject.controls['name']" name="name" 
+                                type="text" class="form-control autofocus" placeholder="اسم الحساب باللاتينى" [ngClass]="{'errors': validateControl('name')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 last">
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label class="col-md-12 col-xs-12 col-sm-12 col-form-label">الحساب الرئيسى</label>
+                            <!--<label class="col-md-4 col-xs-4 col-sm-4 col-form-label">رقم الحساب</label>-->
+                            <div class="col-md-12 col-sm-12 col-xs-12 ___inline-first">
+                                <select class="form-control" name="father_code" (change)="onSelectItem($event)" [formControl]="formObject.controls['father_code']">
+                                    <option *ngFor="let option of __booksTreeArray"
+                                        [value]="option.code" value="{{ option.code }}" >{{ option.name_ar }}</option>
+                                </select>
+                                <div class="errors"></div>
+                            </div>
+                            <!--<div class="col-md-4 col-xs-4 inline-last">
+                                <input data-rules="num" [formControl]="formObject.controls['code']" name="code" 
+                                type="text" class="form-control" placeholder="رقم الحساب" [ngClass]="{'errors': validateControl('code')}">
+                                <div class="errors"></div>
+                            </div>-->
+                        </div>
+                        <div class="form-group col-md-6 col-sm-6">
+                            <label class="col-md-12 col-xs-12 col-form-label">ملحق كود الحساب</label>
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <span class="code_start">{{ __code_start }}</span>
+                                <input data-rules="req,alph,min2,max25" [formControl]="formObject.controls['code']" name="code" 
+                                type="text" class="form-control opp_align_with_padd autofocus" placeholder="ملحق كود الحساب" [ngClass]="{'errors': validateControl('code')}"/>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-12 last">
+                        <div class="form-group col-md-12">
+                            <label class="col-md-12 col-form-label">ملاحظات</label>
+                            <div class="col-md-12 ">
+                                <textarea data-rules="note" [formControl]="formObject.controls['description']" name="description" 
+                                type="text" class="form-control textarea" placeholder="ملاحظات" [ngClass]="{'errors': validateControl('description')}"></textarea>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>-->
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
