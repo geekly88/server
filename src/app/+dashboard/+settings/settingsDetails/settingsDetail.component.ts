@@ -85,7 +85,7 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
             supplier_required  : [ false ],
             perpage            : [ 15 , [ Validators.required , Validators.pattern(intRegex)]],
             language           : [ 'ar' , [ Validators.required , Validators.pattern(nameRegex)]],
-            sell_type          : [ 'both' , [ Validators.required , Validators.pattern(nameRegex)]],
+            sale_type          : [ 'both' , [ Validators.required , Validators.pattern(nameRegex)]],
             pro_type           : [ 'both' , Validators.pattern(nameRegex) ],
             theme              : [ 'default' , Validators.pattern(nameRegex) ],
             
@@ -105,8 +105,9 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
 
             is_bookKepping             : [true],
 
-            storage_code               : ['121'],
-            beginning_inventory_code   : ['122'],
+            branch_code                : ['121'],
+            storage_code               : ['122'],
+            beginning_inventory_code   : ['123'],
 
             cash_code                  : ['111'],
             banks_code                 : ['112'],
@@ -119,10 +120,10 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
             bad_debt_code              : ['355'],
             products_accum_code        : ['231'],
            
-            purchases_taxes_code       : ['241'],
+            purchaseOrders_taxes_code  : ['241'],
             income_taxes_code          : ['356'],
           
-            buys_code                  : ['341'],
+            purchases_code             : ['341'],
             sales_returns_code         : ['342'],
             sales_discounts_code       : ['343'],
             sales_gifts_code           : ['344'],
@@ -130,14 +131,15 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
             inventory_costs_code       : ['346'],
             // sales_cost_code            : ['4512'],
            
-            sales_code                 : ['411'],
-            purchases_returns_code     : ['412'],
-            purchases_discounts_code   : ['413'],
+            sales_code                      : ['411'],
+            purchaseOrders_returns_code     : ['412'],
+            purchaseOrders_discounts_code   : ['413'],
            
 
             inventory_costs_book       : ['' , Validators.pattern(nameRegex)],
-            buys_book                  : ['' , Validators.pattern(nameRegex)],
+            purchases_book             : ['' , Validators.pattern(nameRegex)],
             storage_book               : ['' , Validators.pattern(nameRegex)],
+            branch_book                : ['' , Validators.pattern(nameRegex)],
             cash_book                  : ['' , Validators.pattern(nameRegex)],
             cheques_book               : ['' , Validators.pattern(nameRegex)],
             credit_card_book           : ['' , Validators.pattern(nameRegex)],
@@ -154,9 +156,9 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
             sales_gifts_book           : ['' , Validators.pattern(nameRegex)],
             sales_services_exp_book    : ['' , Validators.pattern(nameRegex)],
             sales_loyalty_book         : ['' , Validators.pattern(nameRegex)],
-            purchases_taxes_book       : ['' , Validators.pattern(nameRegex)],
-            purchases_returns_book     : ['' , Validators.pattern(nameRegex)],
-            purchases_discounts_book   : ['' , Validators.pattern(nameRegex)],
+            purchaseOrders_taxes_book       : ['' , Validators.pattern(nameRegex)],
+            purchaseOrders_returns_book     : ['' , Validators.pattern(nameRegex)],
+            purchaseOrders_discounts_book   : ['' , Validators.pattern(nameRegex)],
             beginning_inventory_book   : ['' , Validators.pattern(nameRegex)],
             banks_book                 : ['' , Validators.pattern(nameRegex)],
 
@@ -171,7 +173,7 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
             loyalty_products           : [ [] ],
             loyalty_count_after_sale   : [ false ],
 
-            sell_terms                 : ['' , [Validators.pattern(noteRegex)]]
+            sale_terms                 : ['' , [Validators.pattern(noteRegex)]]
         });
 
         this.searchForm   = this._fb.group({
@@ -184,8 +186,8 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
             suppliers     : [true],
             products      : [true],
             // invoices      : [true],
-            sells         : [true],
-            buys          : [true],
+            sales         : [true],
+            purchases          : [true],
             expenses      : [true],
             paids         : [true],
             // users         : [true],
@@ -196,6 +198,7 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
             brands        : [true],
             banks         : [true],
             storages      : [true],
+            branches      : [true],
             gifts         : [true],
             booksTree     : [true],
             bookKepping   : [true],
@@ -270,7 +273,7 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
                     this._lab.__setErrors__(item.error);
                     return;
                 }
-                if(!item || !item.data || !item.data.settings){
+                if(!item || !item.data || !item.token){
                     this._lab.__setErrors__(null);
                     for(let key in this.__token.settings){
                         if(this.__token.settings[key] !== null && this.__token.settings[key] !== undefined && this.formObject.value.hasOwnProperty(key)){
@@ -280,7 +283,7 @@ export class SettingsDetailsComponent implements OnInit,AfterViewInit{
                     return;
                 }
                 
-                this.item = item.data.settings;
+                this.item = item.data;
                 for(let key in this.item){
                     if(this.item[key] !== null && this.item[key] !== undefined && this.formObject.value.hasOwnProperty(key)){
                         this.formObject.controls[key].setValue(this.item[key]);

@@ -2,7 +2,7 @@ export interface Users{
 
     id : number;
     parent_id : number,
-    company_id : number,
+    company_id : number,branch_id:number,
 
     username     : string,
     password     : string,

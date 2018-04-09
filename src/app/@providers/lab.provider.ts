@@ -7,8 +7,7 @@ import { DatePipe } from '@angular/common';
 
 declare let $:any;
 declare let __ENV:any;
-declare let jspdf:any;
-declare let htmlToCanvas:any;
+// declare let htmlToCanvas:any;
 
 @Injectable()
 export class LabProvider{
@@ -26,7 +25,7 @@ export class LabProvider{
     private __isXLS:boolean = true;
     private __isXLSX:boolean = true;
     constructor(
-    ){ 
+    ){
         let __self:LabProvider = this;
         $(document).ready(function(){
             setTimeout(function() {
@@ -81,8 +80,8 @@ export class LabProvider{
 
     __initDashboardColors__():void{
         this.__pagesColors = {
-            // buys : '#E08646',
-            // sells : '#8BC34A',
+            // purchases : '#E08646',
+            // sales : '#8BC34A',
             // invoices : '#A48CCA',
             // paids : '#DA5C87',
             // expenses : '#DA5C87',
@@ -112,9 +111,9 @@ export class LabProvider{
             }, 500);
             $('.table thead tr td').click(function(e){
                 let __tds = $('.table thead tr td');
-                for(let i = 0; i < __tds.length ; i++){ 
+                for(let i = 0; i < __tds.length ; i++){
                     let __td = $(__tds[i]);
-                    if(!__td.hasClass('active')) __td.removeClass('rotateit'); 
+                    if(!__td.hasClass('active')) __td.removeClass('rotateit');
                 }
                 let self = $(this);
                 if(self.hasClass('active')){
@@ -129,7 +128,7 @@ export class LabProvider{
     }
 
     public __prepareDateTimePicker__(__mode:string = 'datetime',__ele:string = '#datetime'):void{
-        
+
         // $.fn.datetimepicker.CONSTS = {
         //     I18N: {
         //         en: {
@@ -147,7 +146,7 @@ export class LabProvider{
         // };
         // console.log(__mode , __ele);
         // $(__ele).datetimepicker({
-        //     // baseCls: "perfect-datetimepicker", 
+        //     // baseCls: "perfect-datetimepicker",
         //     viewMode: 'YMDHM',
         //     // firstDayOfWeek: 0,
         //     date: new Date(), //initial date
@@ -186,14 +185,14 @@ export class LabProvider{
             $('.form').find('.popoverroles').remove();
             var self = $(this);
             if(!self.hasClass('keys') && !self.hasClass('select-container')){
-                var parents  = self.parent().parent(); 
+                var parents  = self.parent().parent();
             }else{
                 var parents = self.parent().parent().parent();
             }
             var fieldset = parents.parent().parent();
             var field_name = self.attr('placeholder');
             if(!field_name || _self.deniedFields.indexOf(field_name) >= 0) return;
-            
+
             var rule = self.attr('data-rules') || null;
             if(rule === 'noroles') return;
             var rules = !rule ? ["لايوجد شروط مسبقة لتعبئة الحقل"] : rule.split(',');
@@ -253,86 +252,15 @@ export class LabProvider{
         __elem.click();
     }
 
-    public __toPDF__(__class:string , __component:any = null){
-        // let __DOM:any = $(__class);
-        // if(__class.length){
-            // if(!__ENV.isElectron){
-                // this.__modal('#show-invoice-modal' , {
-                //     backdrop : 'static'
-                // });
-                // let __viewer = $('#pdf_viewer');
-                // // let __src:string = __viewer.attr('src');
-                // __viewer.attr('src' , '').html('');
-                // return print();
-            // }
-            // let __DOM__:any = $('.invoice')
-            // if(!__DOM__ ) return;
-            // setTimeout(() => {
-            //     // if(__src) return;
-            //     htmlToCanvas(__DOM__, {
-            //         onrendered: function(canvas) {         
-            //             let imgData = canvas.toDataURL(
-            //                 'image/jpeg');              
-            //             let doc = new jspdf({
-            //                 unit: 'px',
-            //                 format: 'a4'
-            //             });
-            //             doc.addImage(imgData, 'JPEG', 0, 0);
-            //             if(__ENV.isElectron){
-            //                 let __fileName:string = new Date().toISOString().replace(':','-').replace(':','-').replace('.','_');
-            //                 doc.save("file-" + __fileName + ".pdf");
-            //             }else{
-            //                 let blob = doc.output("blob");
-            //                 $('#pdf_viewer').attr('src' , URL.createObjectURL(blob));
-            //             }
-            //         },
-            //         imageTimeout: 2000,
-            //         removeContainer: true
-            //     });
-            //     if(__component && __component.hasOwnProperty('__isPrint')){
-            //         var __close:any = this.jQuery('#show-invoice-modal button.close');
-            //         if(!__close) return;
-            //         __close.unbind('click');
-            //         __close.click(function(e){
-            //             __component.__isPrint = false;    
-            //         });
-            //     }
-            // },500);
-
-
-            // setTimeout(() => {
-            //     htmlToCanvas(__DOM__, {
-            //         onrendered: function(canvas) {         
-            //             let imgData = canvas.toDataURL(
-            //                 'image/png');              
-            //             let doc = new jspdf({
-            //                 // unit: 'px',
-            //                 // format: 'a4'
-            //             });
-            //             doc.addImage(imgData, 'PNG', 0, 0);
-            //             let blob = doc.output("blob");
-            //             $('#pdf_viewer').attr('src' , URL.createObjectURL(blob));
-            //         },
-            //         imageTimeout: 2000,
-            //         removeContainer: true
-            //     });
-            //     if(__component && __component.hasOwnProperty('__isPrint')){
-            //         var __close:any = this.jQuery('#show-invoice-modal button.close');
-            //         if(!__close) return;
-            //         __close.unbind('click');
-            //         __close.click(function(e){
-            //             __component.__isPrint = false;    
-            //         });
-            //     }
-            // },500);
-        // }
+    public __toPDF__(__class:string , component:any = null){
+        this.OnPrintReport(component);
     }
 
     public __setAlerts__(type='warn' , message:string = null):void{
         this.__clearAlerts__();
         this._top = $('.top-msg');
         if(type === 'connfail' || type === 'error' || type === 'unauth'){
-            var type:string ='error' , 
+            var type:string ='error' ,
                 msge:string= message || 'الرجاء اعادة المحاولة عند التأكد من سلامة اتصالك';
         }else if(type === 'success'){
             var type:string = type,
@@ -341,18 +269,18 @@ export class LabProvider{
             var type:string = 'warn',
                 msge:string = message || 'الرجاء الانتظار حتى انتهاء عملية التحميل';
         }
-        
+
         var span = $('<span class="close"><i class="ti-close"></i></span>');
-        
+
         var msg = $('<div class="msg">').addClass(type).append(span).append(msge).slideDown(300);
-        
+
         this._top.append(msg);
         span.click(function(e){
             msg.fadeOut(500).remove('')
         });
         msg.fadeIn(200).delay(5000).fadeOut(500);
-        if(type === 'warn' || type === 'unauth') { 
-            $('div.circle-loader').show(); 
+        if(type === 'warn' || type === 'unauth') {
+            $('div.circle-loader').show();
         }else{
             $('.div.circle-loader').hide();
         }
@@ -383,7 +311,6 @@ export class LabProvider{
         } catch (error) {
             return;
         }
-
         if(__errorsObj.hasOwnProperty('raw') && __errorsObj.raw.hasOwnProperty('error')
         && __errorsObj.raw.error){
             __errorsObj = __errorsObj.raw.error;
@@ -433,8 +360,8 @@ export class LabProvider{
         component._lab.__modal('#show-report-print-modal');
     }
 
-    
-     
+
+
     public showFromPageXToPageY(component,from:number , to:number):void{
         if(from < 1 || from > to || from > component.__pagesCount) from = 1;
         if(to  > component.__pagesCount || from > to) to = component.__pagesCount;
@@ -477,52 +404,6 @@ export class LabProvider{
                     });
                 }
                 print();
-                // var __styles = {};
-                // var nav = $('.navbar');
-                // var con = $('.content.container-fluid');
-                // __styles['navbar'] = nav.attr('style');
-                // __styles['content'] = con.attr('style');
-
-                // nav.attr('style' , '');
-                // con.attr('style' , '');
-                // window.print();
-                // window.onfocus = function(e){
-                //     nav.attr('style' , __styles['navbar']);
-                //     con.attr('style' , __styles['content']);
-                // }
-                // if(!__ENV.isElectron){
-                //     this.__modal('#show-reports-modal');
-                //     let __viewer = $('#pdf_viewer');
-                //     __viewer.attr('src' , '').html('');
-                // }
-                // let __DOM__:any = $('.reports_results'); 
-                // if(!__DOM__) return;
-                // if(!$event.dontAddPrintItClass) __DOM__.addClass('printit');//.css({ height : 'auto' });
-                // $('button.close.closeReport').click(function(e){
-                //     if(!$event.dontAddPrintItClass) __DOM__.removeClass('printit');//.css({ height : '297mm' });
-                // });
-                // setTimeout(() => {
-                //     htmlToCanvas(__DOM__, {
-                //         onrendered: function(canvas) {         
-                //             let imgData = canvas.toDataURL(
-                //                 'image/jpeg');              
-                //             let doc = new jspdf({
-                //                 // unit: 'px',
-                //                 // format: 'a4'
-                //             });
-                //             doc.addImage(imgData, 'JPEG', 0, 0);
-                //             if(__ENV.isElectron){
-                //                 let __fileName:string = new Date().toISOString().replace(':','-').replace(':','-').replace('.','_');
-                //                 doc.save("file-" + __fileName + ".pdf");
-                //             }else{
-                //                 let blob = doc.output("blob");
-                //                 $('#pdf_viewer').attr('src' , URL.createObjectURL(blob));
-                //             }
-                //         },
-                //         imageTimeout: 2000,
-                //         removeContainer: true
-                //     });
-                // },500);
                 break;
             default:
                 break;
@@ -543,7 +424,7 @@ export class LabProvider{
             month = "0" + month;
         }
         //================================================
-        if(noHMS) return year + "-" + month + "-" + day + " 00:00:00"; 
+        if(noHMS) return year + "-" + month + "-" + day + " 00:00:00";
         //================================================
         hour = String(date.getHours());
         minute = String(date.getMinutes());
@@ -658,10 +539,10 @@ export class LabProvider{
         // this.resize();
     }
 
-    public getHeight(){ 
+    public getHeight(){
         return $(window).height();
     }
-   
+
     public setUrl(url:Array<string>):void{
         this.__url = url;
         this.__urlStr = this.__url.join('/');
@@ -681,10 +562,10 @@ export class LabProvider{
             this.setUrl(__url);
         }else if(!this.__url) return;
         let __page:string = this.__url[1] ? this.__url[1] : '';
-        if((__page === 'sells' || __page === 'invoices' || __page === 'buys') && (this.__url.length >= 3 && this.__url[2].indexOf('details') === 0)){
+        if((__page === 'sales' || __page === 'invoices' || __page === 'purchases') && (this.__url.length >= 3 && this.__url[2].indexOf('details') === 0)){
                 this.__setStyle__('.dashboardPages .content' , {
                     'width' : '100%',
-                    'padding' : '70px 0px 0px 0px' 
+                    'padding' : '70px 0px 0px 0px'
                 });
                 this.__setStyle__('.main_sidebar-wrapper , .second-wrapper' , {
                     'display' : 'none'
@@ -696,7 +577,7 @@ export class LabProvider{
             let __width:string = $('.content').width() <= 740 ? '100%' : 'calc(100% - 220px)';
             this.__setStyle__('.dashboardPages .content' , {
                 // 'width' : __width,
-                // 'padding' : '40px 20px 0px 20px' 
+                // 'padding' : '40px 20px 0px 20px'
             });
             this.__setStyle__('.main_sidebar-wrapper' , {
                 'display' : 'block'
@@ -772,7 +653,7 @@ export class LabProvider{
             }catch(e){
                 try{
                     document.querySelectorAll(elem)[0].setAttribute('style' , '');
-                }catch(e){ }   
+                }catch(e){ }
             }
         }else{
             $(elem).css(style);
@@ -785,7 +666,7 @@ export class LabProvider{
             case 'DELETE':
                 let __ids:string[] = this.__getSelectedItemsIds__();
                 if(!__ids || __ids.length === 0) return;
-                component.__deleteItems(__ids.join(','));                
+                component.__deleteItems(__ids.join(','));
                 break;
             case 'REFRESH':
                 component.onRefresh({refresh : true});
@@ -802,6 +683,10 @@ export class LabProvider{
                 __modal.data('ctrl' , component._controller);
                 __modal.data('parse' , __parse);
                 break;
+            case 'SYNC':
+                let __idss:string[] = this.__getSelectedItemsIds__();
+                if(!__idss || __idss.length === 0) return this.__setAlerts__('warn' , 'الرجاء تحديد العناصر المطلوبة لعملية المزامنة');
+                component.__OnChangeCurrentBranch__(__idss.join(','));
         }
     }
 
@@ -911,6 +796,12 @@ export class LabProvider{
             this._global.navigate('/login');
             return false;
         }
+        let __branches:any[] = <any[]>this._global.getResource('branches');
+        if(!__branches || !__branches.length){
+            this._global.navigatePanel('login');
+            return false;
+        }
+
         if(user.super) return true;
         let __page:string = !__url[1] ? null : __url[1].toLocaleLowerCase();
         if(!__page) return false;
@@ -938,7 +829,7 @@ export class LabProvider{
                 }
             case 'registers':
             case 'registershistory':
-                return (__roles.hasOwnProperty('sells') && true === __roles['sells']['create']);
+                return (__roles.hasOwnProperty('sales') && true === __roles['sales']['create']);
             default:
                 try {
                     if(!(__roles.hasOwnProperty(__page))) return false;
@@ -951,7 +842,7 @@ export class LabProvider{
                             }else{
                                 return (__roles[__page]['create']);
                             }
-                        }else if(__url[2] === 'show' && (__page === 'sell' || __page === 'buys')){
+                        }else if(__url[2] === 'show' && (__page === 'sale' || __page === 'purchases')){
                             return (__roles.hasOwnProperty(__page) && (true === __roles[__page]['update']));
                         }else if(__url[2] === 'destroy'){
                                 return (__roles[__page]['destroy']);
@@ -973,8 +864,8 @@ export class LabProvider{
         'gifts' , 'trash' , 'accounts' , 'registers' , 'timer'
     ];
     public __setShortCuts__(__component:any , __resetForm:boolean = true):void{
-        
-        if(__component.hasOwnProperty('_page') 
+
+        if(__component.hasOwnProperty('_page')
         && this.__deniedShortCutting.indexOf(__component._page.replace('/' , '')) >= 0){
             return;
         }
@@ -988,7 +879,7 @@ export class LabProvider{
                             // CTRL
             let CTRL:number = 17, A:number = 65, V:number = 86, C:number = 67, X:number = 88;
             if ((e.ctrlKey && (e.keyCode !== A && e.keyCode !== V && e.keyCode !== C && e.keyCode !== X))
-            || (e.keyCode === 8 && document.activeElement['type'] !== 'text' 
+            || (e.keyCode === 8 && document.activeElement['type'] !== 'text'
             && document.activeElement['type'] !== 'textarea')) {
                 e.preventDefault();
             }
@@ -1047,7 +938,7 @@ export class LabProvider{
             if(_error) _error.remove();
             let CTRL:number = 17, A:number = 65, V:number = 86, C:number = 67, X:number = 88;
             if ((e.ctrlKey && (e.keyCode !== A && e.keyCode !== V && e.keyCode !== C && e.keyCode !== X))
-            || (e.keyCode === 8 && document.activeElement['type'] !== 'text' 
+            || (e.keyCode === 8 && document.activeElement['type'] !== 'text'
             && document.activeElement['type'] !== 'textarea')) {
                 e.preventDefault();
             }
@@ -1114,7 +1005,7 @@ export class LabProvider{
         }
     }
 
-    public __setOrdersShortCuts__(__component:any , __from:string = "Sell"):void{
+    public __setOrdersShortCuts__(__component:any , __from:string = "Sale"):void{
         if(__component.isDynamic) {
             return;
         }
@@ -1128,7 +1019,7 @@ export class LabProvider{
             if(_error) _error.remove();
             let CTRL:number = 17, A:number = 65, V:number = 86, C:number = 67, X:number = 88;
             if ((e.ctrlKey && (e.keyCode !== A && e.keyCode !== V && e.keyCode !== C && e.keyCode !== X))
-            || (e.keyCode === 8 && document.activeElement['type'] !== 'text' 
+            || (e.keyCode === 8 && document.activeElement['type'] !== 'text'
             && document.activeElement['type'] !== 'textarea')) {
                 e.preventDefault();
             }
@@ -1165,7 +1056,7 @@ export class LabProvider{
             // CTRL + R Reset Details
             if(e.ctrlKey && e.keyCode == 82) {
                 __component.__clearProperties__();
-                if(!__component._editable && !__component.__isParkEdit) __component.__createNewDetails__(); 
+                if(!__component._editable && !__component.__isParkEdit) __component.__createNewDetails__();
             }
             // CTRL + S Shipping Details
             if(e.ctrlKey && e.keyCode == 83) {
@@ -1177,13 +1068,13 @@ export class LabProvider{
             }
             // CTRL + B Back To Ordes
             if(e.ctrlKey && e.keyCode == 66) {
-                __component.onBackToOrdering();    
+                __component.onBackToOrdering();
             }
             // CTRL + D Show Discount popover
             if(e.ctrlKey && e.keyCode == 68) {
                 let __btn:any = __self.jQuery('.item-discount .prices-title p a');
 
-                if(__btn) __btn.click();    
+                if(__btn) __btn.click();
             }
             // ALT + F to DELETE selected
             if(e.ctrlKey && e.keyCode == 70) {
@@ -1233,6 +1124,23 @@ export class LabProvider{
         };
     }
 
+    public __onChangeAvatar__(__component , item , response):void{
+
+        for(let i:number = 0; i < __component._list.length; i++){
+            if(__component._list[i].id === item.id){
+                __component._list[i].img = response instanceof Array ? response[0] : response;
+                break;
+            }
+        }
+        if(__component.hasOwnProperty('__getItems')){
+            let __url:string = __component._global.getPastPageQuery(__component._controller);
+            __component.__getItems(__url);
+        }else{
+            let __list:Array<any> = Object['assign']([] , __component._list);
+            __component._list = [];
+            __component._list = __list;
+        }
+    }
 
     /**
      *  ------------------- BOOKSTREE ----------------------
@@ -1262,7 +1170,7 @@ export class LabProvider{
     // private __addLiToUlParent(book:any , ul:any , __component:any):void{
     //     if(this.__bookCodesArray[book.code]) return;
     //     this.__bookCodesArray[book.code] = true;
-    //     let __ulWidth:number = 2; // addbook , report , 
+    //     let __ulWidth:number = 2; // addbook , report ,
     //     let __liWidth:number = 38;
     //     let has_children:boolean = (book.children && book.children.length > 0);
     //     let li:any = this.jQuery('<li class="code_'+ book.code +'" />');
@@ -1333,7 +1241,7 @@ export class LabProvider{
     //         __childrenUL = this.__deepBooksTree__(<Array<any>>book.children , __component , book.focus);
     //     }
 
-    //     if(__childrenUL) 
+    //     if(__childrenUL)
     //         ul.append(__childrenUL);
     // }
 
@@ -1347,7 +1255,7 @@ export class LabProvider{
     //             e.preventDefault();
     //             let ul:any = $('li.code_' + index).next();
     //             if(!ul || !ul.hasClass || !ul.hasClass('parent')) return;
-                
+
     //             let self:any = $(this);
     //             if(ul.hasClass('expanded')){
     //                 ul.removeClass('expanded').addClass('folded');
@@ -1414,7 +1322,7 @@ export class LabProvider{
                                 cb();
                             }
                         },
-                        (error) => { 
+                        (error) => {
                             __component[field] = [];
                             __component._lab.__setErrors__(error);
                         },

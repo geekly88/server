@@ -90,7 +90,7 @@
                             <tr>
                                 <td colspan="5" class="premession-td">
                                     <div class="col-md-12 no-p premession-title">
-                                        <p>{{  __premessionsObject['sells'] }}</p>
+                                        <p>{{  __premessionsObject['sales'] }}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -98,7 +98,7 @@
                                 <td>عرض قوائم المبيعات</td>
                                 <td *ngFor="let role of __roles">
                                     <label class="label-item">
-                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sells']['find']" />
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sales']['find']" />
                                     <span class="label-mark"></span>
                                     </label>
                                 </td>
@@ -107,7 +107,7 @@
                                 <td>اضافة المبيعات</td>
                                 <td *ngFor="let role of __roles">
                                     <label class="label-item">
-                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sells']['create']" />
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sales']['create']" />
                                     <span class="label-mark"></span>
                                     </label>
                                 </td>
@@ -116,7 +116,7 @@
                                 <td>تعديل المبيعات</td>
                                 <td *ngFor="let role of __roles">
                                     <label class="label-item">
-                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sells']['update']" />
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sales']['update']" />
                                     <span class="label-mark"></span>
                                     </label>
                                 </td>
@@ -125,7 +125,7 @@
                                 <td>حذف المبيعات</td>
                                 <td *ngFor="let role of __roles">
                                     <label class="label-item">
-                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sells']['destroy']" />
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['sales']['destroy']" />
                                     <span class="label-mark"></span>
                                     </label>
                                 </td>
@@ -138,7 +138,7 @@
                             <tr>
                                 <td colspan="5" class="premession-td">
                                     <div class="col-md-12 no-p premession-title">
-                                        <p>{{  __premessionsObject['buys'] }}</p>
+                                        <p>{{  __premessionsObject['purchases'] }}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -146,7 +146,7 @@
                                 <td>عرض قوائم المشتريات</td>
                                 <td *ngFor="let role of __roles">
                                     <label class="label-item">
-                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['buys']['find']" />
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['purchases']['find']" />
                                     <span class="label-mark"></span>
                                     </label>
                                 </td>
@@ -155,7 +155,7 @@
                                 <td>اضافة المشتريات</td>
                                 <td *ngFor="let role of __roles">
                                     <label class="label-item">
-                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['buys']['create']" />
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['purchases']['create']" />
                                     <span class="label-mark"></span>
                                     </label>
                                 </td>
@@ -164,7 +164,7 @@
                                 <td>تعديل المشتريات</td>
                                 <td *ngFor="let role of __roles">
                                     <label class="label-item">
-                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['buys']['update']" />
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['purchases']['update']" />
                                     <span class="label-mark"></span>
                                     </label>
                                 </td>
@@ -173,7 +173,7 @@
                                 <td>حذف المشتريات</td>
                                 <td *ngFor="let role of __roles">
                                     <label class="label-item">
-                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['buys']['destroy']" />
+                                    <input type="checkbox" [ngModelOptions]="{standalone: true}" class="label-cb" [(ngModel)]="__obj[role]['purchases']['destroy']" />
                                     <span class="label-mark"></span>
                                     </label>
                                 </td>

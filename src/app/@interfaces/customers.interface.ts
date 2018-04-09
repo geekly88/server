@@ -1,9 +1,9 @@
-import { Sells , BooksTree } from './';
+import { Sales , BooksTree } from './';
 export interface Customers{
 
     id : number,
     parent_id : number,
-    company_id : number,
+    company_id : number,branch_id:number,
     author_id : number,
 
     active : boolean,
@@ -14,7 +14,7 @@ export interface Customers{
     total : number,
     invoice_paid : number,
     invoices_total : number,
-    sells_count : number,
+    sales_count : number,
     invoices_count : number,
     email : string,
     phone : string,
@@ -53,7 +53,7 @@ export interface Customers{
     book : BooksTree,
 
     description : string,
-    sells : Sells[],
+    sales : Sales[],
     createdAt : Date,
     updatedAt : Date,
 

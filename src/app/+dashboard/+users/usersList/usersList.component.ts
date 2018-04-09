@@ -10,12 +10,15 @@ import { GlobalProvider , LabProvider , RouterTransition } from './../../../@pro
 import { Users } from './../../../@interfaces';
 import { HttpRequestService } from './../../../@services';
 
+import { Uploader }      from 'angular2-http-file-upload';
+import { MyUploadItem } from './../../myUploadItem';
+
 @Component({
     selector : 'users-list',
     templateUrl : './usersList.html',
     providers : [
-        GlobalProvider, 
-        LabProvider, 
+        GlobalProvider,
+        LabProvider,
         HttpRequestService,
         AutocompleteComponent,
         AddNewComponent,
@@ -47,7 +50,8 @@ export class UsersListComponent implements OnInit{
         private _global:GlobalProvider,
         private _http:HttpRequestService,
         private _lab:LabProvider,
-        private _router:Router
+        private _router:Router,
+        private _uploaderService: Uploader
     ){ }
     ngOnInit():any{
         this._lab.__setGlobal__(this._global);
@@ -75,13 +79,32 @@ export class UsersListComponent implements OnInit{
     onAction($event):void{
         switch($event.action){
             case 'DELETE':
-                this.__deleteItems($event.item.id);                
+                this.__deleteItems($event.item.id);
                 break;
             case 'EDIT':
                 let __url = 'users/details/'+ $event.item.id.toString();
                 this._global.navigatePanel(__url);
                 break;
         }
+    }
+
+    onUploadImage(item:Users):void{
+        let uploadFile = (<HTMLInputElement>window.document.getElementById('myFileInputField')).files[0];
+        if(!uploadFile) return;
+        let myUploadItem = new MyUploadItem(uploadFile);
+        let token:string = this._global.getToken()['token'];
+        myUploadItem.url = this._global.config['serverPath'] + this._controller +'/'+item.id+'/avatar?replace=true&token='+token;
+        this._uploaderService.onSuccessUpload = (img, response, status, headers) => {
+        };
+        this._uploaderService.onErrorUpload = (img, response, status, headers) => {
+            this._lab.__setAlerts__('warn' , 'حجم الصورة أقل من 10 ميجابايت ... <jpeg,png>');
+        };
+        this._uploaderService.onCompleteUpload = (img, response, status, headers) => {
+            return this._lab.__onChangeAvatar__(this , item , response.data);
+        };
+        this._uploaderService.onProgressUpload = (img, percentComplete) => {
+        };
+        this._uploaderService.upload(myUploadItem);
     }
 
     __OnChangeURL__():void{
@@ -104,7 +127,7 @@ export class UsersListComponent implements OnInit{
     onPageChanging($event):void{
         let __queryParams:any = this._router.routerState.root.queryParams['value'];
         if(!__queryParams || !__queryParams['sort']){
-            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort; 
+            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort;
         }
         this.__getItems(this._controller +'/'+ $event.queryParams);
     }
@@ -155,7 +178,7 @@ export class UsersListComponent implements OnInit{
                     this.__hideLists = true;
                 }
             },
-            (error) => { 
+            (error) => {
                 this.errors = error;
                 this.__count = 0;
                 this.__pages = 0;
@@ -206,7 +229,7 @@ export class UsersListComponent implements OnInit{
             for(let i= 0; i < this._list.length; i++){
                 if(this._list[i].id.toString() === ids.toString()){
                     __user = this._list[i];
-                    break;                
+                    break;
                 }
             }
         }

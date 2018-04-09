@@ -69,7 +69,7 @@ export class DashboardSidebarComponent/* implements OnInit,AfterViewInit*/{
     onShowSorthcuts():void{
         let __href:string = window.location.href;
         if(__href.indexOf('/details') > 1){
-            if(__href.indexOf('/sells/details') > 1 || __href.indexOf('/buys/details') > 1){
+            if(__href.indexOf('/sales/details') > 1 || __href.indexOf('/purchases/details') > 1){
                 this.__pageType = 'ORDERS';
             }else{
                 this.__pageType = 'FORMS';

@@ -13,14 +13,14 @@
         </div>-->
         <ul>
             <li (click)="OnLinkClicked('index')"><a><i class="ti-pie-chart"></i> لوحة التحكم</a></li>
-            <li (click)="OnLinkClicked('sells')"><a><i class="ti-receipt"></i> المبيعات</a></li>
+            <li (click)="OnLinkClicked('sales')"><a><i class="ti-receipt"></i> المبيعات</a></li>
             <li (click)="OnLinkClicked('invoices')"><a><i class="ti-files"></i> فواتير الشراء</a></li>
             <li (click)="OnLinkClicked('products')"><a><i class="ti-package"></i> الأصناف و الخدمات</a></li>
             <li (click)="OnLinkClicked('agents')"><a><i class="ti-user"></i> أشخاص و مؤسسات</a></li>
             <li (click)="OnLinkClicked('money')"><a><i class="ti-wallet"></i> المصاريف و المدفوعات</a></li>
             <li (click)="OnLinkClicked('more')"><a><i class="ti-more"></i> المزيد</a></li>
         </ul>
-        <div class="col-md-12 above-links no-p"><a class="gosell" (click)="_global.navigatePanel('sells/details')">الذهاب للمبيعات</a></div>
+        <div class="col-md-12 above-links no-p"><a class="gosale" (click)="_global.navigatePanel('sales/details')">الذهاب للمبيعات</a></div>
         <div class="col-md-12 no-p links">
             <li class="col-md-3 no-p" (click)="_lab.__setLogout__(_http)" data-toggle="tooltip" tooltipPlacement="top" tooltip="الخروج"><i class="ti-power-off"></i></li>
             <li class="col-md-3 no-p" (click)="_global.navigatePanel('settings')" data-toggle="tooltip" tooltipPlacement="top" tooltip="الأعدادات"><i class="ti-settings"></i></li>
@@ -65,10 +65,10 @@
             <li (click)="OnNavigateClicked('paids' , false)"><a>ايصالات الدفع و القبض</a></li>
         </ul>
         <ul *ngIf="IsVisibile('invoices') && !__slide">
-            <li (click)="OnNavigateClicked('buys' , false)"><a>فواتير الشراء</a></li>
-            <li (click)="OnNavigateClicked('buys/details' , false)"><a>اضافة فاتورة شراء</a></li>
+            <li (click)="OnNavigateClicked('purchases' , false)"><a>فواتير الشراء</a></li>
+            <li (click)="OnNavigateClicked('purchases/details' , false)"><a>اضافة فاتورة شراء</a></li>
         </ul>
-        <ul *ngIf="IsVisibile('sells') && !__slide">
+        <ul *ngIf="IsVisibile('sales') && !__slide">
             <li (click)="OnNavigateClicked('')"><a>المبيعات</a></li>
             <li (click)="OnNavigateClicked('/details')"><a>اضافة مبيعات</a></li>
             <li class="separator"></li>
@@ -97,14 +97,14 @@
         </div>-->
         <ul>
             <li (click)="OnLinkClicked('index')"><a><i class="ti-pie-chart"></i> لوحة التحكم</a></li>
-            <li (click)="OnLinkClicked('sells')"><a><i class="ti-receipt"></i> المبيعات</a></li>
+            <li (click)="OnLinkClicked('sales')"><a><i class="ti-receipt"></i> المبيعات</a></li>
             <li (click)="OnLinkClicked('invoices')"><a><i class="ti-files"></i> فواتير الشراء</a></li>
             <li (click)="OnLinkClicked('products')"><a><i class="ti-package"></i> الأصناف و الخدمات</a></li>
             <li (click)="OnLinkClicked('agents')"><a><i class="ti-user"></i> أشخاص و مؤسسات</a></li>
             <li (click)="OnLinkClicked('money')"><a><i class="ti-wallet"></i> المصاريف و المدفوعات</a></li>
             <li (click)="OnLinkClicked('more')"><a><i class="ti-more"></i> المزيد</a></li>
         </ul>
-        <div class="col-md-12 above-links no-p"><a class="gosell" (click)="_global.navigatePanel('sells/details')">الذهاب للمبيعات</a></div>
+        <div class="col-md-12 above-links no-p"><a class="gosale" (click)="_global.navigatePanel('sales/details')">الذهاب للمبيعات</a></div>
         <div class="col-md-12 no-p links">
             <li class="col-md-3 no-p" (click)="_lab.__setLogout__(_http)" data-toggle="tooltip" tooltipPlacement="top" tooltip="الخروج"><i class="ti-power-off"></i></li>
             <li class="col-md-3 no-p" (click)="_global.navigatePanel('settings')" data-toggle="tooltip" tooltipPlacement="top" tooltip="الأعدادات"><i class="ti-settings"></i></li>
@@ -149,16 +149,16 @@
             <li (click)="OnNavigateClicked('paids' , false)"><a>ايصالات الدفع و القبض</a></li>
         </ul>
         <ul *ngIf="IsVisibile('invoices') && !__slide">
-            <!--<li (click)="OnNavigateClicked('')" *ngIf="(_global.getToken()['settings']['sell_type'] === 'both' 
-                || _global.getToken()['settings']['sell_type'] === 'invoice')"><a>فواتير المبيعات</a></li>
-            <li (click)="OnNavigateClicked('/details')"  *ngIf="(_global.getToken()['settings']['sell_type'] === 'both' 
-                || _global.getToken()['settings']['sell_type'] === 'invoice')"><a>اضافة فاتورة مبيعات</a></li>
-            <li class="separator"  *ngIf="(_global.getToken()['settings']['sell_type'] === 'both' 
-                || _global.getToken()['settings']['sell_type'] === 'invoice')"></li>-->
-            <li (click)="OnNavigateClicked('buys' , false)"><a>فواتير الشراء</a></li>
-            <li (click)="OnNavigateClicked('buys/details' , false)"><a>اضافة فاتورة شراء</a></li>
+            <!--<li (click)="OnNavigateClicked('')" *ngIf="(_global.getToken()['settings']['sale_type'] === 'both' 
+                || _global.getToken()['settings']['sale_type'] === 'invoice')"><a>فواتير المبيعات</a></li>
+            <li (click)="OnNavigateClicked('/details')"  *ngIf="(_global.getToken()['settings']['sale_type'] === 'both' 
+                || _global.getToken()['settings']['sale_type'] === 'invoice')"><a>اضافة فاتورة مبيعات</a></li>
+            <li class="separator"  *ngIf="(_global.getToken()['settings']['sale_type'] === 'both' 
+                || _global.getToken()['settings']['sale_type'] === 'invoice')"></li>-->
+            <li (click)="OnNavigateClicked('purchases' , false)"><a>فواتير الشراء</a></li>
+            <li (click)="OnNavigateClicked('purchases/details' , false)"><a>اضافة فاتورة شراء</a></li>
         </ul>
-        <ul *ngIf="IsVisibile('sells') && !__slide">
+        <ul *ngIf="IsVisibile('sales') && !__slide">
             <li (click)="OnNavigateClicked('')"><a>المبيعات</a></li>
             <li (click)="OnNavigateClicked('/details')"><a>اضافة مبيعات</a></li>
             <li class="separator"></li>

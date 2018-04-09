@@ -122,6 +122,7 @@ export class EmployeesDetailsComponent implements OnInit,AfterViewInit{
         let postRegex:RegExp = this._global.config["postRegex"];
         let siteRegex:RegExp = this._global.config["siteRegex"];
         this.formObject = this._fb.group({
+            branch_id   : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             name        : ['' , [Validators.required, Validators.pattern(nameRegex)]],
             code        : [ 1 , [Validators.required , Validators.pattern(intRegex)]],
             company_name: ['' , Validators.pattern(nameRegex)],

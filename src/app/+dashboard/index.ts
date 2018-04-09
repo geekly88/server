@@ -11,143 +11,148 @@ export const routes = [
     { path : '' , redirectTo : 'index', pathMatch : 'full' },
     { path : 'index' , component : child.IndexComponent },
     //============================================================================
-    { path : 'suppliers' , component : child.SupplierComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+suppliers') 
+    { path : 'suppliers' , component : child.SupplierComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+suppliers')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'customers' , component : child.CustomersComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+customers') 
+    { path : 'customers' , component : child.CustomersComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+customers')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'employees' , component : child.EmployeesComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+employees') 
+    { path : 'employees' , component : child.EmployeesComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+employees')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'products' , component : child.ProductsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+products') 
+    { path : 'products' , component : child.ProductsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+products')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'history' , component : child.HistoryComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+history') 
+    { path : 'history' , component : child.HistoryComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+history')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'timer' , component : child.TimerComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+timer') 
+    { path : 'timer' , component : child.TimerComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+timer')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'trash' , component : child.ProductsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+trash') 
+    { path : 'trash' , component : child.ProductsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+trash')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'buys' , component : child.BuysComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+buys') 
+    { path : 'purchases' , component : child.PurchasesComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+purchases')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'sells' , component : child.SellsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+sells') 
+    { path : 'sales' , component : child.SalesComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+sales')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'types' , component : child.TypesComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+types') 
+    { path : 'types' , component : child.TypesComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+types')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'collections' , component : child.CollectionsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+collections') 
+    { path : 'collections' , component : child.CollectionsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+collections')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'brands' , component : child.BrandsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+brands') 
+    { path : 'brands' , component : child.BrandsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+brands')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'options' , component : child.OptionsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+options') 
+    { path : 'options' , component : child.OptionsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+options')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'taxes' , component : child.TaxesComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+taxes') 
+    { path : 'taxes' , component : child.TaxesComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+taxes')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'settings' , component : child.SettingsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+settings') 
+    { path : 'settings' , component : child.SettingsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+settings')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'gifts' , component : child.GiftsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+gifts') 
+    { path : 'gifts' , component : child.GiftsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+gifts')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'accounts' , component : child.AccountsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+accounts') 
+    { path : 'accounts' , component : child.AccountsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+accounts')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'users' , component : child.UsersComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+users') 
+    { path : 'users' , component : child.UsersComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+users')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'expenses' , component : child.ExpensesComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+expenses') 
+    { path : 'expenses' , component : child.ExpensesComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+expenses')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'paids' , component : child.PaidsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+paids') 
+    { path : 'paids' , component : child.PaidsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+paids')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'registers' , component : child.RegistersComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+registers') 
+    { path : 'registers' , component : child.RegistersComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+registers')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'registersHistory' , component : child.RegistersHistoryComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+registersHistory') 
+    { path : 'registersHistory' , component : child.RegistersHistoryComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+registersHistory')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'reports' , component : child.ReportsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+reports') 
+    { path : 'reports' , component : child.ReportsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+reports')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'storages' , component : child.StoragesComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+storages') 
+    { path : 'storages' , component : child.StoragesComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+storages')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'bookKepping' , component : child.BookKeppingComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+bookKepping') 
+    { path : 'bookKepping' , component : child.BookKeppingComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+bookKepping')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'booksTree' , component : child.BooksTreeComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+booksTree') 
+    { path : 'booksTree' , component : child.BooksTreeComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+booksTree')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'banks' , component : child.BanksComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+banks') 
+    { path : 'banks' , component : child.BanksComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+banks')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
-    { path : 'journals' , component : child.JournalsComponent , children : 
-        [{ path: '', loadChildren : ()=> System.import('./+journals') 
+    { path : 'branches' , component : child.BranchesComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+branches')
+            .then((comp : any) => comp.default),
+        }]
+    },//============================================================================
+    { path : 'journals' , component : child.JournalsComponent , children :
+        [{ path: '', loadChildren : ()=> System.import('./+journals')
             .then((comp : any) => comp.default),
         }]
     },//============================================================================
@@ -163,13 +168,14 @@ export const routes = [
         child.IndexComponent,
         child.SupplierComponent,
         child.ProductsComponent,
-        child.BuysComponent,
-        child.SellsComponent,
+        child.PurchasesComponent,
+        child.SalesComponent,
         child.RegistersComponent,
         child.RegistersHistoryComponent,
         child.TypesComponent,
         child.CollectionsComponent,
         child.BrandsComponent,
+        child.BranchesComponent,
         child.OptionsComponent,
         child.TaxesComponent,
         child.SettingsComponent,

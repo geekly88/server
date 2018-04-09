@@ -33,19 +33,23 @@ export { GiftsComponent } from './+gifts/gifts.component';
 export { GiftsDetailsComponent } from './+gifts/giftsDetails';
 export { GiftsListComponent } from './+gifts/giftsList';
 
-export { SellsComponent } from './+sells/sells.component';
-export { SellsDetailsComponent } from './+sells/sellsDetails';
-export { SellsListComponent } from './+sells/sellsList';
-export { SellsShowsComponent } from './+sells/sellsShows';
+export { SalesComponent } from './+sales/sales.component';
+export { SalesDetailsComponent } from './+sales/salesDetails';
+export { SalesListComponent } from './+sales/salesList';
+export { SalesShowsComponent } from './+sales/salesShows';
+
+export { BranchesComponent } from './+branches/branches.component';
+export { BranchesDetailsComponent } from './+branches/branchesDetails';
+export { BranchesListComponent } from './+branches/branchesList';
 
 export { BanksComponent } from './+banks/banks.component';
 export { BanksDetailsComponent } from './+banks/banksDetails';
 export { BanksListComponent } from './+banks/banksList';
 
-export { BuysComponent } from './+buys/buys.component';
-export { BuysDetailsComponent } from './+buys/buysDetails';
-export { BuysListComponent } from './+buys/buysList';
-export { BuysShowsComponent } from './+buys/buysShows';
+export { PurchasesComponent } from './+purchases/purchases.component';
+export { PurchasesDetailsComponent } from './+purchases/purchasesDetails';
+export { PurchasesListComponent } from './+purchases/purchasesList';
+export { PurchasesShowsComponent } from './+purchases/purchasesShows';
 
 export { SupplierComponent } from './+suppliers/supplier.component';
 export { SuppliersDetailsComponent } from './+suppliers/suppliersDetails';

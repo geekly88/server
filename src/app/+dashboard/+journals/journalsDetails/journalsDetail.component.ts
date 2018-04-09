@@ -142,6 +142,7 @@ export class JournalsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
         let intRegex:RegExp = this._global.config["intRegex"];
         let priceRegex:RegExp = this._global.config["priceRegex"];
         this.formObject = this._fb.group({
+            branch_id : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             title       : ['' , [Validators.required, Validators.pattern(noteRegex)]],
             status      : ['' ],
             date        : [  ],

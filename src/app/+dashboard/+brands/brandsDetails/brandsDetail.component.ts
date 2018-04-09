@@ -135,8 +135,10 @@ export class BrandsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
 
     private __initFormsObject__():void{
         let nameRegex:RegExp = this._global.config["nameRegex"];
+        let intRegex:RegExp = this._global.config["intRegex"];
         this.formObject = this._fb.group({
-            name               : ['' , [ Validators.required , Validators.pattern(nameRegex)]],
+            branch_id : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
+            name      : ['' , [ Validators.required , Validators.pattern(nameRegex)]],
         });
     }
 

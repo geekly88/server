@@ -53,7 +53,7 @@ export class ResultsReportComponent implements OnInit,OnChanges{
         this.__prepareDateRange__();
         this.__byArray = {
             wins : 'تقارير أرباح حسابك مفصلة',
-            sellwins : 'تقارير أرباح المبيعات',
+            salewins : 'تقارير أرباح المبيعات',
             allwins : 'تقارير أرباح المبيعات و المشتريات'
         };
         this._lab.__setReportsShortcuts(this , false);
@@ -103,7 +103,7 @@ export class ResultsReportComponent implements OnInit,OnChanges{
         this.__initData__();
         // switch (this.by) {
         //     case 'wins':
-        //     case 'sellwins':
+        //     case 'salewins':
         //     case 'allwins':
                 this.__getItems();
         //         break;
@@ -135,7 +135,7 @@ export class ResultsReportComponent implements OnInit,OnChanges{
         this.__data = {
             // 'INV' : { pospaid:0,negpaid:0,pos:0,neg:0,poscost:0,negcost:0 },
             'SEL' : { pospaid:0,negpaid:0,pos:0,neg:0,poscost:0,negcost:0 },
-            'BUY' : { pospaid:0,negpaid:0,pos:0,neg:0,poscost:0,negcost:0 },
+            'PURCHASE' : { pospaid:0,negpaid:0,pos:0,neg:0,poscost:0,negcost:0 },
             'EXP' : { pospaid:0,negpaid:0,pos:0,neg:0,poscost:0,negcost:0 },
             'PID' : { pospaid:0,negpaid:0,pos:0,neg:0,poscost:0,negcost:0 }
         };
@@ -166,9 +166,9 @@ export class ResultsReportComponent implements OnInit,OnChanges{
         this.__WINS__ = 0;
         this.__minus = 0;
         this.__plus = 0;
-        //======== SELLS ========================\\
+        //======== SALES ========================\\
         this.__plus  += this.__data['SEL']['pospaid'];
-        if(this.by !== 'allwins') // cost in allwins will be from buys invoices only
+        if(this.by !== 'allwins') // cost in allwins will be from purchases invoices only
             this.__plus  += this.__data['SEL']['negcost'];
         
         this.__minus += this.__data['SEL']['negpaid'];
@@ -183,20 +183,20 @@ export class ResultsReportComponent implements OnInit,OnChanges{
         // if(this.by !== 'allwins')
         //     this.__minus += this.__data['INV']['poscost'];
         // ====== PAIDS && EXPENSES =============\\  
-        if(this.by !== 'sellwins'){      
+        if(this.by !== 'salewins'){      
             this.__plus  += this.__data['PID']['pospaid'];
             
             this.__minus += this.__data['PID']['negpaid'];
             this.__data['EXP']['negpaid'] = Math.abs(this.__data['EXP']['negpaid']);
             this.__minus += this.__data['EXP']['negpaid'];
         }
-        // ====== BUYS ==========================\\        
+        // ====== PURCHASES ==========================\\        
         if(this.by === 'allwins'){      
-            this.__plus  += this.__data['BUY']['negpaid'];
-            this.__plus  += this.__data['BUY']['poscost'];
+            this.__plus  += this.__data['PURCHASE']['negpaid'];
+            this.__plus  += this.__data['PURCHASE']['poscost'];
 
-            this.__minus += this.__data['BUY']['pospaid'];
-            this.__minus += this.__data['BUY']['negcost'];
+            this.__minus += this.__data['PURCHASE']['pospaid'];
+            this.__minus += this.__data['PURCHASE']['negcost'];
         }
         this.__WINS__ = (this.__plus - this.__minus);
     }

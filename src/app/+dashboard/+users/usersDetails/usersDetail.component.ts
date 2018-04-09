@@ -134,6 +134,7 @@ export class UsersDetailsComponent implements OnInit,AfterViewInit{
         let nameRegex:RegExp = this._global.config["nameRegex"];
         let intRegex:RegExp = this._global.config["intRegex"];
         this.formObject = this._fb.group({
+            branch_id          : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             username           : [ '', [Validators.required , Validators.pattern(nameRegex)]],
             email              : [ '', Validators.pattern(emailRegex)],
             password           : [ '', [Validators.minLength(4) , Validators.maxLength(16)]],

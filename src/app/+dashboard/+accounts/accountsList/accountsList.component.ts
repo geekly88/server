@@ -20,8 +20,8 @@ declare let $:any;
     selector : 'accounts-list',
     templateUrl : './accountsList.html',
     providers : [
-        GlobalProvider, 
-        LabProvider, 
+        GlobalProvider,
+        LabProvider,
         HttpRequestService,
         AutocompleteComponent,
         AddNewComponent,
@@ -82,7 +82,7 @@ export class AccountsListComponent implements OnInit{
     onAction($event):void{
         switch($event.action){
             case 'DELETE':
-                this.__deleteItems($event.item.id);                
+                this.__deleteItems($event.item.id);
                 break;
             case 'EDIT':
                 let __url = this._global.config['dashboard'] + '/accounts/details/'+ $event.item.id.toString();
@@ -118,7 +118,7 @@ export class AccountsListComponent implements OnInit{
                     __token['account'] = __account;
                     this._global.setToken({data : __token } , null , false);
                 }
-                location.reload();
+                return this._lab.__onChangeAvatar__(this , item , response.data);
             }
         };
         this._uploaderService.onProgressUpload = (img, percentComplete) => {
@@ -145,7 +145,7 @@ export class AccountsListComponent implements OnInit{
     onPageChanging($event):void{
         let __queryParams:any = this._router.routerState.root.queryParams['value'];
         if(!__queryParams || !__queryParams['sort']){
-            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort; 
+            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort;
         }
         this.__getItems(this._controller +'/'+ $event.queryParams);
     }
@@ -176,8 +176,8 @@ export class AccountsListComponent implements OnInit{
                 }
             }
         });
-        if(__notAllowed) { 
-            return; 
+        if(__notAllowed) {
+            return;
         }
         this._http.get(this._controller + '/change/' + __id).subscribe(
             (account) => {
@@ -185,15 +185,17 @@ export class AccountsListComponent implements OnInit{
                     this._lab.__setErrors__(account.error);
                     return;
                 }
-                
-                
+
                 this._lab.__setAlerts__('success' , 'لقد تم تغيير الحساب الحالى .. سيتم اعادة التحميل');
                 setTimeout(() => {
                     this._global.clearToken();
                     if(account.data.roles){
-                        this._global.setResource(account.data.roles , 'register');
                         this._global.setResource(account.data.roles , 'roles');
+                        this._global.setResource(account.data.register , 'register');
+                        this._global.setResource(account.data.branches , 'branches');
                         delete account.roles;
+                        delete account.register;
+                        delete account.branches;
                     }
                     this._global.setToken(account , ['/dashboard'] , false);
                 },2000);
@@ -258,7 +260,7 @@ export class AccountsListComponent implements OnInit{
                     this.__hideLists = true;
                 }
             },
-            (error) => { 
+            (error) => {
                 this.errors = error;
                 this.__count = 0;
                 this.__pages = 0;

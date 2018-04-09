@@ -3,19 +3,16 @@ import { ActivatedRoute , Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AutocompleteComponent } from './../../../@components';
 import { GlobalProvider , LabProvider, RouterTransition } from './../../../@providers';
-import { Products , Storages , Brands , Types , Collections , Taxes , Options , Suppliers } from './../../../@interfaces';
+import { Products, Brands, Types, Collections, Taxes, Options } from './../../../@interfaces';
 import { HttpRequestService } from './../../../@services';
 // import  * as child from './../../exports';
-
-declare let $:any;
-let time = new Date();
 
 @Component({
     selector : 'products-details',
     templateUrl : './productsDetails.html',
     providers : [
-        GlobalProvider, 
-        LabProvider, 
+        GlobalProvider,
+        LabProvider,
         HttpRequestService,
     ],
     animations : [RouterTransition('Form')],
@@ -24,7 +21,7 @@ let time = new Date();
     outputs : ['onAction']
 })
 export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewInit{
-    
+
     private editable:boolean;
     private submitted:boolean;
     private formObject:FormGroup;
@@ -34,7 +31,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
     private __param:string;
     private __modal:string;
     private __optionsArray:Array<Options> = [];
-    private __storagesArray:Array<Storages> = [];
+    // private __storagesArray:Array<Storages> = [];
     private __typesArray:Array<Types> = [];
     private __taxesArray:Array<Taxes> = [];
     private __collectionsArray:Array<Collections> = [];
@@ -71,7 +68,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
 
     constructor(
         private _router : Router,
-        private _route : ActivatedRoute, 
+        private _route : ActivatedRoute,
         private _fb:FormBuilder,
         private _global:GlobalProvider,
         private _http:HttpRequestService,
@@ -81,7 +78,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
     ngAfterViewInit() {
         this._lab.__initForm__(this.formObject,this._global);
         let self:ProductsDetailsComponent = this;
-        $('#productchbx').click(function(e){
+        this._lab.jQuery('#productchbx').click(function(e){
             self.__checkTypo__();
         });
     }
@@ -97,7 +94,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
     //         }
     //         this.__checkTypo__();
     //         this.formObject.get('is_product').disable();
-    //     }else if(((props.editable && props.editable.currentValue === false) || !this.editable) 
+    //     }else if(((props.editable && props.editable.currentValue === false) || !this.editable)
     //      || (props.param && props.param.currentValue === null)){
     //          this.__initFormsObject__();
     //          this.__getNewCode__();
@@ -117,10 +114,10 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
             return;
         }
         this.submitted = true;
-        
+
         if(false === valid) {
             this._lab.__setAlerts__('error' , 'الرجاء التأكد من الملاحظات الجانبية لكل حقل و تجنب الاخطاء لاتمام العملية');
-            return;   
+            return;
         }
 
         let obj:any;
@@ -134,7 +131,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
         // let __types_main_id:number = parseInt(values['types_main_id'].toString());
         // values['types_main_id'] = isNaN(__types_main_id) ? 0 : __types_main_id;
 
-        
+
         if(!values.option_one && !values.option_one_value && !values.option_two
         && !values.option_two_value && !values.option_three && !values.option_three_value){
             values.is_variaty = false;
@@ -146,11 +143,15 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
         if(true === this.editable){
             obj = this._http.put(this._page + this.__param, values);
         }else{
+            let __sku_int:number = parseInt(this.formObject.value.sku);
+            if(!isNaN(__sku_int) && __sku_int > this.formObject.value.sku_int){
+                values['sku_int'] = __sku_int;
+            }
             obj = this._http.post(this._page, values);
         }
         obj.subscribe(
             (item) => {
-                if(item.error !== null) { 
+                if(item.error !== null) {
                     this._lab.__setErrors__(item.error);
                     return;
                 }
@@ -168,7 +169,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
                 this.submitted = false;
                 this._lab.__setAlerts__('success','تمت عملية حفظ البيانات بنجاح');
             },
-            (error) => { 
+            (error) => {
                 this._lab.__setErrors__(error);
             },
             ()=> {
@@ -179,7 +180,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
     public validateControl(name:string , error:boolean=false):boolean{
         return (!this.formObject.controls[name].valid && (!this.formObject.controls[name].pristine || this.submitted));
     }
-    
+
     public onSelectItem($event:any):void{
         if(!$event || !$event.target) return;
         let __name:any = $event.target.name;
@@ -223,15 +224,15 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
                 }
             }
         }
-        if(__name === 'storage'){
-            for(let i = 0; i < this.__storagesArray.length; i++){
-                if(this.__storagesArray[i]['name'] === __value){
-                    this.formObject.controls['storage_id']['setValue'](this.__storagesArray[i]['id']);
-                    this.formObject.controls['storage_code']['setValue'](this.__storagesArray[i]['code']);
-                    break;
-                }
-            }
-        }
+        // if(__name === 'storage'){
+        //     for(let i = 0; i < this.__storagesArray.length; i++){
+        //         if(this.__storagesArray[i]['name'] === __value){
+        //             this.formObject.controls['storage_id']['setValue'](this.__storagesArray[i]['id']);
+        //             this.formObject.controls['storage_code']['setValue'](this.__storagesArray[i]['code']);
+        //             break;
+        //         }
+        //     }
+        // }
     }
 
     public onAddSelectItem(__name:string):void{
@@ -239,9 +240,9 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
             case 'type':
                 this.__modal = 'types';
                 break;
-            case 'storage':
-                this.__modal = 'storages';
-                break;
+            // case 'storage':
+            //     this.__modal = 'storages';
+            //     break;
             case 'tax':
                 this.__modal = 'taxes';
                 break;
@@ -260,7 +261,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
                 };
                 return this._lab.__modal('#show-dynamic-model');
             default :
-                this.__modal = __name; 
+                this.__modal = __name;
                 break;
         }
         this.formObject.controls[__name].setValue('');
@@ -270,9 +271,9 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
     onAddedItemAction($event):void{
         if($event.action !== 'ADD' || !$event.item) return;
         switch(this.__modal){
-            case 'storages':
-                this.__storagesArray.push($event.item);
-                break;
+            // case 'storages':
+            //     this.__storagesArray.push($event.item);
+            //     break;
             case 'types':
                 this.__typesArray.push($event.item);
                 break;
@@ -295,9 +296,9 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
 
     private autocompletevaluechanged($event){
         if(!$event || !$event.item) return;
-        if($event.class === 'supplier'){
-            this.formObject.controls[$event.class + '_id'].setValue($event.item.id);
-        }
+        // if($event.class === 'supplier'){
+        //     this.formObject.controls[$event.class + '_id'].setValue($event.item.id);
+        // }
         this.formObject.controls[$event.class].setValue($event.item.name);
     }
 
@@ -343,7 +344,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
                 let __error:string = '';
                 if(!this.nameRegex.test(this.__product_costs['name'])){
                     __error += 'لديك خطأ فى كتابة الاسم\n';
-                } 
+                }
                 if(!this.priceRegex.test(this.__product_costs['cost'])){
                     __error +=  'الرجاء كتابة السعر الصحيح فى الحقل';
                 }
@@ -379,12 +380,14 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
 
     private __initFormsObject__():void{
         this.formObject = this._fb.group({
+            // branch_id          : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(this.intRegex)]],
             product_costs      : [ [ this.__product_costs ] ],
             name               : ['' , [Validators.required, Validators.pattern(this.nameRegex)]],
-            supplier           : ['' , Validators.pattern(this.nameRegex)],
-            supplier_id        : [ 0 , Validators.pattern(this.intRegex)],
-            supplier_code      : [ 0 , Validators.pattern(this.intRegex)],
+            // supplier           : ['' , Validators.pattern(this.nameRegex)],
+            // supplier_id        : [ 0 , Validators.pattern(this.intRegex)],
+            // supplier_code      : [ 0 , Validators.pattern(this.intRegex)],
             sku                : [ '1' , [Validators.required ,Validators.maxLength(16) , Validators.pattern(this.alphanumdashed)]],
+            sku_int            : [ 1 , Validators.pattern(this.intRegex)],
             cost               : [ 0 , Validators.pattern(this.priceRegex)],
             price              : [ 0 , Validators.pattern(this.priceRegex)],
             price2             : [ 0 , Validators.pattern(this.priceRegex)],
@@ -393,15 +396,16 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
             price5             : [ 0 , Validators.pattern(this.priceRegex)],
             tax                : [ 0 , Validators.pattern(this.priceRegex)],
             tax_id             : [ 0 , Validators.pattern(this.intRegex)],
+            stock_obj          : [ {} ],
             stock              : [ 0 , Validators.pattern(this.floatRegex)],
             stock_order_amount : [ 0 , Validators.pattern(this.floatRegex)],
             stock_order_point  : [ 0 , Validators.pattern(this.floatRegex)],
             limit_quantity     : [ 0 , Validators.pattern(this.floatRegex)],
-            limit_sell_quantity: [ 0 , Validators.pattern(this.floatRegex)],
+            limit_sale_quantity: [ 0 , Validators.pattern(this.floatRegex)],
 
-            storage            : [''],
-            storage_code       : [''],
-            storage_id         : [0 , Validators.pattern(this.intRegex)],
+            // storage            : [''],
+            // storage_code       : [''],
+            // storage_id         : [0 , Validators.pattern(this.intRegex)],
 
             is_multi_price     : [ false ],
             has_expire_date    : [ false ],
@@ -431,16 +435,16 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
             is_variaty         : [ (!!this.__settings.is_variaty) ],
             is_product         : [ (!(!!this.__settings['pro_type'] && this.__settings['pro_type'] === 'services')) ],
             is_main            : [ true ],
-           
+
             description        : ['' , [Validators.maxLength(100) , Validators.pattern(this.noteRegex)]],
             main_id            : [ 0 , Validators.pattern(this.intRegex)]
         });
         this.formObject.controls['name'].setValue('');
-        if(this.__storagesArray && this.__storagesArray.length > 0){
-            this.formObject.controls['storage'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].name);
-            this.formObject.controls['storage_id'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].id);
-            this.formObject.controls['storage_code'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].code);
-        }
+        // if(this.__storagesArray && this.__storagesArray.length > 0){
+        //     this.formObject.controls['storage'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].name);
+        //     this.formObject.controls['storage_id'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].id);
+        //     this.formObject.controls['storage_code'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].code);
+        // }
     }
 
     private __init__():void{
@@ -485,7 +489,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
                     this.formObject.get('is_product').disable();
                     this.editable = true;
                 },
-                (response) => { 
+                (response) => {
                     this._global.navigatePanel(this._page);
                 },
                 () => {}
@@ -510,6 +514,7 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
             (item) => {
                 if(item.data && item.data.sku){
                     this.formObject.controls['sku'].setValue(item.data.sku.toString());
+                    this.formObject.controls['sku_int'].setValue(item.data.sku);
                 }
             },(error) => {
             }
@@ -594,21 +599,21 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
                 this.__taxesArray = [];
             }
         );
-        this._http.get('storages?page=1&limit=10000000').subscribe(
-            (items) => {
-                if(!items.error && items.data){
-                    this.__storagesArray = items.data;
-                    if(this.editable || !this.__storagesArray || this.__storagesArray.length === 0) return;
-                    this.formObject.controls['storage'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].name);
-                    this.formObject.controls['storage_id'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].id);
-                    this.formObject.controls['storage_code'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].code);
-                }else{
-                    this.__storagesArray = [];
-                }
-            },(error) => {
-                this.__storagesArray = [];
-            }
-        );
+        // this._http.get('storages?page=1&limit=10000000').subscribe(
+        //     (items) => {
+        //         if(!items.error && items.data){
+        //             this.__storagesArray = items.data;
+        //             if(this.editable || !this.__storagesArray || this.__storagesArray.length === 0) return;
+        //             this.formObject.controls['storage'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].name);
+        //             this.formObject.controls['storage_id'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].id);
+        //             this.formObject.controls['storage_code'].setValue(this.__storagesArray[(this.__storagesArray.length - 1)].code);
+        //         }else{
+        //             this.__storagesArray = [];
+        //         }
+        //     },(error) => {
+        //         this.__storagesArray = [];
+        //     }
+        // );
         this._http.get('types?page=1&limit=10000000').subscribe(
             (items) => {
                 if(!items.error && items.data){
@@ -663,10 +668,10 @@ export class ProductsDetailsComponent implements /*OnChanges,*/OnInit,AfterViewI
         var body:any = document.querySelector('body');
         body.onkeydown = null;
         body.onkeydown = function (e){
-            let _error:any = $('div.errors p.error');
+            let _error:any = this._lab.jQuery('div.errors p.error');
             if(_error) _error.remove();
             let CTRL:number = 17, A:number = 65, V:number = 86, C:number = 67, X:number = 88;
-            if ((e.ctrlKey && (e.which !== A && e.which !== V && e.which !== C && e.which !== X)) 
+            if ((e.ctrlKey && (e.which !== A && e.which !== V && e.which !== C && e.which !== X))
             || (e.keyCode >= 112 && e.keyCode <= 123)) {
                 e.preventDefault();
             }

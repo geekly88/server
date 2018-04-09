@@ -90,6 +90,7 @@ export class StoragesDetailsComponent implements OnInit,AfterViewInit,OnChanges{
                     this._lab.__setErrors__(item.error);
                     return;
                 }
+                let __storages:Storages[] = <Storages[]>this._global.getResource('storages') || [];
                 if(true === this.editable){
                     this.item = item.data;
                     for(let key in this.item){
@@ -101,11 +102,21 @@ export class StoragesDetailsComponent implements OnInit,AfterViewInit,OnChanges{
                         action : 'EDIT',
                         item : this.item
                     });
+                    for(let i:number = 0; i < __storages.length; i++){
+                        if(__storages[i].id === this.item.id){
+                            __storages[i] = this.item;
+                            break;
+                        }
+                    }
+                    if(__storages.length === 0) __storages = [ this.item ];
+                    this._global.setResource(__storages , 'storages');
                 }else{
                     this.onAction.emit({
                         action : 'ADD',
                         item : item.data
                     });
+                    __storages.push(item.data);
+                    this._global.setResource(__storages , 'storages');
                     this.__initFormsObject__();
                 }
                 this.submitted = false;

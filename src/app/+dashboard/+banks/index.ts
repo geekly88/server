@@ -8,7 +8,7 @@ import { DashboardComponentsModule } from './../../@components/module';
 import { BanksDetailsComponent } from './banksDetails';
 import { BanksListComponent } from './banksList';
 
-export const BUYS_ROUTERS = [
+export const PURCHASES_ROUTERS = [
     { path : '', component : BanksListComponent, pathMatch : 'full' },
     { path : 'details', component : BanksDetailsComponent },
     { path : 'details/:id', component : BanksDetailsComponent }
@@ -16,6 +16,6 @@ export const BUYS_ROUTERS = [
 
 @NgModule({
     declarations : [],
-    imports : [ CommonModule, ReactiveFormsModule, DashboardComponentsModule, FormsModule, RouterModule .forChild(BUYS_ROUTERS)]
+    imports : [ CommonModule, ReactiveFormsModule, DashboardComponentsModule, FormsModule, RouterModule .forChild(PURCHASES_ROUTERS)]
 })
 export default class BanksModule {}

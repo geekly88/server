@@ -9,21 +9,19 @@ import { AutocompleteComponent ,
 import { GlobalProvider , LabProvider , RouterTransition } from './../../../@providers';
 import { MyCurrencyPipe } from './../../../@pipes';
 
-import { Products } from './../../../@interfaces';
+import { Products , Branches } from './../../../@interfaces';
 import { HttpRequestService } from './../../../@services';
 
 import { Uploader }      from 'angular2-http-file-upload';
-import { MyUploadItem } from './../../myUploadItem'; 
+import { MyUploadItem } from './../../myUploadItem';
 import { ProductsDetailsComponent } from './../productsDetails';
-
-declare var $:any;
 
 @Component({
     selector : 'products-list',
     templateUrl : './productsList.html',
     providers : [
-        GlobalProvider, 
-        LabProvider, 
+        GlobalProvider,
+        LabProvider,
         HttpRequestService,
         AutocompleteComponent,
         AddNewComponent,
@@ -54,6 +52,9 @@ export class ProductsListComponent implements OnInit{
     private __sort:string = 'DESC';
     private __explain:boolean = false;
     private __hideLists:boolean = true;
+    private __showBranches:boolean = false;
+    private __branchesArray:Branches[];
+    private __branchesNameFromID:any = {};
 
     public param:number;
     public editable:boolean = false;
@@ -72,7 +73,7 @@ export class ProductsListComponent implements OnInit{
         this.__modal = '';
         this.__setObject();
         let __url:string;
-        
+
         let __prev:any = this._lab.jQuery('.prev-page');
         if(__prev){
             let __prevPage:string = __prev.attr('data-page');
@@ -86,6 +87,7 @@ export class ProductsListComponent implements OnInit{
                 }
             }
         }
+        this.__prepareBranchesNames__();
         if(__url) this.__getItems(__url);
         else this.OnChangeActiveType('ALL');
         this._lab.__initLists__();
@@ -95,14 +97,9 @@ export class ProductsListComponent implements OnInit{
     onAction($event):void{
         switch($event.action){
             case 'DELETE':
-                this.__deleteItems($event.item.id);                
+                this.__deleteItems($event.item.id);
                 break;
             case 'EDIT':
-                // this.param = $event.item.id;
-                // this.editable = ($event.item && $event.item.id > 0);
-                // this.editItem = $event.item;
-                // this.__modal = 'products';
-                // this._lab.__modal('#show-pro-details-model');
                 this._global.navigatePanel('products/details/' + $event.item.id , 'products' , "" );
                 break;
             case 'SHOW':
@@ -129,9 +126,9 @@ export class ProductsListComponent implements OnInit{
         let __orderUrl:string = '';
         if(this.__order) __orderUrl = '&sortby=' + this.__order + '&sort=' + this.__sort;
         let __url = this._controller + '/?limit=' + this._global.getToken()['settings']['perpage'] + __orderUrl;
-        if(this.__activeType === 'ACTIVE'){ 
+        if(this.__activeType === 'ACTIVE'){
             status = 'true';
-        }else if(this.__activeType === 'NOT'){ 
+        }else if(this.__activeType === 'NOT'){
             status = 'false';
         }else if(this.__activeType === 'ALL'){
             status = '&contains=true';
@@ -171,11 +168,6 @@ export class ProductsListComponent implements OnInit{
     }
 
     onAddNewClick($event):void{
-        // this.editable = false;
-        // this.param = null;
-        // this.editItem = null;
-        // this.__modal = 'products';
-        // this._lab.__modal('#show-pro-details-model');
         this._global.navigatePanel('products/details');
     }
 
@@ -201,38 +193,12 @@ export class ProductsListComponent implements OnInit{
              this._lab.__setAlerts__('warn' , 'حجم الصورة أقل من 10 ميجابايت ... <jpeg,png>');
         };
         this._uploaderService.onCompleteUpload = (img, response, status, headers) => {
-            if(response && response.data){
-                location.reload();
-                // let __imageSrc:string = this._global.config['serverPath'] + 'images/products/' + response.data[0];
-                // this._lab.jQuery('img#img_' + item.id).attr('src' , __imageSrc);
-            }
-            // complete callback, called regardless of success or failure
+            return this._lab.__onChangeAvatar__(this , item , response.data);
         };
         this._uploaderService.onProgressUpload = (img, percentComplete) => {
         };
         this._uploaderService.upload(myUploadItem);
     }
-    // onShowItem($event):void{
-    //     console.log($event);
-    // }
-
-    // onShowVariaties(item:Products):void{
-    //     let index:string = item.id.toString();
-    //     if(!this.__variaties[index]){
-    //         this._http.get('products?search=main_id&main_id=' + index).subscribe(
-    //             (items) => {
-    //                 if(items && items.error === null && items.data && items.count > 0){
-    //                     this.__variaties[index] = items.data;
-    //                     this.__showVariaties__(index);
-    //                 }else{
-    //                     return this._global.navigatePanel('products/details/'+index);
-    //                 }
-    //             }
-    //         );
-    //     }else{
-    //         this.__showVariaties__(index)
-    //     }
-    // }
 
     OnChangeActivity(item:Products):void{
         let is_active:boolean = !item.is_active;
@@ -273,41 +239,22 @@ export class ProductsListComponent implements OnInit{
         if(__amount === 0){
             return this._lab.__setAlerts__('warn' , 'لايمكنك اعادة التعبئة بطريقة مباشرة ... الرجاء التأكد من بيانات اعادة التعبئة للصنف');
         }
-        this._global.navigatePanel('buys/details/?q=refill&amount='+__amount+'&id='+item.id);
+        this._global.navigatePanel('purchases/details/?q=refill&amount='+__amount+'&id='+item.id);
     }
 
-    // private __showVariaties__(index:string):void{
-    //     $('tr.__variaty').remove();
-    //     for(let i =0; i < this.__variaties[index].length; i++){
-    //         let __self:ProductsListComponent = this;
-    //         let __pro:Products = this.__variaties[index][i];
-    //         let __price:string = new MyCurrencyPipe(this._global).transform(__pro.price.toString() , []);
-    //         let __proId:string = __pro.id.toString();
-    //         let __url:string = this._global.config['panelPath'] + 'products/details/' + __proId;
-    //         let __qtyspan:any = $('<span>').append(__pro.stock); 
-    //         if(__pro.limit_quantity >= __pro.stock) __qtyspan.addClass('error');
-
-    //         let __colspan:string = ($('.__product_'+index+' td').length - 4).toString();
-    //         let __link:any = $('<a class="pro_var col-md-12">').append(__pro.name);
-    //         let __smallShadesStr:string = '(' + __pro.sku + ' ) ' + __pro.variaty.join('/');
-    //         let __smallShade:any = $('<span class="small-shade">').append(__smallShadesStr);
-
-
-    //         let __tr:any = $('<tr class="__variaty __variaty'+ index + '">');
-    //         let __tdCheckbox = $('<td style="border-right:1px solid #0979D9">');
-    //         let __tdLong:any = $('<td colspan="'+__colspan+'">').append(__link).append(__smallShade);
-    //         let __tdPrice:any = $('<td>').append(__price);
-    //         let __tdQuantity:any = $('<td>').append(__qtyspan);
-    //         let __tdActiveAndActions = $('<td colspan="2">');
-
-    //         __tr.append(__tdCheckbox).append(__tdLong).append(__tdQuantity)
-    //             .append(__tdPrice).append(__tdActiveAndActions);
-    //         $('tr.__product_' + index).after(__tr);
-    //         __link.click(function(e){
-    //             __self._global.navigatePanel('products/details/'+__proId);                
-    //         });
-    //     }
-    // }
+    private __prepareBranchesNames__():void{
+        this.__branchesArray = <Array<Branches>>this._global.getResource('branches');
+        if(!this.__branchesArray || !(this.__branchesArray instanceof Array) || this.__branchesArray.length === 0){
+            this._lab.__setAlerts__('warn' , 'تم اعدتك لصفحة تسجيل الدخول لوجود خطأ');
+            return this._lab.__setLogout__(this._http);
+        }else{
+            if(this.__branchesArray.length === 1) return;
+            for(let i:number = 0; i < this.__branchesArray.length; i++){
+                this.__branchesNameFromID[this.__branchesArray[i].id.toString()] = this.__branchesArray[i].name;
+            }
+            this.__showBranches = true;
+        }
+    }
 
     private __setObject():void {
        this._searchObjs = [
@@ -351,7 +298,7 @@ export class ProductsListComponent implements OnInit{
                     if(__first && this.__hideLists) this.__hideLists = true;
                 }
             },
-            (error) => { 
+            (error) => {
                 this.errors = error;
                 this.__count = 0;
                 this.__pages = 0;
@@ -372,7 +319,7 @@ export class ProductsListComponent implements OnInit{
                     this._lab.__setAlerts__('error' , 'فشل فى عملية الحذف');
                     return;
                 }
-                $('tr.__variaty').remove();
+                // this._lab.jQuery('tr.__variaty').remove();
                 this._lab.__setAlerts__('success' , 'تمت عملية الحذف بنجاح ');
                 this.__getItems();
             },

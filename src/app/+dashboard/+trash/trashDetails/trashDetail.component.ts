@@ -143,9 +143,11 @@ export class TrashDetailsComponent implements OnInit,AfterViewInit,OnChanges{
     private __initFormsObject__():void{
         let nameRegex:RegExp  = this._global.config["nameRegex"];
         let floatRegex:RegExp = this._global.config["floatRegex"];
+        let intRegex:RegExp  = this._global.config["intRegex"];
         let noteRegex:RegExp  = this._global.config["noteRegex"];
         
         this.formObject = this._fb.group({
+            branch_id     : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             product_name  : ['' , [ Validators.required , Validators.pattern(nameRegex)]],
             product_id    : [ 0 ],
             quantity      : [ 1 , [ Validators.required , Validators.pattern(floatRegex)]],

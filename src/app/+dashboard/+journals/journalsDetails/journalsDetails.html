@@ -8,7 +8,19 @@
                         <p class="title head">اضافة دفتر جديد</p>
                         <p class="note">يمكنك الدفتر المحاسبى من تتبع القيود المحاسبية بانتظام</p>
                     </div>
-                    <div class="col-md-12 first">
+                    <div class="col-md-12 first" *ngIf="_global.getResource('branches').length > 1">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">الفرع</label>
+                            <div class="col-md-12 ">
+                                <select class="form-control" name="branch_id" (change)="onSelectItem($event)" [formControl]="formObject.controls['branch_id']">
+                                    <option *ngFor="let option of _global.getResource('branches')"
+                                        [value]="option.id" value="{{ option.id }}" >{{ option.name }}</option>
+                                </select>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" [ngClass]="{ 'first' : _global.getResource('branches').length === 1}">
                         <div class="form-group col-md-12">
                             <label class="col-md-12 col-xs-12 col-form-label">العنوان</label>
                             <div class="col-md-9 col-xs-8 inline-first">

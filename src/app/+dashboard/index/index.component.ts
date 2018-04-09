@@ -14,8 +14,8 @@ declare let Chart:any;
 export class IndexComponent implements OnInit{
 
 
-    // private __sellsData:INF.Sells[] = [];
-    // private __buysData:INF.Invoices[] = [];
+    // private __salesData:INF.Sales[] = [];
+    // private __purchasesData:INF.Invoices[] = [];
     private __durationStr:string; //1 WEEEK
     private __durationStrArray:Object = {
         "DAY" : "يوم",
@@ -27,10 +27,10 @@ export class IndexComponent implements OnInit{
 
     private __topDataObject:Array<any> = [];
     private __topData:Object = {};
-    private __sellsDataLabels:Array<string> = [];
-    private __buysDataLabels:Array<string> = [];
-    private __sellsDataObject:Object = {};
-    private __buysDataObject:Object = {};
+    private __salesDataLabels:Array<string> = [];
+    private __purchasesDataLabels:Array<string> = [];
+    private __salesDataObject:Object = {};
+    private __purchasesDataObject:Object = {};
     private __customersDataObject:Array<Object> = [];
     private __suppliersDataObject:Array<Object> = [];
     private __employeesDataObject:Array<Object> = [];
@@ -48,11 +48,11 @@ export class IndexComponent implements OnInit{
 
     private __expensesChartTest:boolean = false;
     private __paidsChartTest:boolean = false;
-    private __buysChartTest:boolean = false;
-    private __sellsChartTest:boolean = false;
+    private __purchasesChartTest:boolean = false;
+    private __salesChartTest:boolean = false;
     // private __invoicesDataTest:boolean = false;
-    private __sellsDataTest:boolean = false;
-    private __buysDataTest:boolean = false;
+    private __salesDataTest:boolean = false;
+    private __purchasesDataTest:boolean = false;
     private __customersDataTest:boolean = false;
     private __employeesDataTest:boolean = false;
     private __suppliersDataTest:boolean = false;
@@ -71,8 +71,8 @@ export class IndexComponent implements OnInit{
     }
 
     private OnRefreshAllChartsData(refreshDoughnut:boolean = false):void{
-        this.__prepareUrlAndProperty('sells' , 'by_high');
-        this.__prepareUrlAndProperty('buys' , 'by_high');
+        this.__prepareUrlAndProperty('sales' , 'by_high');
+        this.__prepareUrlAndProperty('purchases' , 'by_high');
         this.__prepareUrlAndProperty('topData' , 'by_high');
         if(!refreshDoughnut) return;
         this.__prepareUrlAndProperty('customers' , 'by_high');
@@ -108,8 +108,8 @@ export class IndexComponent implements OnInit{
 
     __initTopDataOptions__():void{
         this.__topData = {
-            'sells' : { total  : 0 , paid : 0 },
-            'buys' : { total  : 0 , paid : 0 },
+            'sales' : { total  : 0 , paid : 0 },
+            'purchases' : { total  : 0 , paid : 0 },
             'expenses' : { total  : 0 , paid : 0 },
             'paids' : { recive : 0 , paid : 0 }
         };
@@ -121,9 +121,9 @@ export class IndexComponent implements OnInit{
         let __sort:string = 'DESC';
         let __cb:Function;
         switch (model) {
-            case 'sells':
+            case 'sales':
             // case 'invoices':
-            case 'buys':
+            case 'purchases':
                 __url = 'reports/charts/' + model + '?from=';
                 __url += this._lab.__toDateAPI__(this.__fromDate , true , true);
                 __url += '&to=' + this._lab.__toDateAPI__(this.__toDate , true , true);
@@ -135,15 +135,15 @@ export class IndexComponent implements OnInit{
             // case 'suppliers':
             // case 'employees':
             case 'products':
-                let __sortBy:string = 'sells_count';
-                // if(model === 'suppliers') __sortBy = 'buys_count';
+                let __sortBy:string = 'sales_count';
+                // if(model === 'suppliers') __sortBy = 'purchases_count';
                 __sort = plus && plus === 'by_low' ? 'ASC' : 'DESC';
                 __url += '?limit=5&sortBy='+ __sortBy +'&sort=' + __sort;
                 __cb = (items) => {
                     if((items && items instanceof Array && items.length > 0) && (model === 'customers' || model === 'products')){
                         let __items:Array<any> = [];
                         items.forEach((item , index) => {
-                            if(item.sells_count === 0) return;
+                            if(item.sales_count === 0) return;
                             __items.push(item);
                         });
                         items = Object['assign']([] , __items);
@@ -203,7 +203,7 @@ export class IndexComponent implements OnInit{
         }
         let __total:number = 0;
         let __paid:number = 0;
-        //======== SELLS ========================\\
+        //======== SALES ========================\\
         __total  += Number(__objs['SEL']['pos']);
         __total  += Number(__objs['SEL']['neg']);
         
@@ -218,8 +218,8 @@ export class IndexComponent implements OnInit{
         // __paid += Number(__objs['INV']['pospaid']);
         // __paid += __objs['INV']['poscost'];
 
-        this.__topData['sells']['total'] = __total;
-        this.__topData['sells']['paid'] = __paid;
+        this.__topData['sales']['total'] = __total;
+        this.__topData['sales']['paid'] = __paid;
         // ====== PAIDS =========================\\  
         __total = 0 ; __paid = 0;
         __total  += Number(__objs['PID']['pospaid']);
@@ -231,15 +231,15 @@ export class IndexComponent implements OnInit{
         __paid = Number(__objs['EXP']['negpaid']);
         this.__topData['expenses']['total'] = __paid;
 
-        // ====== BUYS ==========================\\        
+        // ====== PURCHASES ==========================\\        
         __total = 0 ; __paid = 0;
-        __total  += Number(__objs['BUY']['pos']);
-        __total  += Number(__objs['BUY']['neg']);
+        __total  += Number(__objs['PURCHASE']['pos']);
+        __total  += Number(__objs['PURCHASE']['neg']);
 
-        __paid += Number(__objs['BUY']['pospaid']);
-        __paid += Number(__objs['BUY']['negpaid']);
-        this.__topData['buys']['total'] = __total;
-        this.__topData['buys']['paid'] = __paid;
+        __paid += Number(__objs['PURCHASE']['pospaid']);
+        __paid += Number(__objs['PURCHASE']['negpaid']);
+        this.__topData['purchases']['total'] = __total;
+        this.__topData['purchases']['paid'] = __paid;
     }
     
     __prepareChartsData(items:Array<Object> , __property:string, __labelDate:string = 'date'):void{
@@ -273,7 +273,7 @@ export class IndexComponent implements OnInit{
             __labels = ['--' , '--' , '--' , '--' , '--'];
         }
         
-        let __type:string = __property === '__buysData' ? 'line' : 'bar';
+        let __type:string = __property === '__purchasesData' ? 'line' : 'bar';
         let config:Object = {
             type: __type,
             data: {

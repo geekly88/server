@@ -96,6 +96,18 @@ export class AuthGuard implements CanActivate, CanActivateChild {
             this._router.navigate(['/login']);
             return false;
         }
+
+        let __branches = localStorage.getItem('branches');
+        try {
+            __branches =  JSON.parse(__branches);
+            if(!__branches || !__branches.length){
+                this._router.navigate(['/login']);
+                return false;
+            }
+        } catch (error) {
+            return false;
+        }
+
         if(__user.super) return true;
         let __page:string = !__url[1] ? null : __url[1].toLocaleLowerCase();
         if(!__page) return false;
@@ -123,7 +135,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                 }
             case 'registers':
             case 'registershistory':
-                return (__roles.hasOwnProperty('sells') && true === __roles['sells']['create']);
+                return (__roles.hasOwnProperty('sales') && true === __roles['sales']['create']);
             default:
                 try {
                     if(!(__roles.hasOwnProperty(__page))) return false;
@@ -136,7 +148,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
                             }else{
                                 return (__roles[__page]['create']);
                             }
-                        }else if(__url[2] === 'show' && (__page === 'sell' || __page === 'buys')){
+                        }else if(__url[2] === 'show' && (__page === 'sale' || __page === 'purchases')){
                             return (__roles.hasOwnProperty(__page) && (true === __roles[__page]['update']));
                         }else if(__url[2] === 'destroy'){
                                 return (__roles[__page]['destroy']);

@@ -17,7 +17,7 @@ import { Users } from './../@interfaces';
 })
 
 export class LoginComponent implements OnInit{
-    
+
     private formObject: FormGroup;
     private activateObject: FormGroup;
     private __completeLogin:boolean;
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit{
     private __intervalHandler:any;
     private __checkIsRegisteredBoolean:boolean;
     private __activationLastStatus:string = '';
-    
+
     constructor(
         private _router : Router,
         private _http: HttpRequestService,
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit{
         this._global.clearToken();
         this.formObject = this._fb.group({
             username       : ['' , <any>Validators.required],
-            password       : ['' , <any>Validators.required]        
+            password       : ['' , <any>Validators.required]
         });
 
         this.activateObject = this._fb.group({
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit{
     }
 
     OnSubmitForm(model: Users, isValid: boolean):void{
-        if(!this.__isCheckedActivateionYet || !this.__passActivation 
+        if(!this.__isCheckedActivateionYet || !this.__passActivation
         || this.__isExpired === true || !this.__completeLogin){
             return this.__checkActivation(null);
         }
@@ -78,13 +78,20 @@ export class LoginComponent implements OnInit{
         this._http.post('auth/',model).subscribe(
             (res:any) => {
                 if(res.error === null && res.data.token){
+                    this._global.setResource(res.data.branches , 'branches');
+                    this._global.setResource(res.data.register , 'register');
+                    this._global.setResource(res.data.storages , 'storages');
                     this._global.setResource(res.data.roles , 'roles');
                     this._lab.__setGlobal__(this._global);
-                    this._lab.__adjustBooksCodes__(res.data.settings);
+                    delete res.data.roles;
+                    delete res.data.register;
+                    delete res.data.branches;
+                    delete res.data.storages;
+                    // this._lab.__adjustBooksCodes__(res.data.settings);
                     this._global.setToken(res,['dashboard/index'],false);
                     let __self:LoginComponent = this;
                     setTimeout(() => {
-                        let __values:Object = { 
+                        let __values:Object = {
                             login_at : new Date() ,
                             username: res.data.username,
                             role : res.data.role
@@ -110,7 +117,7 @@ export class LoginComponent implements OnInit{
         }
         this.__checkActivation(value);
     }
-    
+
     __checkIsRegistered(__self:LoginComponent):void{
         if(__self.__checkIsRegisteredBoolean) return;
         __self._http.get('super/isregistered').subscribe(

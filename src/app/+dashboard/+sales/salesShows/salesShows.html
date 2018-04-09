@@ -1,0 +1,177 @@
+<div class="col-md-12 no-p" *ngIf="item && orders && orders.length > 0">
+    <div class="col-md-12" [ngClass]="{'padding-20' : !isDynamic }">
+        <div *ngFor="let page of __pages;let _i = index" class="col-md-12 col-sm-12 col-xs-12 no-p page_{{ _i }}">     
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p" *ngIf="__pagesShown[_i] === true">
+                <div *ngIf="__pages.length > 1" class="nextpage" (click)="changePage(__currentPage + 1)"><i class="ti-angle-left"></i></div>  	
+                <div *ngIf="__pages.length > 1" class="prevpage" (click)="changePage(__currentPage - 1)"><i class="ti-angle-right"></i></div>
+                <div class="invoice pagearea box" [ngClass]="{'col-md-12 offset-md-2 no-p' : !isDynamic}">
+                    <ul class="top_invoice" [hidden]="__isPrint">
+                        <li class="__back" *ngIf="isDynamic" (click)="onAction.emit({ class : 'showSale' , action : 'GOBACK' })">{{ backstr }}</li>
+                        <li class="__printit" (click)="onShowPrintDialog()"><i class="ti-printer" data-toggle="tooltip" tooltipPlacement="top" tooltip="طباعة"></i></li>
+                        <li class="__editit" *ngIf="!isDynamic" (click)="_global.navigatePanel('sales/details/' + item.id)" data-toggle="tooltip" tooltipPlacement="top" tooltip="عرض الفاتورة"><i class="ti-settings"></i></li>
+                        <li class="__draftit" *ngIf="item.status !== 'drafted'" (click)="OnChangeStatus('drafted')" data-toggle="tooltip" tooltipPlacement="top" tooltip="الغاء الفاتورة"><i class="ti-close"></i></li>
+                        <li class="__completeit" *ngIf="(item.status === 'drafted' || item.status === 'completed')" (click)="OnChangeStatus('returned')" data-toggle="tooltip" tooltipPlacement="top" tooltip="تحويل الفاتورة الى معادة"><i class="ti-share"></i></li>
+                        <li class="__returnit" *ngIf="(item.status === 'drafted' || item.status === 'returned')" (click)="OnChangeStatus('completed')" data-toggle="tooltip" tooltipPlacement="top" tooltip="تحويل الى فاتورة تامة"><i class="ti-file"></i></li>
+                        <li class="__deleteit" *ngIf="!isDynamic" (click)="OnDelete()" data-toggle="tooltip" tooltipPlacement="top" tooltip="حذف الفاتورة"><i class="ti-trash"></i></li>
+                    </ul>
+                    <div class="show_top float_exac"> 
+                        <div class="col-md-6 invoice_number">
+                            <p class="{{ item.status }}" *ngIf="item.status === 'completed' && !item.is_sale" data-toggle="tooltip" tooltipPlacement="top" tooltip="فاتورة تامة">#INV {{ item.number }}</p>
+                            <p class="{{ item.status }}" *ngIf="item.status === 'completed' && item.is_sale" data-toggle="tooltip" tooltipPlacement="top" tooltip="فاتورة تامة">#ORD {{ item.number }}</p>
+                            <p class="{{ item.status }}" *ngIf="item.status === 'returned'" data-toggle="tooltip" tooltipPlacement="top" tooltip="فاتورة معادة">#RET {{ item.number }}</p>
+                            <p class="{{ item.status }}" *ngIf="item.status === 'drafted'" data-toggle="tooltip" tooltipPlacement="top" tooltip="فاتورة ملغية">#DRF {{ item.number }}</p>
+                            <p class="{{ item.status }}" *ngIf="item.status === 'parked'" data-toggle="tooltip" tooltipPlacement="top" tooltip="فاتورة مركونة">#PRK {{ item.number }}</p>
+                        </div>
+                        <div class="col-md-6 company_logo">
+                            <img  src="{{ _global.config['serverPath']+'uploads/avatars/'+ _global.getToken()['account']['img'] }}" 
+                                *ngIf="_global.getToken()['account']['img'] && _global.getToken()['account']['img'] !== ''">
+                            <p class="first_lttr_logo" 
+                            *ngIf="!_global.getToken()['account']['img'] || _global.getToken()['account']['img'] === ''">
+                                {{ __firstLetterLogo }}
+                            </p>
+                            <p class="col-md-12 no-p title">{{ _global.getToken()['account']['name'] }}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 information">
+                        <div class="col-md-8 customer_info">
+                            <div class="col-md-12 no-p">
+                                <p class="customer col-md-6">
+                                    <span class="col-md-12 no-p">حررت الفاتورة الى</span>
+                                    <span class="col-md-12 no-p" *ngIf="customer && customer.name">{{ customer.name }}</span>
+                                    <span class="col-md-12 no-p" *ngIf="!customer || !customer.name">نقدى</span>
+                                </p>
+                                <p class="employee col-md-6">
+                                    <span class="col-md-12">المندوب</span>
+                                    <span class="col-md-12" *ngIf="item.employee">{{ item.employee }}</span>
+                                    <span class="col-md-12" *ngIf="!item.employee">مندوب</span>
+                                </p>
+                            </div>
+                            <p *ngIf="customer && customer.phone">{{ customer.phone }}</p>
+                            <p *ngIf="customer && customer.mobile">{{ customer.mobile }}</p>
+                            <p *ngIf="customer && customer.email">{{ customer.email }}</p>
+                        </div>
+                        <div class="col-md-4 date_info">
+                            <p>تاريخ الفاتورة : {{ item.date | date:'dd/MM/yyyy H:mm' }}</p>
+                            <p>تاريخ الاستحقاق : {{ item.paid_date | date:'dd/MM/yyyy H:mm'}}</p>
+                            <p>المبلغ المستحق : {{ (item.totals - item.paid) | myCurrency  }}</p>
+                        </div>
+                    </div>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <td width="40px">#</td>
+                                <td>المنتج</td>
+                                <td>الكمية</td>
+                                <td>السعر</td>
+                                <!--<td [hidden]="!_global.getToken()['settings']['is_tax']">الضريبة</td>-->
+                                <td>الخصم</td>
+                                <td>الاجمالى</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let order of page,let i= index">
+                                <td width="40px">{{ ((i+1)  + (__perpage * _i)) }}</td>
+                                <td><p style="margin : 0px">{{ order.product_name }}</p>
+                                    <p style="margin : 0px" *ngIf="order.product_handler">{{ order.product_handler }}</p>
+                                    <p style="margin : 0px" *ngIf="order.description">{{ order.description }}</p></td>
+                                <td>{{ order.quantity }} {{ order.type }}</td>
+                                <td>{{ order.price | myCurrency }}</td>
+                                <!--<td [hidden]="!_global.getToken()['settings']['is_tax']">{{ ((order.tax / 100) * order.price) | myCurrency }}</td>-->
+                                <td>{{ order.discount | myCurrency }}</td>
+                                <td>{{ ((order.price * order.quantity) - order.discount) | myCurrency }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="col-md-12 no-p invoice_footer">
+                        <div class="col-md-6 total_info float_exac">
+                            <div class="col-md-12 no-p">
+                                <p class="col-md-6 __money">{{ item.prices | myCurrency }}</p>
+                                <p class="col-md-4 __title">مجموع السعر</p>
+                            </div>
+                            <div class="col-md-12 no-p">
+                                <p class="col-md-6 __money">{{ item.discounts | myCurrency }}</p>
+                                <p class="col-md-4 __title">التخفيضات</p>
+                            </div>
+                            <div class="col-md-12 no-p" [hidden]="!_global.getToken()['settings']['is_tax']">
+                                <p class="col-md-6 __money">{{ item.taxes | myCurrency }}</p>
+                                <p class="col-md-4 __title">الضرائب</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 total_info float_exac">
+                            <div class="col-md-12 no-p">
+                                <p class="col-md-6 __money">{{ item.totals | myCurrency }}</p>
+                                <p class="col-md-4 __title">الاجمالى</p>
+                            </div>
+                            <div class="col-md-12 no-p">
+                                <p class="col-md-6 __money">{{ item.paid | myCurrency }}</p>
+                                <p class="col-md-4 __title">المبلغ المدفوع</p>
+                            </div>
+                            <div class="col-md-12 no-p">
+                                <p class="col-md-6 __money">{{ (item.totals - item.paid) | myCurrency }}</p>
+                                <p class="col-md-4 __title">المبلغ المستحق</p>
+                            </div>
+                        </div>  
+                        <div class="col-md-12 signature">
+                            <div class="col-md-7 sign_customer">
+                                <p class="__str__">توقيع الزبون</p>
+                                <p class="__line__">___________________</p>
+                            </div>
+                            <div class="col-md-5 sign_office">
+                                <p class="__str__">توقيع الادارة</p>
+                                <p class="__line__">___________________</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12 description total_info float_exac"  *ngIf="item.description && item.description !== ''">
+                            <p class="float_exac head">الملاحظة : </p>
+                            <p class="float_exac tail">{{ item.description }}</p>
+                        </div>
+                        <div class="col-md-12 invoice_bottom">
+                            <div class="col-md-5">{{ __now | date:'dd/MM/yyyy H:mm' }}</div>
+                            <div class="col-md-2 no-p">صفحة {{ (_i+1) }} من {{ __pages.length }}</div>
+                            <div class="col-md-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fade modal" id="show-invoice-modal" tabindex="1" role="dialog"
+    aria-labelledby="myReciptDetailsModalLabel" aria-hidden="false">
+    <div class="modal-dialog" [ngClass]="{ 'modal-sm' : __modal === 'print' }">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal"><span>x</span></button>
+        </div>
+        <!--<iframe id="pdf_viewer" type="application/pdf" src="" width="100%" height="600px" *ngIf="__modal === 'ifram'"></iframe>-->
+        <div class="col-md-12 col-xs-12 col-sm-12 no-p " *ngIf="__modal === 'print'">
+            <form [formGroup]="__printFormObject" (ngSubmit)="OnSubmitPrintForm(__printFormObject.value , __printFormObject.valid)" novalidate 
+                class="form col-md-12 no-p white">
+                <div class="col-md-12 form_paraphraph">
+                    <p class="title head">طباعة الفاتورة</p>
+                    <p class="note">خيارات طباعة الفاتورة</p>
+                </div>
+                <div class="col-md-12 first last">
+                    <div class="form-group col-md-6">
+                        <label class="col-lg-12  col-xs-12 col-sm-12 col-md-12 col-form-label">من الصفحة</label>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-md-12">
+                            <input [formControl]="__printFormObject.controls['from']" name="from" type="text" class="form-control autofocus" placeholder="من الصفحة" 
+                            [ngClass]="{'errors': validateControl('from')}"/>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="col-lg-12  col-xs-12 col-sm-12 col-md-12 col-form-label">الى الصفحة</label>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-md-12">
+                            <input [formControl]="__printFormObject.controls['to']" name="to" type="text" class="form-control autofocus" placeholder="الى الصفحة" 
+                            [ngClass]="{'errors': validateControl('to')}"/>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">طباعة البيانات</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

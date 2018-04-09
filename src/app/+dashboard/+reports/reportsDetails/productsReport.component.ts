@@ -68,10 +68,10 @@ export class ProductsReportComponent implements OnInit,OnChanges{
         this.__prepareDateRange__();
         this.__perpage = this._global.config['report_perpage'];
         this.__byArray = {
-            sellorders : 'تقارير الأصناف حسب المبيعات الفورية',
+            saleorders : 'تقارير الأصناف حسب المبيعات الفورية',
             orders : 'تقارير الأصناف حسب فواتير البيع',
             traffic : 'تقارير الأصناف حسب حركة الأصناف',
-            purches : 'تقارير الأصناف حسب المشتريات',
+            purchaseOrders : 'تقارير الأصناف حسب المشتريات',
             all : 'جرد جميع الأصناف المضافة'
         };
         this._lab.__setReportsShortcuts(this);
@@ -124,13 +124,13 @@ export class ProductsReportComponent implements OnInit,OnChanges{
         this.__allowed  =  { };
         this.__lang = { };
         switch (this.by) {
-            case 'purches':
-            case 'sellorders':
+            case 'purchaseOrders':
+            case 'saleorders':
             case 'orders':
                 this.__allowed['product_name'] = true;
                 this.__allowed['brand'] = false;
-                this.__allowed['sells'] = true;
-                if(this.by === 'purches') this.__allowed['cost'] = true;
+                this.__allowed['sales'] = true;
+                if(this.by === 'purchaseOrders') this.__allowed['cost'] = true;
                 this.__allowed['price'] = true;
                 this.__allowed['tax'] = true;
                 this.__allowed['discount'] = true;
@@ -138,8 +138,8 @@ export class ProductsReportComponent implements OnInit,OnChanges{
 
                 this.__lang['product_name'] = 'الاسم';
                 this.__lang['brand'] = 'الماركة';
-                this.__lang['sells'] = 'الطلبات';
-                if(this.by !== 'purches') this.__lang['cost'] = 'التكلفة';
+                this.__lang['sales'] = 'الطلبات';
+                if(this.by !== 'purchaseOrders') this.__lang['cost'] = 'التكلفة';
                 this.__lang['price'] = 'السعر';
                 this.__lang['tax'] = 'الضريبة';
                 this.__lang['discount'] = 'التخفيض';

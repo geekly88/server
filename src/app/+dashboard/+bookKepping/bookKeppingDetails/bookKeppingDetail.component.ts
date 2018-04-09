@@ -154,6 +154,7 @@ export class BookKeppingDetailsComponent implements OnInit,AfterViewInit,OnChang
         let floatRegex:RegExp = this._global.config["floatRegex"];
         let noteRegex:RegExp = this._global.config["noteRegex"];
         this.formObject = this._fb.group({
+            branch_id          : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             id                 : [0],
             title              : ['' , [ Validators.required , Validators.pattern(nameRegex)]],
             book               : ['' , Validators.pattern(intRegex)],

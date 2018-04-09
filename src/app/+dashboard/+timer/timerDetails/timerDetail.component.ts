@@ -143,8 +143,10 @@ export class TimerDetailsComponent implements OnInit,AfterViewInit,OnChanges{
 
     private __initFormsObject__(time:number = 0):void{
         let nameRegex:RegExp = this._global.config["nameRegex"];
+        let intRegex:RegExp = this._global.config["intRegex"];
         let priceRegex:RegExp = this._global.config["priceRegex"];
         this.formObject = this._fb.group({
+            branch_id     : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             task    : ['' , [ Validators.required , Validators.pattern(nameRegex)]],
             time    : [ time , [ Validators.pattern(priceRegex) , Validators.required]],
             is_done : [ true ],

@@ -16,7 +16,7 @@ import { Users } from './../@interfaces';
         ]
 })
 export class RegisterComponent implements OnInit{
-    
+
     private formObject: FormGroup;
     private submitted:boolean = false;
     private __firstTime:boolean = false;
@@ -66,15 +66,20 @@ export class RegisterComponent implements OnInit{
             (res:any) => {
                 if(res.error === null && res.data.token){
                     this._lab.__setAlerts__('success' , 'سيتم تحويلك الى لوحة التحكم');
-                    let roles:Object = res.data.roles;
-                    if(roles){
-                        this._global.setResource(roles , 'roles');
+
+                        this._global.setResource(res.data.branches , 'branches');
+                        this._global.setResource(res.data.roles , 'roles');
+                        this._global.setResource(res.data.register , 'register');
+                        this._global.setResource(res.data.storages , 'storages');
+                        delete res.data.branches;
+                        delete res.data.register;
                         delete res.data.roles;
-                    }
+                        delete res.data.storages;
+
                     setTimeout(() => {
                         this._global.setToken(res,['/dashboard'],false);
                         setTimeout(() => {
-                            let __values:Object = { 
+                            let __values:Object = {
                                 login_at : new Date(),
                                 username: res.data.username,
                                 role : res.data.role

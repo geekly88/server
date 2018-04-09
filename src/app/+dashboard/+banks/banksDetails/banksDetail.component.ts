@@ -152,6 +152,7 @@ export class BanksDetailsComponent implements OnInit,AfterViewInit,OnChanges{
         let siteRegex:RegExp   = this._global.config["siteRegex"];
         let phoneRegex:RegExp  = this._global.config["phoneRegex"];
         this.formObject = this._fb.group({
+            branch_id   : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             name        : ['' , [ Validators.required , Validators.pattern(nameRegex)]],
             number      : ['' , [ Validators.required , Validators.pattern(intRegex)]],
             address1    : ['' , Validators.pattern(nameRegex)],

@@ -2,7 +2,8 @@ export interface Products{
 
     id : number,
     parent_id : number,
-    company_id : number,
+    company_id : number
+    branch_id : number,
     author_id : number,
 
     createdAt : Date,
@@ -17,7 +18,7 @@ export interface Products{
     stock_order_amount : number,
     till_to_reorder:number,
     limit_quantity : number,
-    limit_sell_quantity : number,
+    limit_sale_quantity : number,
     diffrence:number,
     description : string,
     type : string,
@@ -30,10 +31,9 @@ export interface Products{
     variaties_arr : Array<Array<string>>,
     variaty_count:number,
     status:string,
-    storage:string,
-    storage_code:string,
-    storage_id : number,
-
+    // storage:string,
+    // storage_code:string,
+    // storage_id : number,
     option_one : string,
     option_two : string,
     option_three : string,
@@ -52,14 +52,14 @@ export interface Products{
     tax_id : number,
 
     is_multi_price : boolean,
-    
+
     has_expire_date : boolean,
     expire_date : Date,
 
-    supplier : string,
-    supplier_code : number,
-    supplier_id : number,
-    
+    // supplier : string,
+    // supplier_code : number,
+    // supplier_id : number,
+
     is_product : boolean,
     is_active : boolean,
     is_trackable : boolean,

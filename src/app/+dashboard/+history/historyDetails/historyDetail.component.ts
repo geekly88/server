@@ -135,8 +135,10 @@ export class HistoryDetailsComponent implements OnInit,AfterViewInit,OnChanges{
     }
 
     private __initFormsObject__():void{
+        let intRegex:RegExp = this._global.config["intRegex"];
         let nameRegex:RegExp = this._global.config["nameRegex"];
         this.formObject = this._fb.group({
+            branch_id : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             username  : ['' , [ Validators.required , Validators.pattern(nameRegex)]],
             logoutAt  : [ ],
             createdAt : [ new Date() ]

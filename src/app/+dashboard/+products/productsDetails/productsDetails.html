@@ -6,9 +6,9 @@
                 <button class="close" data-dismiss="modal"><span>x</span></button>
             </div>
             <div class="modal-body col-md-12 white">
-                <div class="col-md-12 no-p" *ngIf="__modal === 'storages'">
+                <!--<div class="col-md-12 no-p" *ngIf="__modal === 'storages'">
                     <storages-details [isDynamic]="true" (onAction)="onAddedItemAction($event)"></storages-details>
-                </div>
+                </div>-->
                 <div class="col-md-12 no-p" *ngIf="__modal === 'types'">
                     <types-details [isDynamic]="true" (onAction)="onAddedItemAction($event)"></types-details>
                 </div>
@@ -41,18 +41,18 @@
                         <div class="form-group col-md-12 first">
                             <div class="col-md-12 col-md-12">
                                 <div class="col-md-2 col-sm-3">
-                                    <input type="checkbox" id="productchbx" class="ios-toggle" 
+                                    <input type="checkbox" id="productchbx" class="ios-toggle"
                                     [formControl]="formObject.controls['is_product']"/>
-                                    <label for="productchbx" class="checkbox-label"></label>    
-                                </div>  
+                                    <label for="productchbx" class="checkbox-label"></label>
+                                </div>
                                 <div class="col-md-10 col-sm-9">
                                     <p class="h2">{{ __typo__ }}</p>
                                     <p>يمكنك الاختيار بين اضافة صنف كالملابس أو غيره ... أو اضافة خدمة تقوم بتقديمها</p>
                                     <p>لاتملك الخدمة مورد أو خيارات خلافا للصنف الذى يمكنك مراقبة كميته و اعادة التعبئة من المورد اوتوماتيكيا</p>
                                     <p></p>
-                                </div> 
-                            </div> 
-                        </div>  
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -60,24 +60,33 @@
                         <p class="title head">اضافة {{ __typo__ }} جديد</p>
                         <p class="note">{{  __typoDesc__}}</p>
                     </div>
-                    
-                    
+                    <!--<div class="col-md-12" *ngIf="_global.getResource('branches').length > 1">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">الفرع</label>
+                            <div class="col-md-12 ">
+                                <select class="form-control" name="branch_id" (change)="onSelectItem($event)" [formControl]="formObject.controls['branch_id']">
+                                    <option *ngFor="let option of _global.getResource('branches')"
+                                        [value]="option.id" value="{{ option.id }}" >{{ option.name }}</option>
+                                </select>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>-->
                     <div class="col-md-12" *ngIf="formObject.controls.is_product.value">
-                        <div class="form-group col-md-12 col-xs-12 col-sm-12">
+                        <!-- <div class="form-group col-md-12 col-xs-12 col-sm-12">
                             <label class="col-md-12 col-form-label">المخزن</label>
                             <div class="col-md-12 ">
                                 <select class="form-control" name="storage" (change)="onSelectItem($event)" [formControl]="formObject.controls['storage']">
-                                    <!--<option value="{{ __storagesArray[0].name }}" *ngIf="__storagesArray.length">{{ __storagesArray[0].name }}</option>-->
                                     <option value="__ADDONE__" name="__ADDONE__">أضف جديد</option>
                                     <option *ngFor="let option of __storagesArray"
                                         [value]="option.name" value="{{ option.name }}" >{{ option.name }}</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">اسم الصنف</label>
                             <div class="col-md-12 ">
-                                <input data-rules="req,max100" [formControl]="formObject.controls['name']" name="name" 
+                                <input data-rules="req,max100" [formControl]="formObject.controls['name']" name="name"
                                 type="text" class="form-control autofocus" placeholder="اسم الصنف" [ngClass]="{'errors': validateControl('name')}"/>
                                 <div class="errors"></div>
                             </div>
@@ -85,7 +94,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">الكود</label>
                             <div class="col-md-12">
-                                <input data-rules="req,alphnumdashed,max16" [formControl]="formObject.controls['sku']" name="sku" 
+                                <input data-rules="req,alphnumdashed,max16" [formControl]="formObject.controls['sku']" name="sku"
                                 type="text" class="form-control" placeholder="الكود" [ngClass]="{'errors': validateControl('sku')}">
                                 <div class="errors"></div>
                             </div>
@@ -96,13 +105,13 @@
                             <label class="col-xs-9 col-md-9 col-sm-9 col-form-label">اسم الخدمة</label>
                             <label class="col-xs-3 col-md-3 col-sm-3 col-form-label">الكود</label>
                             <div class="col-xs-9 col-md-9 col-sm-9 inline-first">
-                                <input data-rules="req,alph,max100" [formControl]="formObject.controls['name']" name="name" 
+                                <input data-rules="req,alph,max100" [formControl]="formObject.controls['name']" name="name"
                                 type="text" class="form-control autofocus" placeholder="اسم الخدمة" [ngClass]="{'errors': validateControl('name')}"/>
                                 <div class="errors"></div>
                             </div>
 
                             <div class="col-xs-3 col-md-3 col-sm-3 inline-last">
-                                <input data-rules="req,num" [formControl]="formObject.controls['sku']" name="sku" 
+                                <input data-rules="req,num" [formControl]="formObject.controls['sku']" name="sku"
                                 type="text" class="form-control" placeholder="الكود" [ngClass]="{'errors': validateControl('sku')}">
                                 <div class="errors"></div>
                             </div>
@@ -162,8 +171,8 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">الكلمات المفتاحية</label>
                             <div class="col-md-12 ">
-                                <keys-cmp placeholder="الكلمات المفتاحية" 
-                                          dataRules="keywords" 
+                                <keys-cmp placeholder="الكلمات المفتاحية"
+                                          dataRules="keywords"
                                           [max]="10"
                                           classes="form-control"
                                           name="tags"
@@ -173,7 +182,7 @@
                                 <div class="errors"></div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </fieldset>
 
@@ -186,7 +195,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">سعر الخدمة</label>
                             <div class="col-md-12 ">
-                                <input data-rules="req,price" [formControl]="formObject.controls['price']" name="price" 
+                                <input data-rules="req,price" [formControl]="formObject.controls['price']" name="price"
                                 type="text" class="form-control" placeholder="سعر الخدمة" [ngClass]="{'errors': validateControl('price')}"/>
                                 <div class="errors"></div>
                             </div>
@@ -194,7 +203,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">تكلفة الخدمة</label>
                             <div class="col-md-12 ">
-                                <input data-rules="req,price" [formControl]="formObject.controls['cost']" name="cost" 
+                                <input data-rules="req,price" [formControl]="formObject.controls['cost']" name="cost"
                                 type="text" class="form-control" placeholder="تكلفة الخدمة" [ngClass]="{'errors': validateControl('cost')}"/>
                                 <div class="errors"></div>
                             </div>
@@ -203,13 +212,13 @@
                 </fieldset>
 
                 <fieldset *ngIf="formObject.controls.is_product.value">
-                    <div class="col-md-12 form_paraphraph">
+                    <!--<div class="col-md-12 form_paraphraph">
                         <p class="title">معلومات الاسعار و الموردين</p>
                         <p class="note">المعلومات اللتى تحتوى على سعر الصنف و المورد</p>
-                    </div>
-                                
+                    </div>-->
+
                     <div class="col-md-12 first last">
-                        <div class="form-group col-md-6">
+                        <!--<div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">المورد</label>
                             <div class="col-md-12 ">
                                 <input data-rules="alph,min2,max25" [formControl]="formObject.controls['supplier']" name="supplier"
@@ -227,8 +236,22 @@
                                 </autocomplete>
                                 <div class="errors"></div>
                             </div>
+                        </div>-->
+                        <div class="col-md-6 col-sm-6 col-xs-6" *ngIf="__settings.is_tax">
+                            <div class="form-group col-md-12">
+                                <label class="col-md-12 col-form-label">الضريبة</label>
+                                <div class="col-md-12 col-xs-12 no-p">
+                                    <select class="form-control" name="tax" (change)="onSelectItem($event)" [formControl]="formObject.controls['tax_id']">
+                                        <option value=""></option>
+                                        <option value="__ADDONE__" name="__ADDONE__">أضف جديد</option>
+                                        <option *ngFor="let option of __taxesArray"
+                                            [value]="option.id" value="{{ option.id }}" >{{ option.name }}</option>
+                                    </select>
+                                    <div class="errors"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6" *ngIf="!_editable || _global.getToken()['settings']['super']">
+                        <div class="" *ngIf="!_editable" [ngClass]="{'col-xs-12-col-sm-12 col-md-12' : !__settings.is_tax , 'col-xs-6-col-sm-6 col-md-6' : __settings.is_tax }">
                             <div class="form-group col-md-4 col-sm-4">
                                 <label class="col-md-12 col-form-label">التكلفة</label>
                                 <div class="col-md-12 ">
@@ -254,7 +277,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" *ngIf="_editable && !_global.getToken()['settings']['super']">
+                        <div class="col-md-6" *ngIf="_editable">
                             <div class="form-group col-md-6 col-sm-6">
                                 <label class="col-md-12 col-form-label">التكلفة</label>
                                 <div class="col-md-12 ">
@@ -274,21 +297,21 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-12" *ngIf="formObject.controls.is_product.value">
+                    <div class="form-group col-md-12 last" *ngIf="formObject.controls.is_product.value">
                         <div class="col-md-12 col-md-12">
                             <br/>
                             <br/>
                             <div class="col-md-2 col-sm-3">
-                                <input type="checkbox" id="multibx" class="ios-toggle" 
+                                <input type="checkbox" id="multibx" class="ios-toggle"
                                 [formControl]="formObject.controls['is_multi_price']"/>
-                                <label for="multibx" class="checkbox-label"></label>    
-                            </div>  
+                                <label for="multibx" class="checkbox-label"></label>
+                            </div>
                             <div class="col-md-10 col-sm-9">
                                 <p class="h2">تفعيل تعدد اسعار الصنف</p>
                                 <p>تفعيل تعدد الاسعار يمكنك من بيع الاصناف باسعار مختلفة وفقا لنوع الطلب</p>
                                 <p>يمكنك اضافة سعر نصف الجملة و الجملة وجملة الجملة وسعر اضافى فى حال وجد</p>
-                            </div> 
-                        </div> 
+                            </div>
+                        </div>
                         <div class="col-md-6" *ngIf="formObject.controls.is_multi_price.value">
                             <div class="form-group col-md-6 col-sm-6">
                                 <label class="col-md-12 col-form-label">نصف الجملة</label>
@@ -326,20 +349,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 last" *ngIf="__settings.is_tax">
-                        <div class="form-group col-md-12">
-                            <label class="col-md-12 col-form-label">الضريبة</label>
-                            <div class="col-md-12 col-xs-12 no-p">
-                                <select class="form-control" name="tax" (change)="onSelectItem($event)" [formControl]="formObject.controls['tax_id']">
-                                    <option value=""></option>
-                                    <option value="__ADDONE__" name="__ADDONE__">أضف جديد</option>
-                                    <option *ngFor="let option of __taxesArray"
-                                        [value]="option.id" value="{{ option.id }}" >{{ option.name }}</option>
-                                </select>
-                                <div class="errors"></div>
-                            </div>
-                        </div>
-                    </div>
                 </fieldset>
 
                 <fieldset *ngIf="formObject.controls.is_product.value">
@@ -349,19 +358,19 @@
                                 <br/>
                                 <br/>
                                 <div class="col-md-2 col-sm-3">
-                                    <input type="checkbox" id="trackchbx" class="ios-toggle" 
+                                    <input type="checkbox" id="trackchbx" class="ios-toggle"
                                     [formControl]="formObject.controls['is_trackable']"/>
-                                    <label for="trackchbx" class="checkbox-label"></label>    
-                                </div>  
+                                    <label for="trackchbx" class="checkbox-label"></label>
+                                </div>
                                 <div class="col-md-10 col-sm-9">
                                     <p class="h2">تفعيل متابعة حركة الصنف {{ formObject.controls.name.value }}</p>
                                     <p>تفعيل متابعة الحركة يضمن لك متابعة الكميات المتبقية و المتوفرة للصنف</p>
                                     <p>لايمكنك بيع كميات من الصنف فى عدم توفرها  أو فى حال انتهاء الكمية</p>
                                     <p>يمكنك تفعيل تتبع الحركة من الاضافة التلقائية لكمية معينة من المورد فى حال وصول الكمية الى عدد معين انت تحدد و جلب الكمية المحددة ايضا</p>
                                     <p></p>
-                                </div> 
-                            </div> 
-                        </div>  
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12 first last" *ngIf="formObject.controls.is_trackable.value">
                        <div class="form-group col-md-3 col-sm-3  col-xs-6">
@@ -383,7 +392,7 @@
                        <div class="form-group col-md-3 col-sm-3  col-xs-6">
                             <label class="col-md-12 col-form-label">التنبيه عند الوصول</label>
                             <div class="col-md-12 ">
-                                <input data-rules="float" [formControl]="formObject.controls['limit_quantity']" name="limit_quantity" 
+                                <input data-rules="float" [formControl]="formObject.controls['limit_quantity']" name="limit_quantity"
                                 type="text" class="form-control" placeholder="الكمية اللتى سيتم تنبيهك عندها" [ngClass]="{'errors': validateControl('limit_quantity')}"/>
                                 <div class="errors"></div>
                             </div>
@@ -391,8 +400,8 @@
                         <div class="form-group col-md-3 col-sm-3  col-xs-6">
                             <label class="col-md-12 col-form-label">أقل كمية بيع</label>
                             <div class="col-md-12">
-                                <input data-rules="float" [formControl]="formObject.controls['limit_sell_quantity']" name="limit_sell_quantity"
-                                type="text" class="form-control" placeholder="أقل كمية بيع" [ngClass]="{'errors': validateControl('limit_sell_quantity')}">
+                                <input data-rules="float" [formControl]="formObject.controls['limit_sale_quantity']" name="limit_sale_quantity"
+                                type="text" class="form-control" placeholder="أقل كمية بيع" [ngClass]="{'errors': validateControl('limit_sale_quantity')}">
                                 <div class="errors"></div>
                             </div>
                         </div>
@@ -405,17 +414,17 @@
                                 <br/>
                                 <br/>
                                 <div class="col-md-2 col-sm-3">
-                                    <input type="checkbox" id="expirechbx" class="ios-toggle" 
+                                    <input type="checkbox" id="expirechbx" class="ios-toggle"
                                     [formControl]="formObject.controls['has_expire_date']"/>
-                                    <label for="expirechbx" class="checkbox-label"></label>    
-                                </div>  
+                                    <label for="expirechbx" class="checkbox-label"></label>
+                                </div>
                                 <div class="col-md-10 col-sm-9">
                                     <p class="h2">تفعيل صلاحية الصنف {{ formObject.controls.name.value }}</p>
                                     <p>اضافة صلاحية الانتهاء للصنف تمكنك من التنبيه فى حالة بيع أى صنف منتهى الصلاحية</p>
                                     <p>وأيضا يتم التنبيه لجميع الأصناف الأخرى وتتبع المنتحات اللتى عى وشك انتهاء مدة الصلاحية</p>
-                                </div> 
-                            </div> 
-                        </div>  
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group  col-md-12" *ngIf="formObject.controls.has_expire_date.value">
                         <label class="col-md-12 col-form-label">تاريخ الصلاحية</label>
@@ -433,19 +442,19 @@
                                 <br/>
                                 <br/>
                                 <div class="col-md-2 col-sm-3">
-                                    <input type="checkbox" id="variatychbx" class="ios-toggle" 
+                                    <input type="checkbox" id="variatychbx" class="ios-toggle"
                                     [formControl]="formObject.controls['is_variaty']"/>
-                                    <label for="variatychbx" class="checkbox-label"></label>    
-                                </div>  
+                                    <label for="variatychbx" class="checkbox-label"></label>
+                                </div>
                                 <div class="col-md-10 col-sm-9">
                                     <p class="h2">تفعيل تنوع الصنف {{ formObject.controls.name.value }}</p>
                                     <p>الصنف المتعدد هو الذى يمكن أن يتنوع فى اللون أو الحجم</p>
                                     <p>يمكنك اضافة الخيار الاول كاللون و اضافة قيم الخيار كالاخضر و الأصفر فى قيمة الخيار الأول</p>
                                     <p>يمكنك وضع سعر و كود أو باركود و مورد مختلف لكل نوع</p>
                                     <p>لابمكن ازالة أو اضافة التنوع بعد اتمام عملية الحفظ لانه سيؤثر على كثير من البيانات</p>
-                                </div> 
-                            </div> 
-                        </div>  
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-12 first" *ngIf="formObject.controls.is_variaty.value && formObject.controls.is_product.value">
                        <div class="form-group col-xs-6 col-md-6">
@@ -462,8 +471,8 @@
                         <div class="form-group col-xs-6 col-md-6">
                             <label class="col-md-12 col-form-label">القيمة مثال (أخضر,برتقالى..)</label>
                             <div class="col-md-12 ">
-                                <keys-cmp placeholder="أضف قيمة الخيار" 
-                                          dataRules="keywords" 
+                                <keys-cmp placeholder="أضف قيمة الخيار"
+                                          dataRules="keywords"
                                           [max]="50"
                                           classes="form-control"
                                           name="option_one_value"
@@ -487,8 +496,8 @@
                         <div class="form-group col-xs-6 col-md-6">
                             <label class="col-md-12 col-form-label">القيمة مثال (120x360..)</label>
                             <div class="col-md-12 ">
-                                <keys-cmp placeholder="أضف قيمة الخيار" 
-                                          dataRules="keywords" 
+                                <keys-cmp placeholder="أضف قيمة الخيار"
+                                          dataRules="keywords"
                                           [max]="50"
                                           classes="form-control"
                                           name="option_two_value"
@@ -501,7 +510,7 @@
                         <div class="form-group col-xs-6 col-md-6">
                             <label class="col-md-12 col-form-label">الخيار مثال (الجودة..)</label>
                             <div class="col-md-12 col-xs-12 no-p">
-                                <select class="form-control" name="option_three" (change)="onSelectItem($event)" 
+                                <select class="form-control" name="option_three" (change)="onSelectItem($event)"
                                 [formControl]="formObject.controls['option_three']">
                                     <option value=""></option>
                                     <option value="__ADDONE__" name="__ADDONE__">أضف جديد</option>
@@ -513,8 +522,8 @@
                         <div class="form-group col-xs-6 col-md-6">
                             <label class="col-md-12 col-form-label">القيمة مثال (ممتاز,متوسط..)</label>
                             <div class="col-md-12 ">
-                                <keys-cmp placeholder="أضف قيمة الخيار" 
-                                          dataRules="keywords" 
+                                <keys-cmp placeholder="أضف قيمة الخيار"
+                                          dataRules="keywords"
                                           [max]="50"
                                           classes="form-control"
                                           name="option_three_value"
@@ -529,7 +538,7 @@
                         <div class="form-group col-md-12">
                             <label class="col-md-12 col-form-label">الوصف</label>
                             <div class="col-md-12 ">
-                                <textarea data-rules="note,max100" [formControl]="formObject.controls['description']" name="description" 
+                                <textarea data-rules="note,max100" [formControl]="formObject.controls['description']" name="description"
                                 type="text" class="form-control textarea" placeholder="الوصف" [ngClass]="{'errors': validateControl('description')}"></textarea>
                                 <div class="errors"></div>
                             </div>

@@ -84,11 +84,11 @@
                 </div>
             </div>
 
-            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'sells'">
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'sales'">
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'اجمالى المبيعات'" 
-                                [data]="__sellsChartsData"
+                                [data]="__salesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'total'"
                                 [isPrice]="true"></charts>
@@ -97,7 +97,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'عدد المبيعات'" 
-                                [data]="__sellsChartsData"
+                                [data]="__salesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'count'"
                                 [isPrice]="false"></charts>
@@ -106,7 +106,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'الضرائب'" 
-                                [data]="__sellsChartsData"
+                                [data]="__salesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'tax'"
                                 [isPrice]="true"></charts>
@@ -115,18 +115,18 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'التخفيضات'" 
-                                [data]="__sellsChartsData"
+                                [data]="__salesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'discount'"
                                 [isPrice]="true"></charts>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'sells'">
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'sales'">
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'اجمالى المبيعات'" 
-                                [data]="__sellsChartsData"
+                                [data]="__salesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'total'"
                                 [isPrice]="true"></charts>
@@ -135,7 +135,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'عدد المبيعات'" 
-                                [data]="__sellsChartsData"
+                                [data]="__salesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'count'"
                                 [isPrice]="false"></charts>
@@ -144,7 +144,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'الضرائب'" 
-                                [data]="__sellsChartsData"
+                                [data]="__salesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'tax'"
                                 [isPrice]="false"></charts>
@@ -153,7 +153,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'التخفيضات'" 
-                                [data]="__sellsChartsData"
+                                [data]="__salesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'discount'"
                                 [isPrice]="false"></charts>
@@ -161,11 +161,11 @@
                 </div>
             </div>
 
-            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'buys'">
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'purchases'">
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'اجمالى المبيعات'" 
-                                [data]="__buysChartsData"
+                                [data]="__purchasesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'total'"
                                 [isPrice]="true"></charts>
@@ -174,7 +174,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'عدد المبيعات'" 
-                                [data]="__buysChartsData"
+                                [data]="__purchasesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'count'"
                                 [isPrice]="false"></charts>
@@ -183,7 +183,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'الضرائب'" 
-                                [data]="__buysChartsData"
+                                [data]="__purchasesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'tax'"
                                 [isPrice]="true"></charts>
@@ -192,18 +192,18 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'التخفيضات'" 
-                                [data]="__buysChartsData"
+                                [data]="__purchasesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'discount'"
                                 [isPrice]="true"></charts>
                     </div>
                 </div>
             </div>
-            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'buys'">
+            <div class="col-md-12 no-p" *ngIf="__showChartsType === 'purchases'">
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'اجمالى المبيعات'" 
-                                [data]="__buysChartsData"
+                                [data]="__purchasesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'total'"
                                 [isPrice]="true"></charts>
@@ -212,7 +212,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'عدد المبيعات'" 
-                                [data]="__buysChartsData"
+                                [data]="__purchasesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'count'"
                                 [isPrice]="false"></charts>
@@ -221,7 +221,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'الضرائب'" 
-                                [data]="__buysChartsData"
+                                [data]="__purchasesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'tax'"
                                 [isPrice]="false"></charts>
@@ -230,7 +230,7 @@
                 <div class="col-md-3 col-sm-6 no-p">
                     <div class="charts_item">
                         <charts [title]="'التخفيضات'" 
-                                [data]="__buysChartsData"
+                                [data]="__purchasesChartsData"
                                 [outlet]="_global.getToken()['register']['name']" 
                                 [summationField]="'discount'"
                                 [isPrice]="false"></charts>
@@ -269,10 +269,10 @@
                         </div>
                         <div class="reports_content">
                             <ul>
-                                <li><a (click)="prepareReport('SELLS','all')">تقارير كل المبيعات</a></li>
-                                <li><a (click)="prepareReport('SELLS','customer')">تقارير المبيعات حسب الزبون</a></li>
-                                <li><a (click)="prepareReport('SELLS','employee')">تقارير المبيعات حسب البائع</a></li>
-                                <li><a (click)="prepareReport('SELLS','author')">تقارير المبيعات حسب المستخدم</a></li>
+                                <li><a (click)="prepareReport('SALES','all')">تقارير كل المبيعات</a></li>
+                                <li><a (click)="prepareReport('SALES','customer')">تقارير المبيعات حسب الزبون</a></li>
+                                <li><a (click)="prepareReport('SALES','employee')">تقارير المبيعات حسب البائع</a></li>
+                                <li><a (click)="prepareReport('SALES','author')">تقارير المبيعات حسب المستخدم</a></li>
                             </ul>
                         </div>
                     </div>
@@ -284,10 +284,10 @@
                         </div>
                         <div class="reports_content">
                             <ul>
-                                <li><a (click)="prepareReport('BUYS','all')">تقارير كل المشتريات</a></li>
-                                <li><a (click)="prepareReport('BUYS','supplier')">تقارير المشتريات حسب المورد</a></li>
-                                <li><a (click)="prepareReport('BUYS','employee')">تقارير المشتريات حسب البائع</a></li>
-                                <li><a (click)="prepareReport('BUYS','author')">تقارير المشتريات حسب المستخدم</a></li>
+                                <li><a (click)="prepareReport('PURCHASES','all')">تقارير كل المشتريات</a></li>
+                                <li><a (click)="prepareReport('PURCHASES','supplier')">تقارير المشتريات حسب المورد</a></li>
+                                <li><a (click)="prepareReport('PURCHASES','employee')">تقارير المشتريات حسب البائع</a></li>
+                                <li><a (click)="prepareReport('PURCHASES','author')">تقارير المشتريات حسب المستخدم</a></li>
                             </ul>
                         </div>
                     </div>
@@ -333,9 +333,9 @@
                         </div>
                         <div class="reports_content">
                             <ul>
-                                <li><a (click)="prepareReport('PRODUCTS','purches')">تقارير الأصناف حسب المشتريات</a></li>
+                                <li><a (click)="prepareReport('PRODUCTS','purchaseOrders')">تقارير الأصناف حسب المشتريات</a></li>
                                 <li><a (click)="prepareReport('PRODUCTS','orders')">تقارير الأصناف حسب فواتير المبيعات</a></li>
-                                <!--<li><a (click)="prepareReport('PRODUCTS','sellorders')">تقارير الأصناف حسب المبيعات الفورية</a></li>-->
+                                <!--<li><a (click)="prepareReport('PRODUCTS','saleorders')">تقارير الأصناف حسب المبيعات الفورية</a></li>-->
                                 <li><a (click)="prepareReport('PRODUCTS','traffic')">تقارير حركة صنف</a></li>
                             </ul>
                         </div>
@@ -360,8 +360,8 @@
     
     <div class="col-md-12 no-p" [hidden]="!__showReport__">
         <!--<invoices-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'INVOICES'"></invoices-report>-->
-        <sells-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'SELLS'"></sells-report>
-        <buys-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'BUYS'"></buys-report>
+        <sales-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'SALES'"></sales-report>
+        <purchases-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'PURCHASES'"></purchases-report>
         <products-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'PRODUCTS'"></products-report>
         <contacts-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'CONTACTS'"></contacts-report>
         <wallet-report (onAction)="onAction($event)" [changable]="__CHANGABLE__" [by]="__BY__" [controls]="formObject" [from]="__form" [to]="__to" *ngIf="__DEPART__ === 'WALLET'"></wallet-report>
@@ -494,7 +494,7 @@
                         <p class="top_title">أرباح مبيعاتك</p>
                         <img src="assets/img/expl/expenses.svg" />
                         <p class="bottom">صافى الأرباح من المبيعات الكلية</p>
-                        <a class="botn" (click)="prepareReport('RESULTS','sellwins')">عرض التقرير</a>
+                        <a class="botn" (click)="prepareReport('RESULTS','salewins')">عرض التقرير</a>
                     </div>
                 </div>
             </div>

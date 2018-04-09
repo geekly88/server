@@ -3,7 +3,7 @@ export interface Suppliers{
 
     id : number,
     parent_id : number,
-    company_id : number,
+    company_id : number,branch_id:number,
     author_id : number,
 
     active : boolean,
@@ -12,7 +12,7 @@ export interface Suppliers{
     company_name:string,
     paid : number,
     total : number,
-    buys_count : number,
+    purchases_count : number,
     email : string,
     phone : string,
     mobile : string,

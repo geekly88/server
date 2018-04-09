@@ -5,7 +5,7 @@ import { LabProvider } from './';
 
 @Injectable()
 export class GlobalProvider{
-    
+
     public History:Array<string> = [];
     public config:Object;
     public lang:Object = getLang();
@@ -14,7 +14,7 @@ export class GlobalProvider{
     public months:Array<string> = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     constructor(
         private _router:Router,
-        private _lab:LabProvider    
+        private _lab:LabProvider
     ){
         let __appPort:string = '3000';
         let __serverPort:string = '1337';
@@ -26,8 +26,8 @@ export class GlobalProvider{
             serverPath : window.location.protocol + '//' + window.location.host.replace(__appPort , __serverPort) + '/',
             dashboard  : '/dashboard',
             report_perpage : 20,
-            sells_report_perpage : 10,
-            buys_report_perpage : 15,
+            sales_report_perpage : 10,
+            purchases_report_perpage : 15,
             alphanumdashed : /^[a-zA-Z0-9-_]+$/,
             nameRegex  : /^[a-zA-Z-_#\s\u0621-\u064A0-9ﻻ ]{2,50}$/,
             shortNameRegex  : /^[a-zA-Z-_\s\u0621-\u064A0-9ﻻ ]{1,50}$/,
@@ -45,23 +45,23 @@ export class GlobalProvider{
             startPrefix : '',
             endPrefix : '',
             bookCodes : [
-                'buys',
+                'purchases',
                 'storage',
                 'cash',
                 'customers',
                 'suppliers',
                 'bad_debt',
                 'products_accum',
-                'sells',
+                'sales',
                 'income_taxes',
                 'sales_returns',
                 'sales_discounts',
                 'sales_gifts',
                 'sales_services_exp',
                 'sales_loyalty',
-                'purchases_taxes',
-                'purchases_returns',
-                'purchases_discounts',
+                'purchaseOrders_taxes',
+                'purchaseOrders_returns',
+                'purchaseOrders_discounts',
                 'beginning_inventory',
                 'inventory_costs',
                 'banks'
@@ -85,7 +85,7 @@ export class GlobalProvider{
     ngOnInit():void{
         this.lang = getLang(this.getToken()['settings']['language']);
     };
-    
+
     trans(key:string):any{
         if(this.lang.hasOwnProperty(key))
             return this.lang[key];
@@ -107,7 +107,7 @@ export class GlobalProvider{
 
     setToken(key:any,route:any[]=null,clear:boolean=true):void{
         if(clear) { this.clearToken();}
-        localStorage.setItem('TokenKey', this.config['startPrefix'] 
+        localStorage.setItem('TokenKey', this.config['startPrefix']
         + JSON.stringify(key.data)
         + this.config['endPrefix']
         );
@@ -131,7 +131,7 @@ export class GlobalProvider{
         }
         return null;
     };
-    
+
     clearToken(route:any[] = null){
         localStorage.clear();
         if(route){
@@ -140,7 +140,7 @@ export class GlobalProvider{
     };
 
     setResource(resource:any , key:string):void{
-        localStorage.setItem(key, this.config['startPrefix'] 
+        localStorage.setItem(key, this.config['startPrefix']
         + JSON.stringify(resource)
         + this.config['endPrefix']
         );
@@ -177,13 +177,13 @@ export class GlobalProvider{
         };
         return url;
     }
-    
+
     randomString(length:number = 8, chars:string = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
         let result:string = '';
         for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
         return result;
     }
-    
+
     public stripTags(text:string):string{
         return text;
     }

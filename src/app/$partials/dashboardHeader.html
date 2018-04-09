@@ -59,9 +59,9 @@
         </div>
     </div>
     <div class="float_opp">
-        <a 
+        <a
             class="dropdown accounts_menu"><span class="float_exac dropdown-toggle" id="AccountsMenu" data-toggle="dropdown">
-                {{ _global.getToken()['username'] }} 
+                {{ _global.getToken()['username'] }}
                 <!--<img src="/assets/img/{{ _global.getToken()['img'] }}" *ngIf="_global.getToken()['img'] && _global.getToken()['img'] !== ''">-->
                 <!--<img src="/assets/icon/logo.ico" *ngIf="!_global.getToken()['img'] || _global.getToken()['img'] === ''">-->
             </span>
@@ -69,7 +69,8 @@
                 <div class="main_body">
                     <div class="col-md-12 no-p">
                         <ul class="col-md-12 no-p">
-                            <li (click)="OnNavigateLinks('accounts')" *ngIf="_global.getToken()['super']"><a><i class="ti-home"></i>الحسابات و الشركات</a></li>
+                            <li (click)="OnNavigateLinks('accounts')"><a><i class="ti-home"></i>الحسابات و الشركات</a></li>
+                            <li (click)="OnNavigateLinks('branches')"><a><i class="ti-direction-alt"></i>الفروع</a></li>
                             <li (click)="OnNavigateLinks('users')"><a><i class="ti-shield"></i>المستخدمين</a></li>
                             <li (click)="OnNavigateLinks('settings')"><a><i class="ti-settings"></i>الاعدادات</a></li>
                             <li (click)="_lab.__modal('#show-style-model')"><a><i class="ti-panel"></i>العرض</a></li>
@@ -84,7 +85,7 @@
 </nav>
 
 <div class="fade modal" id="show-info-modal" tabondex="-1" role="dialog"
-    aria-labelledby="myInfoModalLabel" aria-hidden="true" 
+    aria-labelledby="myInfoModalLabel" aria-hidden="true"
     data-query="" data-parse="0" data-lstget="/" data-ctrl="none">
     <div class="modal-dialog downloadmodal">
         <div class="modal-content">
@@ -96,14 +97,14 @@
                    <p class="title">معلومات الانشاء</p>
                </div>
                <div class="col-md-12 col-xs-12 col-sm-12 no-p info_content">
-                   
+
                </div>
             </div>
         </div>
     </div>
 </div>
 <div class="fade modal" id="show-download-modal" tabondex="-1" role="dialog"
-    aria-labelledby="myDownloadModalLabel" aria-hidden="true" 
+    aria-labelledby="myDownloadModalLabel" aria-hidden="true"
     data-query="" data-parse="0" data-lstget="/" data-ctrl="none">
     <div class="modal-dialog downloadmodal">
         <div class="modal-content">

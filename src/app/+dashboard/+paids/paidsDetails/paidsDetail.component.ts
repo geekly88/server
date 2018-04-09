@@ -260,6 +260,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
         let floatRegex:RegExp = this._global.config["floatRegex"];
         let alphanumdashed:RegExp = this._global.config["alphanumdashed"];
         this.formObject = this._fb.group({
+            branch_id     : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             number        : [ 1 , [Validators.required , Validators.pattern(intRegex)]],
             // page          : [ this._journal.page , [Validators.required , Validators.pattern(intRegex)]],
             reference     : ['' , Validators.pattern(alphanumdashed)],
@@ -293,7 +294,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
 
             is_registered : [ false ],
 
-            is_purches    : [ true ],
+            is_purchaseOrders    : [ true ],
             is_supplier   : [ false ],
             is_other      : [ false ],
 
@@ -394,7 +395,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
         this.formObject.controls['name_code'].setValue('');
         this.formObject.controls['name_id'].setValue(0);
         let typesProperty:Array<string> = [
-            'is_sales' , 'is_purches' , 'is_customer' , 'is_supplier' , 'is_employee' , 'is_other'
+            'is_sales' , 'is_purchaseOrders' , 'is_customer' , 'is_supplier' , 'is_employee' , 'is_other'
         ];
         typesProperty.forEach((property) => {
             if(property === chekbox) this.formObject.controls[property].setValue(true);
@@ -431,7 +432,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
                 this.formObject.controls['is_supplier'].setValue(true);
                 this.formObject.controls['is_customer'].setValue(false);
                 this.formObject.controls['is_employee'].setValue(false);
-                this.formObject.controls['is_purches'].setValue(false);
+                this.formObject.controls['is_purchaseOrders'].setValue(false);
                 this.formObject.controls['is_other'].setValue(false);
                 this.formObject.controls['is_sales'].setValue(false);
                 this.__type_label = 'اسم المورد';
@@ -440,7 +441,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
                 this.formObject.controls['is_supplier'].setValue(false);
                 this.formObject.controls['is_customer'].setValue(true);
                 this.formObject.controls['is_employee'].setValue(false);
-                this.formObject.controls['is_purches'].setValue(false);
+                this.formObject.controls['is_purchaseOrders'].setValue(false);
                 this.formObject.controls['is_sales'].setValue(false);
                 this.formObject.controls['is_other'].setValue(false);
                 this.__type_label = 'اسم الزبون';
@@ -449,7 +450,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
                 this.formObject.controls['is_supplier'].setValue(false);
                 this.formObject.controls['is_customer'].setValue(false);
                 this.formObject.controls['is_employee'].setValue(true);
-                this.formObject.controls['is_purches'].setValue(false);
+                this.formObject.controls['is_purchaseOrders'].setValue(false);
                 this.formObject.controls['is_sales'].setValue(false);
                 this.formObject.controls['is_other'].setValue(false);
                 this.__type_label = 'اسم الموظف';
@@ -457,7 +458,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
             case 'SALE':
                 this.formObject.controls['is_customer'].setValue(false);
                 this.formObject.controls['is_supplier'].setValue(false);
-                this.formObject.controls['is_purches'].setValue(false);
+                this.formObject.controls['is_purchaseOrders'].setValue(false);
                 this.formObject.controls['is_sales'].setValue(true);
                 this.formObject.controls['is_employee'].setValue(false);
                 this.formObject.controls['is_other'].setValue(false);
@@ -467,7 +468,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
                 this.formObject.controls['is_customer'].setValue(false);
                 this.formObject.controls['is_supplier'].setValue(false);
                 this.formObject.controls['is_sales'].setValue(false);
-                this.formObject.controls['is_purches'].setValue(true);
+                this.formObject.controls['is_purchaseOrders'].setValue(true);
                 this.formObject.controls['is_other'].setValue(false);
                 this.formObject.controls['is_employee'].setValue(false);
                 this.__type_label = 'رقم فاتورة الشراء';
@@ -476,7 +477,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
                 this.formObject.controls['is_customer'].setValue(false);
                 this.formObject.controls['is_supplier'].setValue(false);
                 this.formObject.controls['is_sales'].setValue(false);
-                this.formObject.controls['is_purches'].setValue(false);
+                this.formObject.controls['is_purchaseOrders'].setValue(false);
                 this.formObject.controls['is_employee'].setValue(false);
                 this.formObject.controls['is_other'].setValue(true);
                 this.__type_label = this.__is_paid ? 'الحساب المدين' : 'الحساب الدائن';
@@ -519,7 +520,7 @@ export class PaidsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
         
             case 'SALE':
             case 'PUR':
-                __url__ = type === 'SALE' ? 'sells' : 'buys';
+                __url__ = type === 'SALE' ? 'sales' : 'purchases';
                 this.__autoObj = {
                     url : __url__ + '/?contains=false',
                     template : 'فاتورة رقم  #number',

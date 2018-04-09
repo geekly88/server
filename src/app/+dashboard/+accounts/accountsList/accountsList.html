@@ -48,10 +48,10 @@
                         <td width="40px">
                             <span>
                                 <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
-                            </span>        
+                            </span>
                         </td>
                         <td class="hidden-lg-down pro_img image">
-                            <img 
+                            <img
                             *ngIf="item.img" src="{{ _global.config['serverPath']+'uploads/avatars/'+ item.img }}" />
                             <img *ngIf="!item.img" src="/assets/img/noimage.png"  />
                             <input name="file" (change)="onUploadImage(item)" enctype="multipart/form-data" type="file" id="myFileInputField" />
@@ -62,25 +62,25 @@
                         <td class="hidden-lg-down">{{ item.city }}</td>
                         <td class="hidden-lg-down">{{ item.town }}</td>
                         <td >
-                            <input type="checkbox" data-id="{{ item.id }}" id="changexhkbx_{{ item.id }}" class="ios-toggle" 
+                            <input type="checkbox" data-id="{{ item.id }}" id="changexhkbx_{{ item.id }}" class="ios-toggle"
                                    [checked]="item.id === _global.getToken()['company_id']"
                                    (change)="OnChangeCurrentAccount($event)"/>
-                            <label for="changexhkbx_{{ item.id }}" class="checkbox-label"></label> 
+                            <label for="changexhkbx_{{ item.id }}" class="checkbox-label"></label>
                         </td>
                         <td class="actions">
                             <dashboard-actions
                                 [obj]="_actionsObjs" [item]="item" (onAction)="onAction($event)">
                             </dashboard-actions>
                         </td>
-                        
+
                     </tr>
                 </tbody>
             </table>
         </div>
         <div class="main_footer">
-            <dashboard-footer 
+            <dashboard-footer
                 [pages]="__pages"
-                [count]="__count" 
+                [count]="__count"
                 [pageUrl]="_controller"
                 [filterObj]="_filtersObjs"
                 [searchObj]="_searchObjs"
@@ -91,4 +91,3 @@
     </div>
 </div>
 <!--<show-item [showItemFields]="_showItemFields" [showItem]="_showItem" [isShowItem]="_isShowItem" (onShowItem)="onShowItem($event)"></show-item>-->
-

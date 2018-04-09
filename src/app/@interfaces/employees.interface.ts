@@ -1,9 +1,9 @@
-import { Sells } from './';
+import { Sales } from './';
 export interface Employees{
 
     id : number,
     parent_id : number,
-    company_id : number,
+    company_id : number,branch_id:number,
     author_id : number,
 
     active : boolean,
@@ -12,10 +12,10 @@ export interface Employees{
     company_name:string,
     paid : number,
     total : number,
-    buys_total:number,
-    buys_paid:number,
-    sells_count : number,
-    buys_count : number,
+    purchases_total:number,
+    purchases_paid:number,
+    sales_count : number,
+    purchases_count : number,
     email : string,
     phone : string,
     mobile : string,
@@ -47,7 +47,7 @@ export interface Employees{
     custom_field4 :string,
 
     description : string,
-    sells : Sells[],
+    sales : Sales[],
     createdAt : Date,
     updatedAt : Date,
 

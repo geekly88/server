@@ -23,7 +23,7 @@
                 <button class="btn btn-primary register-activate" (click)="onPerpareOpenRegister()">تفعيل المسجل</button>
             </div>
             <div class="col-md-12 col-xs-12 expl bounceInDown" *ngIf="editable && editItem && editItem.case === 'open'">
-                <p><img src="/assets/img/expl/sell.svg" width="100px" /></p>
+                <p><img src="/assets/img/expl/sale.svg" width="100px" /></p>
 
                 <div class="col-md-12 col-xs-12">
                     <h2 class="center">المسجل مفعل حاليا</h2>
@@ -41,16 +41,16 @@
                     <p class="shade">يمكنك الذهاب للمبيعات</p>
                 </div>
 
-                <button class="btn btn-primary register-activate" (click)="_global.navigatePanel('sells/details')">الذهاب للمبيعات</button>
+                <button class="btn btn-primary register-activate" (click)="_global.navigatePanel('sales/details')">الذهاب للمبيعات</button>
             </div>
             <div class="col-md-12 col-xs-12 expl bounceInDown" *ngIf="__hasParam && editItem && editItem.case === 'close'">
-                <p><img src="/assets/img/expl/sell.svg" width="100px" /></p>
+                <p><img src="/assets/img/expl/sale.svg" width="100px" /></p>
 
                 <div class="col-md-12 col-xs-12">
                     <h2 class="center">بيانات الجلسة رقم #{{ editItem.closure }}</h2>
                     <!--<p class="shade">يمكنك الذهاب للمبيعات</p>-->
                 </div>
-                <!--<button class="btn btn-primary register-activate" (click)="_global.navigatePanel('sells/details')">الذهاب للمبيعات</button>-->
+                <!--<button class="btn btn-primary register-activate" (click)="_global.navigatePanel('sales/details')">الذهاب للمبيعات</button>-->
             </div>
             <div class="col-md-12 col-xs-12 no-p register-header" *ngIf="editItem">
                 <div class="col-md-12 col-xs-12 no-p">

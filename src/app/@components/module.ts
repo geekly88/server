@@ -15,11 +15,13 @@ import * as child from './../+dashboard/exports';
 @NgModule({
     declarations: [
             // Components / Directives/ Pipes
-            child.SellReportComponent,
+            child.SaleReportComponent,
             child.BookKeppingReportComponent,
-            child.BuyReportComponent,
+            child.PurchaseReportComponent,
             child.BanksDetailsComponent,
             child.BanksListComponent,
+            child.BranchesDetailsComponent,
+            child.BranchesListComponent,
             child.ContactsReportComponent,
             child.ProductsReportComponent,
             child.WalletReportComponent,
@@ -36,12 +38,12 @@ import * as child from './../+dashboard/exports';
             child.HistoryListComponent,
             child.TimerListComponent,
             child.TimerDetailsComponent,
-            child.BuysDetailsComponent,
-            child.BuysListComponent,
-            child.BuysShowsComponent,
-            child.SellsDetailsComponent,
-            child.SellsListComponent,
-            child.SellsShowsComponent,
+            child.PurchasesDetailsComponent,
+            child.PurchasesListComponent,
+            child.PurchasesShowsComponent,
+            child.SalesDetailsComponent,
+            child.SalesListComponent,
+            child.SalesShowsComponent,
             child.RegistersDetailsComponent,
             child.RegistersListComponent,
             child.RegistersHistoryDetailsComponent,
@@ -105,15 +107,17 @@ import * as child from './../+dashboard/exports';
         CommonModule, ReactiveFormsModule, FormsModule, TooltipModule ,
         PopoverModule , Daterangepicker , Ng2DatetimePickerModule //,ChartsModule
         , ChartModule
-        //, MyDatePickerModule 
+        //, MyDatePickerModule
     ],
     exports : [
-       
-        child.SellReportComponent,
+
+        child.SaleReportComponent,
         child.BookKeppingReportComponent,
-        child.BuyReportComponent,
+        child.PurchaseReportComponent,
         child.BanksDetailsComponent,
         child.BanksListComponent,
+        child.BranchesDetailsComponent,
+        child.BranchesListComponent,
         child.ContactsReportComponent,
         child.ProductsReportComponent,
         child.WalletReportComponent,
@@ -130,12 +134,12 @@ import * as child from './../+dashboard/exports';
         child.HistoryListComponent,
         child.TimerListComponent,
         child.TimerDetailsComponent,
-        child.BuysDetailsComponent,
-        child.BuysListComponent,
-        child.BuysShowsComponent,
-        child.SellsDetailsComponent,
-        child.SellsListComponent,
-        child.SellsShowsComponent,
+        child.PurchasesDetailsComponent,
+        child.PurchasesListComponent,
+        child.PurchasesShowsComponent,
+        child.SalesDetailsComponent,
+        child.SalesListComponent,
+        child.SalesShowsComponent,
         child.RegistersDetailsComponent,
         child.RegistersListComponent,
         child.RegistersHistoryDetailsComponent,
@@ -157,7 +161,7 @@ import * as child from './../+dashboard/exports';
         child.OptionsDetailsComponent,
         child.OptionsListComponent,
         child.UsersListComponent,
-        child.UsersDetailsComponent, 
+        child.UsersDetailsComponent,
         child.UsersPremessionsComponent,
         child.BookKeppingListComponent,
         child.BookKeppingDetailsComponent,
@@ -192,8 +196,8 @@ import * as child from './../+dashboard/exports';
         pip.ReportSrc,
         pip.MyTimerPipe,
         pip.MyPaymentTypesPipe
-        
-        
+
+
     ]
 })
 export class DashboardComponentsModule{ }

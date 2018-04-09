@@ -8,16 +8,28 @@
                         <p class="title head">اضافة زبون جديد</p>
                         <p class="note">الزبون هو الشخص أو الشركة اللتى تقوم بشراء منتجاتك أو طلب خدماتك اللتى تقوم بتقديمها</p>
                     </div>
-                    <div class="col-md-12 first">
+                    <div class="col-md-12 first" *ngIf="_global.getResource('branches').length > 1">
+                        <div class="form-group col-md-12 col-sm-12">
+                            <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">الفرع</label>
+                            <div class="col-md-12 ">
+                                <select class="form-control" name="branch_id" (change)="onSelectItem($event)" [formControl]="formObject.controls['branch_id']">
+                                    <option *ngFor="let option of _global.getResource('branches')"
+                                        [value]="option.id" value="{{ option.id }}" >{{ option.name }}</option>
+                                </select>
+                                <div class="errors"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" [ngClass]="{ 'first' : _global.getResource('branches').length === 1}">
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-xs-12 col-form-label">اسم الزبون</label>
                             <div class="col-md-9 col-xs-8 inline-first">
-                                <input data-rules="req,alph,min2,max25" [formControl]="formObject.controls['name']" name="name" 
+                                <input data-rules="req,alph,min2,max25" [formControl]="formObject.controls['name']" name="name"
                                 type="text" class="form-control autofocus" placeholder="اسم الزبون" [ngClass]="{'errors': validateControl('name')}"/>
                                 <div class="errors"></div>
                             </div>
                             <div class="col-md-3 col-xs-4 inline-last">
-                                <input data-rules="num" [formControl]="formObject.controls['code']" name="code" 
+                                <input data-rules="num" [formControl]="formObject.controls['code']" name="code"
                                 type="text" class="form-control" placeholder="المعرف" [ngClass]="{'errors': validateControl('code')}">
                                 <div class="errors"></div>
                             </div>
@@ -25,7 +37,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">اسم الشركة</label>
                             <div class="col-md-12">
-                                <input data-rules="name,min2,max50" [formControl]="formObject.controls['company_name']" name="company_name" 
+                                <input data-rules="name,min2,max50" [formControl]="formObject.controls['company_name']" name="company_name"
                                 type="text" class="form-control" placeholder="اسم الشركة" [ngClass]="{'errors': validateControl('company_name')}">
                                 <div class="errors"></div>
                             </div>
@@ -35,7 +47,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">رصيد أول المدة</label>
                             <div class="col-md-12">
-                                <input data-rules="price" [formControl]="formObject.controls['open_amount']" name="open_amount" 
+                                <input data-rules="price" [formControl]="formObject.controls['open_amount']" name="open_amount"
                                 type="text" class="form-control" placeholder="رصيد أول المدة" [ngClass]="{'errors': validateControl('open_amount')}">
                                 <div class="errors"></div>
                             </div>
@@ -43,7 +55,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">البريد الالكترونى</label>
                             <div class="col-md-12">
-                                <input data-rules="email" [formControl]="formObject.controls['email']" name="email" 
+                                <input data-rules="email" [formControl]="formObject.controls['email']" name="email"
                                 type="text" class="form-control" placeholder="البريد الالكترونى" [ngClass]="{'errors': validateControl('email')}">
                                 <div class="errors"></div>
                             </div>
@@ -53,7 +65,7 @@
                         <div class="form-group col-md-12">
                             <label class="col-lg-12 col-form-label">البريد الالكترونى</label>
                             <div class="col-md-12">
-                                <input data-rules="email" [formControl]="formObject.controls['email']" name="email" 
+                                <input data-rules="email" [formControl]="formObject.controls['email']" name="email"
                                 type="text" class="form-control" placeholder="البريد الالكترونى" [ngClass]="{'errors': validateControl('email')}">
                                 <div class="errors"></div>
                             </div>
@@ -71,14 +83,14 @@
                                 </select>
                             </div>
                             <div class="col-md-9 col-xs-9 inline-last">
-                                <input *ngIf="formObject.controls.phoneType.value === 'phone'" 
-                                data-rules="phone" [formControl]="formObject.controls['phone']" name="phone" 
+                                <input *ngIf="formObject.controls.phoneType.value === 'phone'"
+                                data-rules="phone" [formControl]="formObject.controls['phone']" name="phone"
                                 type="text" class="form-control" placeholder="رقم الهاتف" [ngClass]="{'errors': validateControl('phone')}">
                                 <input *ngIf="formObject.controls.phoneType.value === 'mobile'"
-                                data-rules="phone" [formControl]="formObject.controls['mobile']" name="mobile" 
+                                data-rules="phone" [formControl]="formObject.controls['mobile']" name="mobile"
                                 type="text" class="form-control" placeholder="رقم النقال" [ngClass]="{'errors': validateControl('mobile')}">
                                 <input *ngIf="formObject.controls.phoneType.value === 'fax'"
-                                data-rules="phone" [formControl]="formObject.controls['fax']" name="fax" 
+                                data-rules="phone" [formControl]="formObject.controls['fax']" name="fax"
                                 type="text" class="form-control" placeholder="رقم الفاكس" [ngClass]="{'errors': validateControl('fax')}">
                                 <div class="errors"></div>
                             </div>
@@ -86,7 +98,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">الموقع الالكترونى</label>
                             <div class="col-md-12">
-                                <input data-rules="url" [formControl]="formObject.controls['website']" name="website" 
+                                <input data-rules="url" [formControl]="formObject.controls['website']" name="website"
                                 type="text" class="form-control" placeholder="الموقع الالكترونى" [ngClass]="{'errors': validateControl('website')}">
                                 <div class="errors"></div>
                             </div>
@@ -106,7 +118,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">العمر</label>
                             <div class="col-md-12">
-                                <input data-rules="num" [formControl]="formObject.controls['age']" name="age" 
+                                <input data-rules="num" [formControl]="formObject.controls['age']" name="age"
                                 type="text" class="form-control" placeholder="العمر" [ngClass]="{'errors': validateControl('age')}">
                                 <div class="errors"></div>
                             </div>
@@ -123,7 +135,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">البلد</label>
                             <div class="col-md-12 ">
-                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['country']" 
+                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['country']"
                                 type="text" class="form-control" placeholder="البلد" [ngClass]="{'errors': validateControl('country')}"/>
                                     <div class="errors"></div>
                             </div>
@@ -131,7 +143,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">المدينة</label>
                             <div class="col-md-12">
-                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['state']" 
+                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['state']"
                                     type="text" class="form-control" placeholder="المدينة" [ngClass]="{'errors': validateControl('state')}">
                                 <div class="errors"></div>
                             </div>
@@ -141,7 +153,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">المنطقة</label>
                             <div class="col-md-12">
-                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['city']" 
+                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['city']"
                                     type="text" class="form-control" placeholder="المنطقة" [ngClass]="{'errors': validateControl('city')}">
                                 <div class="errors"></div>
                             </div>
@@ -149,7 +161,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">العنوان البريدى</label>
                             <div class="col-md-12">
-                                <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['postcode']" 
+                                <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['postcode']"
                                 type="text" class="form-control" placeholder="العنوان البريدى" [ngClass]="{'errors': validateControl('postcode')}">
                                 <div class="errors"></div>
                             </div>
@@ -159,7 +171,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">الشارع 1</label>
                             <div class="col-md-12">
-                                <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address1']" 
+                                <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address1']"
                                 type="text" class="form-control" placeholder="الشارع 1" [ngClass]="{'errors': validateControl('address1')}">
                                 <div class="errors"></div>
                             </div>
@@ -167,7 +179,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-lg-12 col-form-label">الشارع 2</label>
                             <div class="col-md-12">
-                                <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address2']" 
+                                <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address2']"
                                 type="text" class="form-control" placeholder="الشارع 2" [ngClass]="{'errors': validateControl('address2')}">
                                 <div class="errors"></div>
                             </div>
@@ -185,16 +197,16 @@
                                 <br/>
                                 <br/>
                                 <div class="col-md-2 col-sm-3">
-                                    <input type="checkbox" id="variatychbx" class="ios-toggle" 
+                                    <input type="checkbox" id="variatychbx" class="ios-toggle"
                                     [formControl]="formObject.controls['is_same_address']"/>
-                                    <label for="variatychbx" class="checkbox-label"></label>    
-                                </div>  
+                                    <label for="variatychbx" class="checkbox-label"></label>
+                                </div>
                                 <div class="col-md-10 col-sm-9">
                                     <p class="h2">استخدام عنوان مختلف لعملية الشحن</p>
                                     <!--<p>اضافة صلاحية الانتهاء للصنف تمكنك من التنبيه فى حالة بيع أى صنف منتهى الصلاحية</p>
                                     <p>وأيضا يتم التنبيه لجميع الأصناف الأخرى وتتبع المنتحات اللتى عى وشك انتهاء مدة الصلاحية</p>-->
-                                </div> 
-                            </div> 
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-12 no-p" [hidden]="!formObject.value.is_same_address">
@@ -202,7 +214,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-lg-12 col-form-label">البلد</label>
                                 <div class="col-md-12 ">
-                                    <input data-rules="alph,min2,max25" [formControl]="formObject.controls['country']" 
+                                    <input data-rules="alph,min2,max25" [formControl]="formObject.controls['country']"
                                     type="text" class="form-control" placeholder="البلد" [ngClass]="{'errors': validateControl('country')}"/>
                                         <div class="errors"></div>
                                 </div>
@@ -210,7 +222,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-lg-12 col-form-label">المدينة</label>
                                 <div class="col-md-12">
-                                    <input data-rules="alph,min2,max25" [formControl]="formObject.controls['state']" 
+                                    <input data-rules="alph,min2,max25" [formControl]="formObject.controls['state']"
                                         type="text" class="form-control" placeholder="المدينة" [ngClass]="{'errors': validateControl('state')}">
                                     <div class="errors"></div>
                                 </div>
@@ -220,7 +232,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-lg-12 col-form-label">المنطقة</label>
                                 <div class="col-md-12">
-                                    <input data-rules="alph,min2,max25" [formControl]="formObject.controls['city']" 
+                                    <input data-rules="alph,min2,max25" [formControl]="formObject.controls['city']"
                                         type="text" class="form-control" placeholder="المنطقة" [ngClass]="{'errors': validateControl('city')}">
                                     <div class="errors"></div>
                                 </div>
@@ -228,7 +240,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-lg-12 col-form-label">العنوان البريدى</label>
                                 <div class="col-md-12">
-                                    <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['postcode']" 
+                                    <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['postcode']"
                                     type="text" class="form-control" placeholder="العنوان البريدى" [ngClass]="{'errors': validateControl('postcode')}">
                                     <div class="errors"></div>
                                 </div>
@@ -238,7 +250,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-lg-12 col-form-label">الشارع 1</label>
                                 <div class="col-md-12">
-                                    <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address1']" 
+                                    <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address1']"
                                     type="text" class="form-control" placeholder="الشارع 1" [ngClass]="{'errors': validateControl('address1')}">
                                     <div class="errors"></div>
                                 </div>
@@ -246,7 +258,7 @@
                             <div class="form-group col-md-6">
                                 <label class="col-lg-12 col-form-label">الشارع 2</label>
                                 <div class="col-md-12">
-                                    <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address2']" 
+                                    <input data-rules="alphnumdashed,min2,max50" [formControl]="formObject.controls['address2']"
                                     type="text" class="form-control" placeholder="الشارع 2" [ngClass]="{'errors': validateControl('address2')}">
                                     <div class="errors"></div>
                                 </div>
@@ -264,7 +276,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">خيار اضافى 1</label>
                             <div class="col-md-12 ">
-                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['custom_field1']" 
+                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['custom_field1']"
                                 type="text" class="form-control" placeholder="خيار اضافى 1" [ngClass]="{'errors': validateControl('custom_field1')}"/>
                                     <div class="errors"></div>
                             </div>
@@ -272,7 +284,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">خيار اضافى 2</label>
                             <div class="col-md-12 ">
-                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['custom_field2']" 
+                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['custom_field2']"
                                 type="text" class="form-control" placeholder="خيار اضافى 2" [ngClass]="{'errors': validateControl('custom_field2')}"/>
                                     <div class="errors"></div>
                             </div>
@@ -280,7 +292,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">خيار اضافى 3</label>
                             <div class="col-md-12 ">
-                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['custom_field3']" 
+                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['custom_field3']"
                                 type="text" class="form-control" placeholder="خيار اضافى 3" [ngClass]="{'errors': validateControl('custom_field3')}"/>
                                     <div class="errors"></div>
                             </div>
@@ -288,7 +300,7 @@
                         <div class="form-group col-md-6">
                             <label class="col-md-12 col-form-label">خيار اضافى 4</label>
                             <div class="col-md-12 ">
-                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['custom_field4']" 
+                                <input data-rules="alph,min2,max25" [formControl]="formObject.controls['custom_field4']"
                                 type="text" class="form-control" placeholder="خيار اضافى 4" [ngClass]="{'errors': validateControl('custom_field4')}"/>
                                     <div class="errors"></div>
                             </div>
@@ -298,7 +310,7 @@
                         <div class="form-group col-md-12">
                             <label class="col-lg-12 col-form-label">ملاحظات</label>
                             <div class="col-md-12 ">
-                                <textarea data-rules="note" [formControl]="formObject.controls['description']" name="description" 
+                                <textarea data-rules="note" [formControl]="formObject.controls['description']" name="description"
                                 type="text" class="form-control textarea" placeholder="ملاحظات" [ngClass]="{'errors': validateControl('description')}"></textarea>
                                 <div class="errors"></div>
                             </div>

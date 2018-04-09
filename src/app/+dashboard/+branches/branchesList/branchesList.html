@@ -1,0 +1,93 @@
+branches<div class="col-md-12 padding-20 list">
+    <div class="col-md-12 headtitle">
+        <p>الحسابات</p>
+    </div>
+    <div class="main_action clearfix">
+        <p class="title">قائمة تضم جميع الفروع المضافة</p>
+        <p>...</p>
+        <p class="title __expl" (click)="__explain = !__explain">اعرف أكثر <i class="fa fa-life-saver"></i></p>
+        <addnew-item (onAddNewClick)="onAddNewClick($event)"></addnew-item>
+    </div>
+    <div class="col-md-12 padding-20 expl bounceInDown" *ngIf="__explain || __hideLists">
+        <p> فرع فى ذات الوقت
+            يمكنك تسجيل أكثر من فرع للحساب الواحد ... كما يمكنك مزامنة أكثر من
+        </p>
+        <p><img src="/assets/img/expl/branches.svg" width="100px" /></p>
+        <p class="add" (click)="onAddNewClick({})">أضف حساب جديد</p>
+    </div>
+    <div class="col-xl-12 col-sm-12 col-xs-12 col-md-12 box noshadow">
+        <div class="main_body">
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p above_table" [hidden]="__hideLists">
+                <li class="active">
+                    <a>الكل</a>
+                </li>
+                <li class="opp" (click)="onTopActionClick({clicked:true,action:'EXPORTLIST'})"><a>تصدير القائمة <i class="fa fa-database"></i></a></li>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12 no-p table-rainbow top-rainbow" [hidden]="__hideLists">
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [xshidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+                <ranbow-colors [class]="'col-md-3 col-sm-6 col-xs-12'" [smhidden]="true"></ranbow-colors>
+            </div>
+            <table class="table" [hidden]="__hideLists">
+                <thead>
+                    <tr>
+                        <td width="40px"></td>
+                        <td class="hidden-lg-down pro_img image"></td>
+                        <td (click)="OnOrderBy('name')" [ngClass]="{'active' : __order === 'name'}">الاسم</td>
+                        <td class="hidden-sm-down" (click)="OnOrderBy('phone')" [ngClass]="{'active' : __order === 'phone'}">الهاتف</td>
+                        <td (click)="OnOrderBy('country')" class="hidden-lg-down" [ngClass]="{'active' : __order === 'country'}">البلد</td>
+                        <td class="hidden-lg-down" (click)="OnOrderBy('city')" [ngClass]="{'active' : __order === 'city'}">المنطقة</td>
+                        <td class="hidden-lg-down" (click)="OnOrderBy('town')" [ngClass]="{'active' : __order === 'town'}">المدينة</td>
+                        <td width="50px">مزامنة</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of _list">
+                        <td width="40px">
+                            <span>
+                                <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
+                            </span>
+                        </td>
+                        <td class="hidden-lg-down pro_img image">
+                            <img
+                            *ngIf="item.img" src="{{ _global.config['serverPath']+'uploads/avatars/'+ item.img }}" />
+                            <img *ngIf="!item.img" src="/assets/img/noimage.png"  />
+                            <input name="file" (change)="onUploadImage(item)" enctype="multipart/form-data" type="file" id="myFileInputField" />
+                        </td>
+                        <td>{{ item.name }}</td>
+                        <td class="hidden-sm-down">{{ item.phone }}</td>
+                        <td class="hidden-lg-down">{{ item.country }}</td>
+                        <td class="hidden-lg-down">{{ item.city }}</td>
+                        <td class="hidden-lg-down">{{ item.town }}</td>
+                        <td >
+                            <input type="checkbox" data-id="{{ item.id }}" id="changexhkbx_{{ item.id }}" class="ios-toggle"
+                                   [checked]="__isItTheCurrentBranch(item.id)"
+                                   (change)="OnChangeCurrentBranch($event)"/>
+                            <label for="changexhkbx_{{ item.id }}" class="checkbox-label"></label>
+                        </td>
+                        <td class="actions">
+                            <dashboard-actions
+                                [obj]="_actionsObjs" [item]="item" (onAction)="onAction($event)">
+                            </dashboard-actions>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="main_footer">
+            <dashboard-footer
+                [pages]="__pages"
+                [count]="__count"
+                [pageUrl]="_controller"
+                [filterObj]="_filtersObjs"
+                [searchObj]="_searchObjs"
+                (pageChanging)="onPageChanging($event)"
+                (onAction)="onTopActionClick($event)">
+            </dashboard-footer>
+        </div>
+    </div>
+</div>
+<!--<show-item [showItemFields]="_showItemFields" [showItem]="_showItem" [isShowItem]="_isShowItem" (onShowItem)="onShowItem($event)"></show-item>-->

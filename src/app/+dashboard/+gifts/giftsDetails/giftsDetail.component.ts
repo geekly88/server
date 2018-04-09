@@ -146,6 +146,7 @@ export class GiftsDetailsComponent implements OnInit,AfterViewInit,OnChanges{
         let floatRegex:RegExp = this._global.config["floatRegex"];
         let alphanumdashed:RegExp = this._global.config["alphanumdashed"];
         this.formObject = this._fb.group({
+            branch_id     : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             name          : ['' , Validators.pattern(nameRegex)],
             coupon        : ['' , Validators.pattern(alphanumdashed)],
             type          : ['' , Validators.pattern(nameRegex)],

@@ -141,6 +141,7 @@ export class TaxesDetailsComponent implements OnInit,AfterViewInit,OnChanges{
         let nameRegex:RegExp = this._global.config["nameRegex"];
         let intRegex:RegExp = this._global.config["intRegex"];
         this.formObject = this._fb.group({
+            branch_id          : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             name               : ['' , [ Validators.required , Validators.pattern(nameRegex)]],
             tax                : ['' , [ Validators.required , Validators.pattern(intRegex)]],
         });

@@ -11,15 +11,15 @@ import { Suppliers , BooksTree } from './../../../@interfaces';
 import { HttpRequestService } from './../../../@services';
 
 import { Uploader }      from 'angular2-http-file-upload';
-import { MyUploadItem } from './../../myUploadItem'; 
+import { MyUploadItem } from './../../myUploadItem';
 
 
 @Component({
     selector : 'suppliers-list',
     templateUrl : './suppliersList.html',
     providers : [
-        GlobalProvider, 
-        LabProvider, 
+        GlobalProvider,
+        LabProvider,
         HttpRequestService,
         AutocompleteComponent,
         AddNewComponent,
@@ -79,7 +79,7 @@ export class SuppliersListComponent implements OnInit{
     onAction($event):void{
         switch($event.action){
             case 'DELETE':
-                this.__deleteItems($event.item.id);                
+                this.__deleteItems($event.item.id);
                 break;
             case 'EDIT':
                 let __url = 'suppliers/details/'+ $event.item.id.toString();
@@ -106,11 +106,7 @@ export class SuppliersListComponent implements OnInit{
             this._lab.__setAlerts__('warn' , 'حجم الصورة أقل من 10 ميجابايت ... <jpeg,png>');
         };
         this._uploaderService.onCompleteUpload = (img, response, status, headers) => {
-            if(response.data && response.data){
-                location.reload();
-                // let __imageSrc:string = this._global.config['serverPath'] + 'images/uploaded/' + response.data;
-                // this._lab.jQuery('img#img_' + item.id).attr('src' , __imageSrc);
-            }
+            return this._lab.__onChangeAvatar__(this , item , response.data);
         };
         this._uploaderService.onProgressUpload = (img, percentComplete) => {
         };
@@ -137,7 +133,7 @@ export class SuppliersListComponent implements OnInit{
     onPageChanging($event):void{
         let __queryParams:any = this._router.routerState.root.queryParams['value'];
         if(!__queryParams || !__queryParams['sort']){
-            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort; 
+            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort;
         }
         this.__getItems(this._controller +'/'+ $event.queryParams);
     }
@@ -183,7 +179,7 @@ export class SuppliersListComponent implements OnInit{
             open_amount : 'رصيد أول المدة',
             total : 'اجمالى المشتريات' ,
             paid : 'المدفوع للمشتريات' ,
-            buys_count : 'عدد المشتريات',
+            purchases_count : 'عدد المشتريات',
             createdAt : 'تاريخ الانشاء',
             updatedAt : 'أخر تعديل',
             __pipes : {
@@ -197,7 +193,7 @@ export class SuppliersListComponent implements OnInit{
                 open_amount : true,
                 createdAt : true,
                 updatedAt : true,
-                buys_count : true,
+                purchases_count : true,
                 paid : true,
                 total : true,
             }
@@ -227,7 +223,7 @@ export class SuppliersListComponent implements OnInit{
                     this.__hideLists = true;
                 }
             },
-            (error) => { 
+            (error) => {
                 this.errors = error;
                 this.__count = 0;
                 this.__pages = 0;

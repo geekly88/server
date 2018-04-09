@@ -236,6 +236,7 @@ export class ExpensesDetailsComponent implements OnInit,AfterViewInit,OnChanges{
         let floatRegex:RegExp = this._global.config["floatRegex"];
         let alphanumdashed:RegExp = this._global.config["alphanumdashed"];
         this.formObject = this._fb.group({
+            branch_id     : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             number        : [ 1 , [Validators.required , Validators.pattern(intRegex)]],
             // page          : [ this._journal.page , [Validators.required , Validators.pattern(intRegex)]],
             reference     : ['' , Validators.pattern(alphanumdashed)],

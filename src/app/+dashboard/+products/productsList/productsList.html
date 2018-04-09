@@ -56,8 +56,8 @@
                         <td width="40px"><input type="checkbox" class="parentcheckbox option-input checkbox"></td>
                         <td class="hidden-lg-down image pro_img"></td>
                         <td (click)="OnOrderBy('name')" [ngClass]="{'active' : __order === 'name'}">الاسم</td>
-                        <td (click)="OnOrderBy('storage')" class="hidden-md-down"  [ngClass]="{'active' : __order === 'storage'}">المخزن</td>
-                        <td (click)="OnOrderBy('supplier')" class="hidden-md-down"  [ngClass]="{'active' : __order === 'supplier'}">المورد</td>
+                        <td (click)="OnOrderBy('branch')" [hidden]="!__showBranches" class="hidden-md-down"  [ngClass]="{'active' : __order === 'branch'}">الفرع</td>
+                        <!-- <td (click)="OnOrderBy('supplier')" class="hidden-md-down"  [ngClass]="{'active' : __order === 'supplier'}">المورد</td> -->
                         <td (click)="OnOrderBy('tags')" class="hidden-lg-down" [ngClass]="{'active' : __order === 'tags'}">الكلمات</td>
                         <td (click)="OnOrderBy('brand')" class="hidden-lg-down" [ngClass]="{'active' : __order === 'brand'}">الماركة</td>
                         <td (click)="OnOrderBy('collection')" class="hidden-lg-down" [ngClass]="{'active' : __order === 'collection'}">المجموعة</td>
@@ -74,10 +74,10 @@
                         <td width="40px" [ngClass]="{'reorder' : item.is_trackable && (item.diffrence <= 0 && item.stock_order_amount > 0) }">
                             <span>
                                 <input type="checkbox" class="{{ item.id }} list-item option-input checkbox">
-                            </span>        
+                            </span>
                         </td>
                         <td class="hidden-lg-down pro_img image" >
-                            <img 
+                            <img
                             *ngIf="item.imgs && item.imgs.length > 0" src="{{ _global.config['serverPath']+'uploads/proimg/'+ item.imgs[0] }}"  id="img_{{ item.id }}"/>
                             <img *ngIf="!item.imgs || item.imgs.length === 0" src="/assets/img/noimage.png"/>
                             <input name="file" (change)="onUploadImage(item)" enctype="multipart/form-data" type="file" id="myFileInputField_{{ item.id }}" />
@@ -85,7 +85,7 @@
 
                         <td *ngIf="item.is_variaty" class="__product_{{ item.id }}">
                             <a class="pro_var col-md-12" (click)="onShowVariaties(item)">
-                                <p>{{ item.name }}</p> 
+                                <p>{{ item.name }}</p>
                                 <p class="variaty_count">({{item.variaty_count}})</p>
                             </a>
                             <span class="small-shade" *ngIf="item.sku && item.sku !== ''">{{item.sku}}</span>
@@ -94,15 +94,15 @@
                             <a class="pro_var col-md-12" (click)="_global.navigatePanel('products/details/' + item.id)">{{ item.name }}</a>
                             <span class="small-shade" *ngIf="item.sku && item.sku !== ''">{{item.sku}}</span>
                         </td>
-                        
-                        <td class="hidden-md-down">{{ item.storage }}
-                            <!--<a (click)="_global.navigatePanel('storages/details/' + item.storage_id)" 
+
+                        <td class="hidden-md-down" [hidden]="!__showBranches">{{ __branchesNameFromID[item.id] }}
+                            <!--<a (click)="_global.navigatePanel('storages/details/' + item.storage_id)"
                             *ngIf="item.storage && item.storage_id ">{{ item.storage }}</a>-->
                         </td>
-                        <td class="hidden-md-down">
-                            <a (click)="_global.navigatePanel('suppliers/details/' + item.supplier_id)" 
+                        <!--<td class="hidden-md-down">
+                            <a (click)="_global.navigatePanel('suppliers/details/' + item.supplier_id)"
                             *ngIf="item.supplier && item.supplier_id ">{{ item.supplier }}</a>
-                        </td>
+                        </td>-->
                         <td class="hidden-lg-down" *ngIf="!item.tags || item.tags.length === 0"></td>
                         <td class="hidden-lg-down" *ngIf="item.tags && item.tags.length > 0">
                             <a *ngFor="let tag of item.tags.split(',')" (click)="onChangeItemsSearch('tags' , tag , true)">{{ tag }} </a>
@@ -111,16 +111,16 @@
                             <a *ngIf="item.brand" (click)="onChangeItemsSearch('brand' , item.brand)">{{ item.brand }}</a>
                         </td>
                         <td class="hidden-lg-down">
-                            <a *ngIf="item.collection" 
+                            <a *ngIf="item.collection"
                             (click)="onChangeItemsSearch('collection' , item.collection)">{{ item.collection }}</a>
                         </td>
-                        <td *ngIf="item.is_trackable" class="hidden-sm-down"><span [ngClass]="{'error' : (item.stock <= item.limit_quantity || item.quantity === 0) 
+                        <td *ngIf="item.is_trackable" class="hidden-sm-down"><span [ngClass]="{'error' : (item.stock <= item.limit_quantity || item.quantity === 0)
                             , 'refill' : item.diffrence <= 0 && item.stock_order_amount > 0 }"
                             (click)="OnReOrderProduct(item)" >{{ item.stock }} {{ item.type }}</span></td>
                         <td *ngIf="!item.is_trackable" class="hidden-sm-down">غير محدود</td>
                         <td  class="hidden-sm-down">{{ item.price | myCurrency:3 }}</td>
                         <td>
-                            <input type="checkbox" data-id="{{ item.id }}" id="changexhkbx_{{ item.id }}" class="ios-toggle" 
+                            <input type="checkbox" data-id="{{ item.id }}" id="changexhkbx_{{ item.id }}" class="ios-toggle"
                                    [checked]="item.is_active"
                                    (change)="OnChangeActivity(item)"/>
                             <label for="changexhkbx_{{ item.id }}" class="checkbox-label"></label>
@@ -131,13 +131,13 @@
                             </dashboard-actions>
                         </td>
                     </tr>
-                </tbody>                
+                </tbody>
             </table>
         </div>
         <div class="main_footer">
-            <dashboard-footer 
+            <dashboard-footer
                 [pages]="__pages"
-                [count]="__count" 
+                [count]="__count"
                 [pageUrl]="_controller"
                 [filterObj]="_filtersObjs"
                 [searchObj]="_searchObjs"
@@ -148,4 +148,3 @@
     </div>
 </div>
 <!--<show-item [showItemFields]="_showItemFields" [showItem]="_showItem" [isShowItem]="__modal === 'show'" (onShowItem)="onShowItem($event)"></show-item>-->
-

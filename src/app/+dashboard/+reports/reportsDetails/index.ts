@@ -1,5 +1,5 @@
-export * from './buysReport.component';
-export * from './sellsReport.component';
+export * from './purchasesReport.component';
+export * from './salesReport.component';
 export * from './contactsReport.component';
 export * from './productsReport.component';
 export * from './walletReport.component';

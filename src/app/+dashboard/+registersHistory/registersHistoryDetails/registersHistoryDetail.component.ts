@@ -3,7 +3,7 @@ import { ActivatedRoute , Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AutocompleteComponent } from './../../../@components';
 import { GlobalProvider , LabProvider, RouterTransition } from './../../../@providers';
-import { RegistersHistory , Registers , Sells , Users , Expenses , Paids } from './../../../@interfaces';
+import { RegistersHistory , Registers , Sales , Users , Expenses , Paids } from './../../../@interfaces';
 import { HttpRequestService } from './../../../@services';
 
 declare let $:any;
@@ -162,7 +162,7 @@ export class RegistersHistoryDetailsComponent implements OnInit,AfterViewInit{
                 this._lab.__setAlerts__('success' , 'تم تفعيل المسجل ... سيتم تحويلك للمبيعات');
                 let __self:RegistersHistoryDetailsComponent = this;
                 setTimeout(function() {
-                    __self._global.navigatePanel('sells/details');
+                    __self._global.navigatePanel('sales/details');
                 }, 2000);
             },(error) => {
                 this._lab.__setErrors__(error);
@@ -326,6 +326,7 @@ export class RegistersHistoryDetailsComponent implements OnInit,AfterViewInit{
 
     __initFormsObject__():void{
         this.formObject = this._fb.group({
+            branch_id          : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(this.intRegex)]],
             openedAt           : [ null ],
             closedAt           : [ null ],
             case               : [ 'close' ],
@@ -376,7 +377,7 @@ export class RegistersHistoryDetailsComponent implements OnInit,AfterViewInit{
                     this.__notRetrived = true;
                     return;
                 }
-                let __sellsArr:Sells[] = response.data[0] || [];
+                let __salesArr:Sales[] = response.data[0] || [];
                 let __expensesArr:Expenses[] = response.data[1] || [];
                 let __paidsArr:Paids[] = response.data[2] || [];
 
@@ -386,15 +387,15 @@ export class RegistersHistoryDetailsComponent implements OnInit,AfterViewInit{
                 let __bank:number = 0;
                 let __expenses = 0, __register_paid = 0, __register_recive = 0;
                 let multi:number = 1;
-                __sellsArr.forEach((sell) => {
-                    __costs     += sell.costs * multi;
-                    __prices    += sell.prices * multi;
-                    __taxes     += sell.taxes * multi;
-                    __discounts += sell.discounts * multi;
-                    __totals    += sell.totals * multi;
-                    __paids      += sell.paid * multi;
-                    if(!sell.payments || sell.payments.length === 0) return;
-                    sell.payments.forEach((pay) => {
+                __salesArr.forEach((sale) => {
+                    __costs     += sale.costs * multi;
+                    __prices    += sale.prices * multi;
+                    __taxes     += sale.taxes * multi;
+                    __discounts += sale.discounts * multi;
+                    __totals    += sale.totals * multi;
+                    __paids      += sale.paid * multi;
+                    if(!sale.payments || sale.payments.length === 0) return;
+                    sale.payments.forEach((pay) => {
                         switch (pay.by) {
                             case 'CASH':
                                 __cash += pay.paid * multi;

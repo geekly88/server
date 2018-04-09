@@ -22,7 +22,7 @@
                         <div class="item col-md-12 col-sm-12 col-xs-12 padding-10">
                             <div class="icon"><i class="ti-receipt"></i></div>
                             <div class="data">
-                                <div class="number">{{ __topData['sells']['total'] | myCurrency }}</div>
+                                <div class="number">{{ __topData['sales']['total'] | myCurrency }}</div>
                                 <div class="desc">اجمالى المبيعات</div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                         <div class="item col-md-12 col-sm-12 col-xs-12 padding-10 lighter">
                             <div class="icon"><i class="ti-truck"></i></div>
                             <div class="data">
-                                <div class="number">{{ __topData['buys']['total'] | myCurrency }}</div>
+                                <div class="number">{{ __topData['purchases']['total'] | myCurrency }}</div>
                                 <div class="desc">اجمالى المشتريات</div>
                             </div>
                         </div>
@@ -65,12 +65,12 @@
                         <div class="col-md-12 col-sm-12 col-xs-12 no-p item box">
                             <div class="col-md-12 no-p header">
                                 <p class="float_exac">المبيعات</p>
-                                <a class="float_opp" (click)="__prepareUrlAndProperty('sells' , 'by_high')"><i class="ti-reload"></i></a>
+                                <a class="float_opp" (click)="__prepareUrlAndProperty('sales' , 'by_high')"><i class="ti-reload"></i></a>
                             </div>
                             <div class="col-md-12 no-p body">
-                                <div class="testshadow" [hidden]="!__sellsDataTest"></div>
+                                <div class="testshadow" [hidden]="!__salesDataTest"></div>
                                 <div class="col-md-12 col-xs-12 no-p dash-chart">
-                                    <canvas id="__sellsData"></canvas>
+                                    <canvas id="__salesData"></canvas>
                                 </div>
                             </div>
                             <div class="col-md-12 no-p footer">
@@ -84,12 +84,12 @@
                         <div class="col-md-12 col-sm-12 col-xs-12 no-p item box">
                             <div class="col-md-12 no-p header">
                                 <p class="float_exac">فواتير الشراء</p>
-                                <a class="float_opp" (click)="__prepareUrlAndProperty('buys' , 'by_high')"><i class="ti-reload"></i></a>
+                                <a class="float_opp" (click)="__prepareUrlAndProperty('purchases' , 'by_high')"><i class="ti-reload"></i></a>
                             </div>
                             <div class="col-md-12 no-p body">
-                                <div class="testshadow" [hidden]="!__buysDataTest"></div>
+                                <div class="testshadow" [hidden]="!__purchasesDataTest"></div>
                                 <div class="col-md-12 col-xs-12 no-p dash-chart">
-                                    <canvas id="__buysData"></canvas>
+                                    <canvas id="__purchasesData"></canvas>
                                 </div>
                             </div>
                             <div class="col-md-12 no-p footer">نتائج أخر {{ __durationStrArray[__durationStr] }}</div>
@@ -117,7 +117,7 @@
                                     <ul class="col-md-12 col-md-6 col-sm-12 col-xs-12 no-p">
                                         <li *ngFor="let color of __doughnutColors,let i = index">
                                             <span class="color" style="background : {{ color }}"></span>
-                                            <p *ngIf="__productsData && __productsData[i]">{{ __productsData[i].name }} / {{ __productsData[i].sells_count }}</p>
+                                            <p *ngIf="__productsData && __productsData[i]">{{ __productsData[i].name }} / {{ __productsData[i].sales_count }}</p>
                                             <p  class="shadow" *ngIf="!__productsData || !__productsData[i]">لايوجد منتج لهذا الترتيب</p>
                                         </li>
                                     </ul>
@@ -142,7 +142,7 @@
                                     <ul class="col-md-12 col-md-6 col-sm-12 col-xs-12 no-p">
                                         <li *ngFor="let color of __doughnutColors,let i = index" class="col-md-12 col-sm-12 col-xs-12">
                                             <span class="color" style="background : {{ color }}"></span>
-                                            <p *ngIf="__customersData && __customersData[i]">{{ __customersData[i].name }} / {{ __customersData[i].sells_count }}</p>
+                                            <p *ngIf="__customersData && __customersData[i]">{{ __customersData[i].name }} / {{ __customersData[i].sales_count }}</p>
                                             <p class="shadow" *ngIf="!__customersData || !__customersData[i]">لايوجد زبون لهذا الترتيب</p>
                                         </li>
                                     </ul>

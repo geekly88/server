@@ -3,7 +3,7 @@ export interface Orders {
 
     id : number,
     parent_id : number,
-    company_id : number,
+    company_id : number,branch_id:number,
     author_id : number,
 
     number : string,
@@ -27,6 +27,8 @@ export interface Orders {
     variaty : string;
     brand_id : number,
     quantity : number,
+    quantity_origin_id:number,
+    quantity_origin:string,
     multiplier : number,
 
     date : Date,

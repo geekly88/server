@@ -1,0 +1,1 @@
+export * from './purchasesList.component';

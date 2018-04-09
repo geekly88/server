@@ -140,8 +140,8 @@ export class ContactsReportComponent implements OnInit,OnChanges{
                 if(this.by === 'suppliers') this.__allowed['paid'] = true;
                 if(this.by === 'suppliers') this.__allowed['total'] = true;
 
-                if(this.by === 'employees') this.__allowed['buys_paid'] = false;
-                if(this.by === 'employees') this.__allowed['buys_total'] = false;
+                if(this.by === 'employees') this.__allowed['purchases_paid'] = false;
+                if(this.by === 'employees') this.__allowed['purchases_total'] = false;
                 if(this.by === 'employees' || this.by === 'customers') this.__allowed['invoices_paid'] = true;
                 if(this.by === 'employees' || this.by === 'customers') this.__allowed['invoices_total'] = true;
 
@@ -161,8 +161,8 @@ export class ContactsReportComponent implements OnInit,OnChanges{
                 if(this.by === 'suppliers') this.__lang['paid'] = 'مدفوع المشتريات';
                 if(this.by === 'suppliers') this.__lang['total'] = 'اجمالى المشتريات';
 
-                if(this.by === 'employees') this.__lang['buys_paid'] = 'مدفوع المشتريات';
-                if(this.by === 'employees') this.__lang['buys_total'] = 'مديونية المشتريات';
+                if(this.by === 'employees') this.__lang['purchases_paid'] = 'مدفوع المشتريات';
+                if(this.by === 'employees') this.__lang['purchases_total'] = 'مديونية المشتريات';
                 if(this.by === 'employees' || this.by === 'customers') this.__lang['invoices_paid'] = 'مدفوع فواتير البيع';
                 if(this.by === 'employees' || this.by === 'customers') this.__lang['invoices_total'] = 'اجمالى فواتير البيع';
 
@@ -216,8 +216,8 @@ export class ContactsReportComponent implements OnInit,OnChanges{
                     case 'total':
                     case 'invoices_paid':
                     case 'invoices_total':
-                    case 'buys_total':
-                    case 'buys_total':
+                    case 'purchases_total':
+                    case 'purchases_total':
                         this.__list[i][__key] = new MyCurrencyPipe(this._global).transform(this.__list[i][__key].toString() , []);
                         break;
                 }

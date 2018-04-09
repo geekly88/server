@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, OnInit , EventEmitter, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -41,7 +41,7 @@ import { GlobalProvider, LabProvider } from './../@providers';
                             <label class="col-md-12 col-sm-12 col-xs-12 col-form-label no-p">من تاريخ</label>
                             <div class="col-md-12 col-sm-12 col-xs-12 no-p">
                                 <input data-rules="date" ng2-datetime-picker name="date" [(ngModel)]="__fromDate"
-                                            [formControl]="formObject.controls['from']" [close-on-select]="false" 
+                                            [formControl]="formObject.controls['from']" [close-on-select]="false"
                                             type="text" class="form-control no-popover" placeholder="من تاريخ" readonly/>
                             </div>
                         </div>
@@ -51,7 +51,7 @@ import { GlobalProvider, LabProvider } from './../@providers';
                             <label class="col-md-12 col-sm-12 col-xs-12 col-form-label no-p">الى تاريخ</label>
                             <div class="col-md-12 col-sm-12 col-xs-12 no-p">
                                 <input data-rules="date" ng2-datetime-picker name="date" [(ngModel)]="__toDate"
-                                            [formControl]="formObject.controls['to']" [close-on-select]="false" 
+                                            [formControl]="formObject.controls['to']" [close-on-select]="false"
                                             type="text" class="form-control no-popover" placeholder="الى تاريخ" readonly/>
                             </div>
                         </div>
@@ -60,7 +60,7 @@ import { GlobalProvider, LabProvider } from './../@providers';
                         <div class="form-group col-md-12 no-p">
                             <label class="col-md-12 col-sm-12 col-xs-12 col-form-label no-p">{{ item.value }}</label>
                             <div class="col-md-12 col-sm-12 col-xs-12 no-p">
-                                <input [formControl]="formObject.controls[item.key]" name="{{ item.value }}" 
+                                <input [formControl]="formObject.controls[item.key]" name="{{ item.value }}"
                                 type="text" class="form-control autofocus no-popover" placeholder="{{ item.value }}" />
                             </div>
                         </div>
@@ -135,6 +135,13 @@ export class DashboardFooterComponent implements OnInit,AfterViewInit{
         this.OnSearchClick();
     }
 
+    // ngOnChanges(props:any):void{
+    //     console.log(props);
+    //     if(props.hasOwnProperty('filterObj') && props.filterObj.currentValue && props.filterObj.currentValue){
+    //         this.__initFilterObjects__();
+    //     }
+    // }
+
     ngAfterViewInit():void{
         this._lab.__setListShortCuts__(this);
     }
@@ -187,10 +194,10 @@ export class DashboardFooterComponent implements OnInit,AfterViewInit{
     OnSubmitForm(values:any):void{
         let __searchUrl:string;
         let __search:Array<string> = [];
-        
+
         let __queryParams:any = this._router.routerState.root.queryParams['value'];
         let __page:number = this._currentPage === 0 ? 1 : this._currentPage;
-        
+
         __searchUrl = '?page='+ __page + '&limit=' + this._global.getToken()['settings']['perpage'];
 
         if(__queryParams && __queryParams['sort']) __searchUrl += '&sort=' + __queryParams['sort'];
@@ -207,7 +214,7 @@ export class DashboardFooterComponent implements OnInit,AfterViewInit{
         }
 
         __searchUrl += '&search=' + __search.join('-');
-        
+
         if(this.__fromDate && this.__toDate){
             __searchUrl += '-from-to&to=';
             __searchUrl += this._lab.__toDateAPI__(new Date(this.__toDate.getTime() + ((3600 * 24 * 1000) - 1000)),true,true);
@@ -224,6 +231,7 @@ export class DashboardFooterComponent implements OnInit,AfterViewInit{
     }
 
     __initFilterObjects__():void{
+        this.__actions = [];
         let url:string = this._router.url;
         let __urlArray:Array<string> = url.split('/');
         let __clearUrlArray:Array<string> = [];
@@ -254,8 +262,11 @@ export class DashboardFooterComponent implements OnInit,AfterViewInit{
             __class : 'refresh',
             img : 'reload'
         });
-        if(this.filterObj && this.filterObj.actions && this.filterObj.actions instanceof Array) 
-            this.__actions.concat(this.filterObj.actions);
+        if(this.filterObj && this.filterObj.actions && this.filterObj.actions instanceof Array){
+            for(let i:number = 0; i < this.filterObj.actions.length; i++){
+                this.__actions.push(this.filterObj.actions[i]);
+            }
+        }
     }
 
     __initSearchObjects__():void{

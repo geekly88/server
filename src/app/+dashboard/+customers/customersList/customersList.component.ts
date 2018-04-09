@@ -11,14 +11,14 @@ import { Customers , BooksTree } from './../../../@interfaces';
 import { HttpRequestService } from './../../../@services';
 
 import { Uploader }      from 'angular2-http-file-upload';
-import { MyUploadItem } from './../../myUploadItem'; 
+import { MyUploadItem } from './../../myUploadItem';
 
 @Component({
     selector : 'customers-list',
     templateUrl : './customersList.html',
     providers : [
-        GlobalProvider, 
-        LabProvider, 
+        GlobalProvider,
+        LabProvider,
         HttpRequestService,
         AutocompleteComponent,
         AddNewComponent,
@@ -78,7 +78,7 @@ export class CustomersListComponent implements OnInit{
     onAction($event):void{
         switch($event.action){
             case 'DELETE':
-                this.__deleteItems($event.item.id);                
+                this.__deleteItems($event.item.id);
                 break;
             case 'EDIT':
                 let __url = 'customers/details/'+ $event.item.id.toString();
@@ -108,11 +108,7 @@ export class CustomersListComponent implements OnInit{
             this._lab.__setAlerts__('warn' , 'حجم الصورة أقل من 10 ميجابايت ... <jpeg,png>');
         };
         this._uploaderService.onCompleteUpload = (img, response, status, headers) => {
-            if(response.data && response.data){
-                location.reload();
-                // let __imageSrc:string = this._global.config['serverPath'] + 'images/uploaded/' + response.data;
-                // this._lab.jQuery('.image.image_' + item.id + ' img').attr('src' , __imageSrc);
-            }
+            return this._lab.__onChangeAvatar__(this , item , response.data);
         };
         this._uploaderService.onProgressUpload = (img, percentComplete) => {
              // progress callback
@@ -141,7 +137,7 @@ export class CustomersListComponent implements OnInit{
     onPageChanging($event):void{
         let __queryParams:any = this._router.routerState.root.queryParams['value'];
         if(!__queryParams || !__queryParams['sort']){
-            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort; 
+            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort;
         }
         this.__getItems(this._controller +'/'+ $event.queryParams);
     }
@@ -185,7 +181,7 @@ export class CustomersListComponent implements OnInit{
             address1 : 'العنوان 1',
             address2 : 'العنوان 2',
             open_amount : 'رصيد أول المدة',
-            sells_count : 'عدد المبيعات' ,
+            sales_count : 'عدد المبيعات' ,
             invoices_count : 'عدد الفواتير' ,
             total : 'اجمالى المبيعات' ,
             paid : 'المستلم من المبيعات' ,
@@ -204,7 +200,7 @@ export class CustomersListComponent implements OnInit{
             },
             __required : {
                 open_amount : true,
-                sells_count : true,
+                sales_count : true,
                 total : true ,
                 paid : true  ,
                 invoices_count : true,
@@ -239,7 +235,7 @@ export class CustomersListComponent implements OnInit{
                     this.__hideLists = true;
                 }
             },
-            (error) => { 
+            (error) => {
                 this.errors = error;
                 this.__count = 0;
                 this.__pages = 0;

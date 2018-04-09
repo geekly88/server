@@ -3,7 +3,7 @@ import { ActivatedRoute , Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AutocompleteComponent } from './../../../@components';
 import { GlobalProvider , LabProvider, RouterTransition } from './../../../@providers';
-import { Sells , Products , BooksTree } from './../../../@interfaces';
+import { Sales , Products , BooksTree } from './../../../@interfaces';
 import { HttpRequestService } from './../../../@services';
 
 @Component({
@@ -26,10 +26,10 @@ export class ReportsListComponent implements OnInit{
     private __to:Date;
     private __showReport__:boolean = false;
     private __showCharts:boolean = false;
-    private __showChartsType:string = 'sells';
-    private __sellsChartsData:Array<any> = [];
+    private __showChartsType:string = 'sales';
+    private __salesChartsData:Array<any> = [];
     private __invoicesChartsData:Array<any> = [];
-    private __buysChartsData:Array<any> = [];
+    private __purchasesChartsData:Array<any> = [];
     private __sortBy:string = 'date';
     private __filters:Object = { };
     private __zakat:Object = null;
@@ -192,7 +192,7 @@ export class ReportsListComponent implements OnInit{
     //     }
     // }
     
-    // OnChangeChartType(type:string = 'sells'):void{
+    // OnChangeChartType(type:string = 'sales'):void{
     //     switch (type) {
     //         default:
     //             this.__sortBy = 'date';
@@ -228,7 +228,7 @@ export class ReportsListComponent implements OnInit{
     //                         total : 3,
     //                         price : 5,
     //                         discount : 1,
-    //                         sells_discount : 1,
+    //                         sales_discount : 1,
     //                         tax : 1,
     //                         paid : 3,
     //                         date : '11/5'
@@ -238,7 +238,7 @@ export class ReportsListComponent implements OnInit{
     //                         total : 0,
     //                         price : 0,
     //                         discount : 0,
-    //                         sells_discount : 0,
+    //                         sales_discount : 0,
     //                         tax : 0,
     //                         paid : 0,
     //                         date : '12/5'
@@ -248,7 +248,7 @@ export class ReportsListComponent implements OnInit{
     //                         total : 0,
     //                         price : 0,
     //                         discount : 0,
-    //                         sells_discount : 0,
+    //                         sales_discount : 0,
     //                         tax : 0,
     //                         paid : 0,
     //                         date : '13/5'
@@ -258,7 +258,7 @@ export class ReportsListComponent implements OnInit{
     //                         total : 0,
     //                         price : 0,
     //                         discount : 0,
-    //                         sells_discount : 0,
+    //                         sales_discount : 0,
     //                         tax : 0,
     //                         paid : 0,
     //                         date : '14/5'

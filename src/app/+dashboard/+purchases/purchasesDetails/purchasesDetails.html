@@ -1,0 +1,738 @@
+<div class="col-md-12 col-xs-12 no-p mainDetails" style="overflow-y:hidden;">
+    
+    <div class="col-md-12 col-xs-12 no-p"  [hidden]="__showSide !== 'PRINT'">
+        <purchases-shows [data]="__showPurchaseData" [isDynamic]="true" [print]="__printPurchase__"
+            (onAction)="autocompletevaluechanged($event)">
+        </purchases-shows>
+    </div>
+    
+    <div class="col-lg-7 no-p col-md-12 col-xs-12 order-search-side" [hidden]="__showSide !== 'PURCHASEORDER'">
+        <div class="col-md-12 col-xs-12 no-p">
+            <form class="form" [formGroup]="searchForm" (ngSubmit)="null" class="col-md-12 col-xs-12 no-p float_exac" [hidden]="!__showSearch">
+                <div class="form-group col-md-12 col-xs-12">
+                    <div class="col-md-12 col-xs-12 no-p">
+                        <input [formControl]="searchForm.controls['search']" name="search" data-rules="noroles"
+                        type="text" class="form-control order-search autofocus" placeholder="البحث عن منتج,خدمة,مورد أو موظف"/>
+                        <orders-autocomplete
+                                [isSup]="true"
+                                [field]="['name' , 'sku']"
+                                [template]="'<p class=\'auto-name-top\'>#name</p><p class=\'auto-name-bottom small\'>#sku</p>'"
+                                [searchFields]="['name','sku']"
+                                [control]="searchForm.controls.search"
+                                [search]="searchForm.controls.search.value"
+                                [url]="'products/?contains=true&logic=||'"
+                                [class]="'search'"
+                                (onsetvalue)="autocompletevaluechanged($event)"
+                                >
+                        </orders-autocomplete>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="col-md-12 col-xs-12 products_list" *ngIf="__showTags">
+            <div class="square_list_item" *ngFor="let i of __loopsArray">
+                <div class="col-md-12 col-xs-12 no-p" *ngIf="__tags[(((__tagsPage - 1) * __pagesLimit) + i)] && __tags[(((__tagsPage - 1) * __pagesLimit) + i)].name">
+                    <button (click)="__onSelectTag__(__tags[(((__tagsPage - 1) * __pagesLimit) + i)])">{{ __tags[(((__tagsPage - 1) * __pagesLimit) + i)].name }}</button>
+                </div>
+                <div *ngIf="!__tags[(((__tagsPage - 1) * __pagesLimit) + i)]" class="square_list_item_empty"></div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-xs-12 products_list" *ngIf="__showBrands">
+            <div class="square_list_item" *ngFor="let i of __loopsArray">
+                <div class="col-md-12 col-xs-12 no-p" *ngIf="__brands[i] && __brands[i].id">
+                    <button (click)="__onSelectBrand__(__brands[i])" *ngIf=" __brands[i].img && __brands[i].img !== ''">
+                        <img src="assets/img/products/{{ __brands[i].img }}" />
+                        <p class="pro_name">{{ __brands[0].name }}</p>
+                    </button>
+                    <button (click)="__onSelectBrand__(__brands[i])" *ngIf="!__brands[i].img || __brands[i].img === ''">{{ __brands[i].name }}</button>
+                </div>
+                <div *ngIf="!__brands[i]" class="square_list_item_empty"></div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-xs-12 products_list" *ngIf="__showCollections">
+            <div class="square_list_item" *ngFor="let i of __loopsArray">
+                <div class="col-md-12 col-xs-12 no-p" *ngIf="__collections[i] && __collections[i].id">
+                    <button (click)="__onSelectCollection__(__collections[i])" *ngIf=" __collections[i].img && __collections[i].img !== ''">
+                        <img src="assets/img/products/{{ __collections[i].img }}" />
+                        <p class="_name">{{ __collections[0].name }}</p>
+                    </button>
+                    <button (click)="__onSelectCollection__(__collections[i])" *ngIf="!__collections[i].img || __collections[i].img === ''">{{ __collections[i].name }}</button>
+                </div>
+                <div *ngIf="!__collections[i]" class="square_list_item_empty"></div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-xs-12 products_list" *ngIf="__showProducts">
+            <div class="square_list_item" *ngFor="let i of __loopsArray">
+                <div class="col-md-12 col-xs-12 no-p" *ngIf="__products[i] && __products[i].id">
+                        <span class="product_price {{ _modal }}">{{ __products[i].cost | myCurrency }}</span>
+                        <a class="product_info" (click)="__showProductDetials(__products[i])"><i class="ti-info"></i></a>
+                        <button (click)="addProductToPurchaseOrders(__products[i])" *ngIf="__products[i].imgs && __products[i].imgs.length !== 0"> 
+                                <img src="{{ _global.config['serverPath']+'uploads/proimg/'+ __products[i].imgs[0] }}" />
+                                {{ __products[i].name }}
+                        </button>
+                    <button (click)="addProductToPurchaseOrders(__products[i])" *ngIf="!__products[i].imgs || __products[i].imgs.length === 0">{{ __products[i].name }}</button>
+                </div>
+                <div *ngIf="!__products[i]" class="square_list_item_empty"></div>
+            </div>
+        </div>
+        <div class="no-p col-md-12 col-xs-12">
+            <ul class="col-md-12 col-xs-12 no-p">
+                <li (click)="onSideBarClick()"><i class="ti-layout-grid2"></i></li>
+                <li [ngClass]="{'active' : __toggleSearch__ === 'PRODUCTS' }" (click)="OnToggleSearchType('PRODUCTS' , true)"><p>الأصناف</p></li>
+                <li [ngClass]="{'active' : __toggleSearch__ === 'BRANDS' }" (click)="OnToggleSearchType('BRANDS')"><p>الماركات</p></li>
+                <li [ngClass]="{'active' : __toggleSearch__ === 'COLLECTIONS' }" (click)="OnToggleSearchType('COLLECTIONS')"><p>المجموعات</p></li>
+                <li [ngClass]="{'active' : __toggleSearch__ === 'TAGS' }" (click)="OnToggleSearchType('TAGS')"><p>الكلمات</p></li>
+                <li class="float_opp" (click)="OnAddSupplier()"><i class="ti-user"></i></li>
+                <li class="float_opp" (click)="prevPage()"><i class="ti-angle-double-left"></i></li>
+                <li class="float_opp" (click)="nextPage()"><i class="ti-angle-double-right"></i></li>
+            </ul>
+        </div>
+    </div>
+    <!-- =================================== ===================================================-->
+    <div class="no-p col-lg-5 col-md-12 col-xs-12 col-sm-12 col-md-12 col-xs-12 order-list-side"  [hidden]="__showSide !== 'PURCHASEORDER'">
+        <div class="col-md-12 col-xs-12 no-p top-actions">
+            <a class="order-top-action float_exac" (click)="__showModalDetails__()">#{{ formObject.controls['number'].value }} <i class="ti-file"></i></a>
+            <a class="order-top-action trashy" (click)="onRemoveAllPurchaseOrders()"><i class="ti-trash"></i></a>
+            <a class="order-top-action" (click)="__checkParkPurchases__()" 
+               ><i class="ti-time"></i>
+            </a>
+            <a class="order-top-action show_customer_action" (click)="__showModalDetails__('supplierandemployees')"
+            ><i class="ti-user"></i></a>
+            <a class="order-top-action show_shipping_action" (click)="__showModalDetails__('shipping')" ><i class="ti-truck"></i></a>
+            <a class="order-top-action 8BC34A" (click)="__showModalDetails__('parkMsg')" *ngIf="__hasParkNote"><i class="ti-envelop"></i></a>
+            <a class="order-top-action" 
+                (click)="__showModalDetails__('paymentsDetails')" 
+                *ngIf="formObject.value.id && formObject.value.status === 'completed'">
+                <i class="ti-money"></i>
+            </a>
+        </div>
+        <div class="order-list-container col-md-12 col-xs-12 no-p">
+            <div class="col-md-12 col-xs-12 no-p orders_wrapper">
+                <div class="col-md-12 col-xs-12 no-p order-list-details">
+                    <form class="form col-md-12 col-xs-12 no-p bounceInDown" *ngFor="let form of __purchaseOrders,let i=index" [formGroup]="form" 
+                        (onSubmit)="onUpdatePurchaseOrder(form)" novalidate>
+                        <a class="order-itself col-md-12 col-xs-12 no-p order_{{i}}" [ngClass]="{'form_focus' : form.controls.focus.value }">
+                            <div class="col-md-12 col-xs-12 no-p">
+                                <div class="order_quantity" (click)="onFocusPurchaseOrder(form,i)">{{ form.controls.quantity.value }}</div>
+                                <a class="order_product_name" (click)="onFocusPurchaseOrder(form,i)">
+                                    <p class="order-name">{{ form.controls.product_name.value }}</p>
+                                    <p class="order-variaties">{{ form.controls.product_handler.value }}</p>
+                                </a>
+                                <div class="order_price" (click)="onFocusPurchaseOrder(form,i)">{{ form.controls.total.value | myCurrency }}</div>
+                                <div class="order_remove">
+                                    <a class="order-top-action trashy" (click)="onRevemoPurchaseOrder(form , i)"><i class="ti-trash"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 no-p order_form form_{{i}} bounceInDown" *ngIf="form.controls.focus.value === true">
+                                <div class="small_qty form-group">
+                                    <label class="label-control">الكمية</label>
+                                    <div class="col-md-12 col-xs-12 no-p">
+                                        <input class="form-control autofocus" [formControl]="form.controls.quantity" placeholder="الكمية" (change)="onUpdatePurchaseOrder(form)"/>
+                                    </div>
+                                </div>
+                                <div class="small_unit form-group" *ngIf="form.controls.type.value 
+                                     && __units[form.controls.type.value] 
+                                     && __units_main_id[form.controls.type_main_id.value]">
+                                    <label class="label-control">الوحدة</label>
+                                    <div class="col-md-12 col-xs-12 no-p">
+                                        <select class="form-control" [formControl]="form.controls.type" (change)="onUpdatePurchaseOrder(form ,'unit')">
+                                            <option *ngFor="let unit of __units_main_id[form.controls.type_main_id.value]" 
+                                                    value="{{ unit.name }}">{{ unit.name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="small_price form-group" *ngIf="form.controls.tax.value && form.controls.tax.value > 0">
+                                    <label class="label-control" (click)="__changePurchaseOrderPrice__(form)">الضريبة %</label>
+                                    <div class="col-md-12 col-xs-12 no-p">
+                                        <input class="form-control" [formControl]="form.controls.tax" placeholder="السعر" (change)="onUpdatePurchaseOrder(form)"/>
+                                    </div>
+                                </div>
+                                <div class="small_price form-group">
+                                    <label class="label-control">السعر</label>
+                                    <div class="col-md-12 col-xs-12 no-p">
+                                        <input class="form-control" [formControl]="form.controls.price" placeholder="السعر" (change)="onUpdatePurchaseOrder(form)"/>
+                                    </div>
+                                </div>
+                                <div class="small_discount form-group">
+                                    <label class="label-control">التخفيض %</label>
+                                    <div class="col-md-12 col-xs-12 no-p">
+                                        <input class="form-control" [formControl]="form.controls.discount" placeholder="التخفيض%" (change)="onUpdatePurchaseOrder(form)"/>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12 col-xs-12 col-sm-12 no-p">
+                                    <label class="col-md-12 col-form-label no-p">جهة تخزين المنتج</label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 no-p">
+                                        <select class="form-control" name="quantity_dir_id" [formControl]="form.controls.quantity_dir_id" 
+                                        (change)="__setQuantityDirForm__(form , $event)">
+                                            <option [value]="0" value="0">المتجر</option>
+                                            <option *ngFor="let option of __storagesArray"
+                                                [value]="option.id" value="{{ option.id }}" >{{ option.name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 form-group">
+                                    <input class="form-control" [formControl]="form.controls.description" placeholder="وصف الصنف">
+                                </div>
+                                <div class="col-md-12 col-xs-12">
+                                    <p><a class="more" (click)="OnProductDetails(form)" ><i class="ti-info"></i> تفاصيل المنتج</a></p>
+                                </div>
+                            </div>  
+                        </a>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 no-p">
+                <div class="col-md-12 col-xs-12 textarea">
+                    <textarea [(ngModel)]="__textArea" placeholder="شروط و اتفاقية الاستخدام"></textarea>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 prices">
+                <div class="col-md-12 col-xs-12 no-p item item-price">
+                    <div class="col-xs-4 no-p prices-title"><p>السعر</p></div>
+                    <div class="col-xs-8 no-p prices-content"><p>{{ __obj.price | myCurrency }}</p></div>
+                </div>
+                <div class="col-md-12 col-xs-12 no-p item item-discount">
+                    <div class="col-xs-4 no-p prices-title" >
+                        <p>
+                            <popover-content #myPopover
+                                placement="top"
+                                [animation]="true"
+                                [closeOnClickOutside]="false">
+                                <div class="discountDetails">
+                                    <div class="col-md-12 col-xs-12 no-p"><p class="title">أضف تخفيض للطلب</p></div>
+                                    <div class="col-md-12 col-xs-12 no-p">
+                                        <div class="percent col-md-6 no-p" (click)="(__discountType = 'PERCENT') && __refreshPrices()" 
+                                            [ngClass]="{'borders' : __discountType === 'PERCENT'}">%</div>
+                                        <div class="value col-md-6 no-p" (click)="(__discountType = 'AMOUNT') && __refreshPrices()" 
+                                            [ngClass]="{'borders' : __discountType === 'AMOUNT'}">{{ _global.getToken()['settings']['currency'] }}</div>
+                                    </div>
+                                    <div class="col-md-12 col-xs-12 no-p dis_details">
+                                        <input (change)="__refreshPrices()" data-rules="noroles" class="form-control" [(ngModel)]="__discountAmount">
+                                    </div>
+                                </div>
+                            </popover-content>
+                            <a [popover]="myPopover">التخفيض</a>
+                        </p>
+
+                    </div>
+                    <div class="col-xs-8 no-p prices-content"><p>{{ __obj.discount | myCurrency }}</p></div>
+                </div>
+                <div class="col-md-12 col-xs-12 no-p item item-taxes">
+                    <div class="col-xs-4 no-p prices-title"><p>الضرائب</p></div>
+                    <div class="col-xs-8 no-p prices-content"><p>{{ __obj.tax | myCurrency }}</p></div>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 order-list-pay">
+                <button class="btn" (click)="onPayClick()" [ngClass]="{'disable' : !__purchaseOrders || __purchaseOrders.length === 0}">
+                    <p class="float_exac">ادفع</p>
+                    <p class="float_opp">{{ __obj.total | myCurrency }}</p>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 no-p PayDetails" [hidden]="__showSide !== 'PAY'">
+        <div class="col-md-12 col-xs-12 no-p">
+            <div class="col-md-5 details-side hidden-md-down">
+                <div class="col-md-12 col-xs-12 no-p"><p class="center _title_">قائمة الطلبات</p></div>
+                <div class="col-md-12 col-xs-12 padding-20 pay-items">
+                    <div class="col-md-12 col-xs-12 pay-item" *ngFor="let ord of __purchaseOrders">
+                        <div class="_qty_"><p class="center">{{ ord.value.quantity }}</p></div>
+                        <div class="_name_">
+                            <p class="_main_name_">{{ ord.value.product_name }}</p>
+                            <p class="_variaty_ small">{{ ord.value.product_handler }}</p>
+                            <p class="_variaty_ small" *ngIf="ord.value.description && ord.value.description.length >= 1">{{ ord.value.description }}</p>
+                        </div>
+                        <div class="_price_">{{ ord.value.total | myCurrency}}</div>
+                   </div>
+                   <div class="col-md-12 col-xs-12 prices">
+                        <div class="col-md-12 col-xs-12 no-p item item-price">
+                            <div class="col-md-12 col-sm-12 col-xs-12 no-p prices-title"><p>السعر</p></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 no-p prices-content"><p>{{ __obj.price | myCurrency }}</p></div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 no-p item item-discount">
+                            <div class="col-md-12 col-sm-12 col-xs-12 no-p prices-title"><p>التخفيض</p></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 no-p prices-content"><p>{{ __obj.discount | myCurrency }}</p></div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 no-p item item-taxes">
+                            <div class="col-md-12 col-sm-12 col-xs-12 no-p prices-title"><p>الضرائب</p></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 no-p prices-content"><p>{{ __obj.tax | myCurrency }}</p></div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 no-p item item-total">
+                            <div class="col-md-12 col-sm-12 col-xs-12 no-p prices-title"><p>الاجمالى<span class="small">( {{ __purchaseOrders.length }} طلبات)</span></p></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12 no-p prices-content"><p>{{ __obj.total | myCurrency }}</p></div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-md-12 col-xs-12 no-p _blance_"><p>الاجمالى : {{ __obj.total | myCurrency }}</p></div>-->
+            </div>
+            <div class="col-md-7 pay-side">
+                <div class="col-md-12 col-xs-12">
+                    <button class="_back_ btn float_exac" (click)="onCompletePayment('' , true)">حفظ الفاتورة</button>
+                    <button class="_back_ btn" (click)="onBackToPurchaseOrdering()">الرجوع للقائمة</button>
+                </div>
+                <div class="col-md-12 col-xs-12">
+                    <p class="_paystr_">ادفع</p>
+                    <input type="text" [(ngModel)]="__payAmount" class="_paycontrol_" placeholder="المبلغ المدفوع"/>
+                </div>
+                <div class="col-md-12 col-xs-12 _paydebt_">
+                    <a class="show_paid" (click)="__showModalDetails__('paymentsDetails')"><i class="ti-money"></i></a>
+                    <p>المدفوع {{ formObject.value.paid | myCurrency }} من {{ __obj.total | myCurrency }}</p>
+                </div>
+                <div class="col-md-12 col-xs-12 _paysbtn_">
+                    <div class="pay_way_item">
+                        <img src="assets/img/expl/cash.svg" />
+                        <button class="btn" (click)="onCompletePayment('CASH')">دفع كاش</button>
+                    </div>
+                    <div class="pay_way_item">
+                        <img src="assets/img/expl/credit-card.svg" />
+                        <button class="btn" (click)="onCompletePayment('CREDIT')">الدفع ببطاقة الائتمان</button>
+                    </div>
+                    <div class="pay_way_item">
+                        <img src="assets/img/expl/cheque.svg" />
+                        <button class="btn" (click)="onCompletePayment('CHEQUE')">الدفع بالشيك</button>
+                    </div>
+                    <div class="pay_way_item">
+                        <img src="assets/img/expl/banks.svg" />
+                        <button class="btn" (click)="__showModalDetails__('chooseBank')">تحويل مصرفى</button>
+                    </div>
+                </div>
+                <div class="col-md-6 _customer_">
+                    <div class="_cos_title_ col-md-12 col-xs-12"><p>المورد</p></div>
+                    <div class="_cos_details col-md-12 col-xs-12" *ngIf="!_supplier">
+                        <p>لم تحدد المورد لهذا الفاتورة ... <a (click)="onBackToPurchaseOrdering()">يمكنك الرجوع لاختيار المورد</a> أو <a (click)="OnAddSupplier()">أضافة مورد جديد</a></p>
+                    </div>
+                    <div class="_cos_details col-md-12 col-xs-12" *ngIf="_supplier">
+                        <i class="ti-user"></i>
+                        <div class="col-md-12 col-xs-12 no-p"><p class="tit">الاسم</p><p (click)="__onShowSupplierData()" class="data">{{ _supplier.name }}</p></div>
+                        <!--<div class="col-md-12 col-xs-12 no-p"><p class="tit">اجمالى المشتريات</p><p class="data">{{ (_supplier.total + __obj.total) | myCurrency }}</p></div>
+                        <div class="col-md-12 col-xs-12 no-p"><p class="tit">المدفوع</p><p class="data">{{ (_supplier.paid + __obj.paid) | myCurrency }}</p></div>
+                        <div class="col-md-12 col-xs-12 no-p"><p class="tit">المتبقى</p><p class="data">{{ (_supplier.total - (_supplier.paid + __payAmount)) | myCurrency }}</p></div>-->
+                    </div>
+                </div>
+                <!--<div class="col-md-6 _customer_">
+                    
+                </div>-->
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="fade modal" id="show-purchase-details-modal" tabindex="1" role="dialog"
+    aria-labelledby="myInvoiceDetailsModalLabel" aria-hidden="false">
+    <div class="modal-dialog" [ngClass]="{'modal-lg' : _modal === 'shows' || _modal === 'suppliers' || _modal === 'employees'}">
+        <div class="modal-header">
+            <button class="close" data-dismiss="modal"><span>x</span></button>
+        </div>
+        <div class="modal-body col-md-12 col-xs-12 white" *ngIf="_modal === 'shows'">
+        </div>
+        <div class="col-md-12 col-xs-12 col-md-12 col-xs-12 no-p purchaseDetails" [hidden]="_modal !== 'purchases'">
+            <div class="col-md-12 col-xs-12 no-p">
+                <div class="col-md-12 col-xs-12 main_body white">
+                    <form [formGroup]="formObject" (ngSubmit)="OnSubmitForm(formObject.value , formObject.valid)" novalidate
+                        class="form col-md-12 col-xs-12 no-p">
+                        <fieldset>
+                            <div class="col-xl-12 form_paraphraph">
+                                <p class="title head">البيانات الرئيسية للطلب</p>
+                            </div>
+                            <div class="col-md-12 first" *ngIf="_global.getResource('branches').length > 1">
+                                <div class="form-group col-md-12 col-sm-12">
+                                    <label class="col-lg-12 col-md-12 col-xs-12 col-sm-12 col-form-label">الفرع</label>
+                                    <div class="col-md-12 ">
+                                        <select class="form-control" name="branch_id" (change)="onSelectItem($event)" [formControl]="formObject.controls['branch_id']">
+                                            <option *ngFor="let option of _global.getResource('branches')"
+                                                [value]="option.id" value="{{ option.id }}" >{{ option.name }}</option>
+                                        </select>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 first">
+                                <button type="button" class="btn_box " (click)="__type__ = 'completed'" [ngClass]="{'active' : __type__ === 'completed'}">
+                                    <i class="ti-file"></i>
+                                    <span>فاتورة جديدة</span>
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-sm-6 col-xs-6 first">
+                                <button type="button" class="btn_box" (click)="__type__ = 'returned'" [ngClass]="{'active' : __type__ === 'returned'}">
+                                    <i class="ti-back-left"></i>
+                                    <span>اعادة فاتورة</span>
+                                </button>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <div class="form-group col-md-6 col-sm-12">
+                                    <label class="col-md-12 col-xs-12 col-form-label">#رقم الفاتورة</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <input data-rules="req,num" [formControl]="formObject.controls['number']" name="number" 
+                                        type="text" class="form-control" placeholder="رقم الفاتورة" [ngClass]="{'errors': validateControl('number')}">
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 col-sm-12">
+                                    <label class="col-md-12 col-xs-12 col-form-label">معرف فاتورة المورد</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <input data-rules="req,num" [formControl]="formObject.controls['notebook_number']" name="notebook_number" 
+                                        type="text" class="form-control" placeholder="معرف فاتورة المورد" [ngClass]="{'errors': validateControl('notebook_number')}">
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 last">
+                                <div class="form-group col-md-6 col-sm-12">
+                                    <label class="col-md-12 col-xs-12 col-sm-12 col-form-label">تاريخ الفاتورة</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <input data-rules="date" ng2-datetime-picker name="date" [(ngModel)]="__purchaseDate"
+                                        [formControl]="formObject.controls['date']" [close-on-select]="false" 
+                                        type="text" class="form-control" placeholder="تاريخ الفاتورة"
+                                        [ngClass]="{'errors': validateControl('date')}" readonly/>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6 col-sm-12">
+                                    <label class="col-md-12 col-xs-12 col-sm-12 col-form-label">تاريخ الدفع</label>
+                                    <div class="col-md-12 col-xs-12">    
+                                        <input data-rules="date" ng2-datetime-picker name="paid_date" [(ngModel)]="__paidDate" 
+                                        [formControl]="formObject.controls['paid_date']" [close-on-select]="false" 
+                                        type="text" class="form-control" placeholder="تاريخ الدفع" 
+                                        [ngClass]="{'errors': validateControl('paid_date')}" readonly/>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+            <suppliers-details [isDynamic]="true" *ngIf="_modal === 'suppliers'"
+            (onNewOneAdded)="OnSuppliersAdded($event)"></suppliers-details>
+
+            <!--<employees-details [isDynamic]="true" *ngIf="_modal === 'employees'"
+            (onNewOneAdded)="OnEmployeesAdded($event)"></employees-details>-->
+        <!--</div>-->
+         <pro-details [product]="__proDetails" *ngIf="_modal === 'proDetails'"></pro-details>
+
+         <div class="col-md-12 col-xs-12 no-p padding-20" *ngIf="_modal === 'parkMsg'">
+            <div class="col-md-12 col-xs-12 no-p">
+                <div class="col-md-12 col-xs-12 main_body white">
+                    <form novalidate class="form col-md-12 col-xs-12 no-p">
+                        <fieldset>
+                            <div class="col-xl-12 form_paraphraph">
+                                <p class="title head">الملاحظة المرفقة</p>
+                                <p>يتم ترك الملاحظة المرافقة عند حفظ الفاتورة للتذكير</p>
+                            </div>
+                            <div class="col-xl-12 form_paraphraph">
+                                <p>{{ _lastPurchase.parked_msg }}</p>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+         </div>
+
+        <div class="col-md-12 col-xs-12 no-p" *ngIf="_modal === 'parkpurchases'">
+            <div class="shadow_box park_box">
+                <div class="park_header col-md-12 col-xs-12">
+                    <a (click)="__showModalDetails__('parkForm')" >حفظ الفاتورة مؤقتا</a>
+                </div>
+                <div class="park_body col-md-12 col-xs-12 no-p">
+                    <div class="park_item" *ngFor="let park of __parkPurchases">
+                        <div class="park_name">
+                            <p class="number">{{ park.number }}</p>
+                            <p class="data">{{ park.date }}</p>
+                        </div>
+                        <div class="park_price">
+                            <p class="total">{{ park.totals }}</p>
+                            <p class="count">{{ park.count }} طلبات</p>
+                        </div>
+                        <div class="park_actions">
+                            <a (click)="__onParkedPurchaseAction(park,'EDIT')"><i class="ti-settings"></i></a>
+                            <a (click)="__onParkedPurchaseAction(park,'DELETE')"><i class="ti-trash"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 padding-20 center h2" *ngIf="__parkPurchases.length === 0">
+                        <p>لا يوجد بيانات لعرضها حاليا</p>
+                    </div>
+                </div>
+                <div class="park_footer col-md-12 col-xs-12">
+                    <a (click)="__getMoreParkPurchases()">عرض المزيد <i class="ti-reload"></i></a>
+                </div>
+            </div>
+        </div>
+
+         <div class="col-md-12 col-xs-12 no-p padding-20" *ngIf="_modal === 'parkForm'">
+            <div class="col-md-12 col-xs-12 no-p">
+                <div class="col-md-12 col-xs-12 main_body white">
+                    <form [formGroup]="formObject" (ngSubmit)="onParkPurchaseOrders()" novalidate
+                        class="form col-md-12 col-xs-12 no-p">
+                        <fieldset>
+                            <div class="col-xl-12 form_paraphraph">
+                                <p class="title head">الملاحظة لحفظ الفاتورة</p>
+                                <p>اترك ملاحظة ليتم قرائتها عند العودة للطلبات</p>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <div class="form-group col-md-12 col-xs-12">
+                                    <label class="col-md-12 col-xs-12 col-form-label">ملاحظات الحفظ</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <textarea data-rules="alph" [formControl]="formObject.controls['parked_msg']" name="parked_msg" 
+                                                  style="padding : 10px ; height : 90px;"
+                                                  class="form-control autofocus" placeholder="الملاحظة" [ngClass]="{'errors': validateControl('parked_msg')}">
+                                        </textarea>
+                                        <div class="errors"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <button type="submit" class="btn btn-primary">حفظ البيانات</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+         </div>
+
+
+         <div class="col-md-12 col-xs-12 no-p padding-20" *ngIf="_modal === 'chooseBank'">
+            <div class="col-md-12 col-xs-12 no-p">
+                <div class="col-md-12 col-xs-12 main_body white">
+                    <form (ngSubmit)="null" class="form col-md-12 col-xs-12 no-p" novalidate>
+                        <fieldset>
+                            <div class="col-xl-12 form_paraphraph">
+                                <p class="title head">اختر البنك الدائن</p>
+                                <p>تحويل المبلغ من البنك المختار لعملية الدفع الحالية</p>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <div class="form-group col-md-12 col-xs-12">
+                                    <label class="col-md-12 col-xs-12 col-form-label">اسم البنك</label>
+                                    <div class="col-md-12 col-xs-12">
+                                        <select class="form-control" [(ngModel)]="__chosenBankID" [ngModelOptions]="{standalone: true}">
+                                            <option *ngFor="let bank of __banks" 
+                                                    value="{{ bank.id }}">{{ bank.name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xs-12">
+                                <button type="submit" class="btn btn-primary" (click)="onCompletePayment('BANK')">تحويل المبلغ</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+         </div>
+
+         <div class="col-md -12 no-p" *ngIf="_modal === 'supplierandemployees'">
+             <div class="show_box show_customer" >
+                <div class="col-md-6 tabheader" 
+                     (click)="__showSupplierData = true" [ngClass]="{ 'active' : __showSupplierData}">
+                    المورد
+                </div>
+                <div class="col-md-6 tabheader" 
+                     (click)="__showSupplierData = false" [ngClass]="{ 'active' : !__showSupplierData}">
+                    الموظف
+                </div>
+                <div class="col-md-12 col-xs-12 no-p"  [hidden]="__showSupplierData === false">
+                    <div class="col-md-12 col-xs-12 no-p image-wrapper" [ngClass]="{'notfound' : !_supplier}">
+                        <img src="assets/img/expl/employees.svg" *ngIf="!_supplier || !_supplier['img']" />
+                        <img src="{{ _global.config['serverPath']+'uploads/avatars/'+ _supplier.img }}" *ngIf="_supplier && _supplier['img']" />
+                        <a class="cover-close" *ngIf="_supplier" (click)="OnRemoveSupplier()"><i class="ti-close"></i></a>
+                    </div>
+                    <div class="col-md-12 col-xs-12 no-p customer_body" *ngIf="!_supplier">
+                        <p class="customer-name center">لم يحدد المورد</p>
+                    </div>
+                    <div class="col-md-12 col-xs-12 no-p customer_body" *ngIf="_supplier">
+                        <p class="customer-name center">{{ _supplier.name }}</p>
+                        <div class="col-md-12 col-xs-12 prices">
+                            <div class="col-md-12 col-xs-12 no-p item item-price">
+                                <div class="col-xs-4 no-p prices-title"><p>دائن</p></div>
+                                <div class="col-xs-8 no-p prices-content"><p>{{ _supplier.total | myCurrency }}</p></div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 no-p item item-price">
+                                <div class="col-xs-4 no-p prices-title"><p>المدفوع</p></div>
+                                <div class="col-xs-8 no-p prices-content"><p>{{ _supplier.paid | myCurrency }}</p></div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 no-p item item-price">
+                                <div class="col-xs-4 no-p prices-title"><p>المتبقى</p></div>
+                                <div class="col-xs-8 no-p prices-content"><p>{{ (_supplier.total - _supplier.paid) | myCurrency }}</p></div>
+                            </div>
+                        </div>
+                        <p class="customer-name center" *ngIf="_supplier.email">{{ _supplier.email }}</p>
+                        <p class="customer-name center" *ngIf="_supplier.phone">{{ _supplier.phone }}</p>
+                        <p class="customer-name center" *ngIf="_supplier.mobile">{{ _supplier.mobile }}</p>
+                    
+                    </div>
+                </div>
+                <div class="col-md-12 col-xs-12 no-p" [hidden]="__showSupplierData === true">
+                    <div class="col-md-12 col-xs-12 no-p image-wrapper" [ngClass]="{'notfound' : !_employee}">
+                        <img src="assets/img/expl/employees.svg" *ngIf="!_employee || !_employee['img']" />
+                        <img src="{{ _global.config['serverPath']+'uploads/avatars/'+ _employee.img }}" *ngIf="_employee && _employee['img']" />
+                        <a class="cover-close" *ngIf="_employee" (click)="OnRemoveEmployee()"><i class="ti-close"></i></a>
+                    </div>
+                    <div class="col-md-12 col-xs-12 no-p customer_body" *ngIf="!_employee">
+                        <p class="customer-name center">لم يحدد الموظف</p>
+                    </div>
+                    <div class="col-md-12 col-xs-12 no-p customer_body" *ngIf="_employee">
+                        <p class="customer-name center">{{ _employee.name }}</p>
+                        <div class="col-md-12 col-xs-12 prices">
+                            <div class="col-md-12 col-xs-12 no-p item item-price">
+                                <div class="col-xs-4 no-p prices-title"><p>مدين</p></div>
+                                <div class="col-xs-8 no-p prices-content"><p>{{ _employee.total | myCurrency }}</p></div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 no-p item item-price">
+                                <div class="col-xs-4 no-p prices-title"><p>المدفوع</p></div>
+                                <div class="col-xs-8 no-p prices-content"><p>{{ _employee.paid | myCurrency }}</p></div>
+                            </div>
+                            <div class="col-md-12 col-xs-12 no-p item item-price">
+                                <div class="col-xs-4 no-p prices-title"><p>المتبقى</p></div>
+                                <div class="col-xs-8 no-p prices-content"><p>{{ (_employee.total - _employee.paid) | myCurrency }}</p></div>
+                            </div>
+                        </div>
+                        <p class="customer-name center" *ngIf="_employee.email">{{ _employee.email }}</p>
+                        <p class="customer-name center" *ngIf="_employee.phone">{{ _employee.phone }}</p>
+                        <p class="customer-name center" *ngIf="_employee.mobile">{{ _employee.mobile }}</p>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+         <div class="col-md-12 col-xs-12 no-p" *ngIf="_modal === 'shipping'">
+             <fieldset>
+                <!--<div class="col-xl-12 form_paraphraph">
+                    <p class="title head">شحن الفاتورةات</p>
+                    <p>فى حال كان هناك شحن يسجل كمصروف على الشركة</p>
+                </div>-->
+                <div class="show_box show_shipping">
+                    <div class="form col-md-12 col-xs-12 no-p">
+                        <div class="_cos_title_ no-p col-md-12 col-xs-12"><p>عملية النقل و الشحن</p></div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="col-md-6 col-xs-6 col-sm-6 first" >
+                                <button type="button" class="btn_box" (click)="__setQuantityDir__('store')" [ngClass]="{'active' : formObject.value.quantity_dir === 'store' }">
+                                    <i class="ti-direction-alt"></i>
+                                    <span>التخزين داخل المتجر</span>
+                                </button>
+                            </div>
+                            <div class="col-md-6 col-xs-6 col-sm-6 first">
+                                <button type="button" class="btn_box" (click)="__setQuantityDir__('storage')" [ngClass]="{'active' : formObject.value.quantity_dir === 'storage' }">
+                                    <i class="ti-home"></i>
+                                    <span>التخزين داخل المخازن</span>
+                                </button>
+                            </div>
+                            <div class="form-group col-md-12 col-xs-12 col-sm-12" *ngIf="__quantityDir__ === 'storage'">
+                                <label class="col-md-12 col-form-label">المخزن</label>
+                                <div class="col-md-12 ">
+                                    <select class="form-control" name="storage" (change)="__setQuantityDir__('storage' , $event)">
+                                        <option *ngFor="let option of __storagesArray"
+                                            [value]="option.id" value="{{ option.id }}" >{{ option.name }}</option>
+                                    </select>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class="col-md-12 col-xs-12 no-p checking">
+                            <div class="form-group col-md-12 col-xs-12 no-p">
+                                <label class="label-item">
+                                    <input (change)="__refreshPrices()" type="checkbox" class="label-cb" 
+                                           [(ngModel)]="shipping_by_company" name="shipping_by_company" />
+                                    <span class="label-mark"></span>
+                                    يتم دفع الشحن من قبل مورد البضاعة - (شحن مجانى)
+                                </label>
+                            
+                            </div>
+                        </div>
+                        <div class="form" (ngSubmit)="null">
+                            <div class="form-group datas">
+                                <label class="col-md-4 col-form-label">مبلغ النقل أو الشحن</label>
+                                <div class="col-md-6 float_opp">
+                                    <input (change)="__refreshPrices()" [(ngModel)]="shipping_amount" name="shipping_amount" 
+                                    type="text" class="form-control" placeholder="مبلغ النقل أو الشحن"/>
+                                </div>
+                                <div class="col-md-2 padding-20"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </fieldset>
+         </div>
+         <div class="col-md -12 no-p" *ngIf="_modal === 'paymentsDetails'">
+             <div class="show_box show_customer" >
+                <div class="col-md-12 col-xs-12 no-p">
+                    <div class="col-md-12 col-xs-12 no-p image-wrapper notfound">
+                        <img src="assets/img/expl/expenses.svg"/>
+                    </div>
+                    <div class="col-md-12 col-xs-12 no-p customer_body" *ngIf="formObject.value.paid === 0 || !formObject.value.payments || formObject.value.payments.length === 0">
+                        <p class="customer-name center">لم يتم الدفع الى الأن</p>
+                    </div>
+                    <div class="col-md-12 col-xs-12 no-p customer_body" *ngIf="formObject.value.paid > 0 && formObject.value.payments && formObject.value.payments.length > 0">
+                        <p class="customer-name center">تأريخ الدفع</p>
+                        <div class="col-md-12 col-xs-12 prices">
+                           <div class="col-md-11 col-xs-11 no-p">
+                                <div class="col-md-12 col-xs-12 no-p item item-price">
+                                    <div class="col-xs-4 no-p prices-title"><p>طريقة الدفع</p></div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 no-p item item-price">
+                                    <div class="col-xs-4 no-p prices-title"><p>المبلغ</p></div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 no-p item item-price">
+                                    <div class="col-xs-4 no-p prices-title"><p>التاريخ</p></div>
+                                </div>
+                           </div>
+                           <div class="col-md-1 col-xs-1 no-p"><p></p>
+                           </div>  
+                        </div>
+                        <div class="col-md-12 col-xs-12 prices" *ngFor="let payment of formObject.value.payments;let i = index">
+                            <div class="col-md-11 col-xs-11 no-p">
+                                <div class="col-md-12 col-xs-12 no-p item item-price">
+                                    <div class="col-xs-8 no-p prices-content"><p>{{ payment['by'] | paymentType }}</p></div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 no-p item item-price">
+                                    <div class="col-xs-8 no-p prices-content"><p>{{ payment['paid'] | myCurrency }}</p></div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 no-p item item-price">
+                                    <div class="col-xs-8 no-p prices-content"><p>{{ payment['date'] | date:'dd/MM/yyyy H:mm' }}</p></div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 col-xs-1">
+                                <a (click)="OnRemovePayment(i)" class="remove"><i class="ti-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 no-p customer_body" *ngIf="formObject.value.paid === 0 || !formObject.value.payments || formObject.value.payments.length === 0">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+<div class="fade modal" id="show-variaty-modal" tabondex="-1" role="dialog"
+    aria-labelledby="myVariatyModalLabel" aria-hidden="true" *ngIf="_variatyProduct && _variatyProduct.product_costs && _variatyProduct.product_costs.length > 1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header variaty-modal-header white">
+                <button class="close" data-dismiss="modal"><span>x</span></button>
+                <p class="h3">{{ _variatyProduct.name }} منتج متنوع التكلفة</p>
+            </div>
+            <div class="modal-body col-md-12 col-xs-12 white">
+                <div class="col-md-12 col-xs-12 no-p variaty-select">
+                    <div class="variaty-types-list col-md-12 col-xs-12 no-p bounceInDown"> 
+                        <p class="col-md-12 col-xs-12 variaty-name">تكلفة المنتج أو الخدمة</p>
+                        <button class="variaty-item btn" *ngFor="let variaty of _variatyProduct.product_costs,let i = index"
+                                (click)="onSelectVariaty(variaty , indx)">
+                            <p class="item item{{indx}}_{{i}}">{{ variaty }}</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->

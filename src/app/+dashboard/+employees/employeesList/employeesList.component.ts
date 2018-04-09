@@ -11,14 +11,14 @@ import { Employees } from './../../../@interfaces';
 import { HttpRequestService } from './../../../@services';
 
 import { Uploader }      from 'angular2-http-file-upload';
-import { MyUploadItem } from './../../myUploadItem'; 
+import { MyUploadItem } from './../../myUploadItem';
 
 @Component({
     selector : 'employees-list',
     templateUrl : './employeesList.html',
     providers : [
-        GlobalProvider, 
-        LabProvider, 
+        GlobalProvider,
+        LabProvider,
         HttpRequestService,
         AutocompleteComponent,
         AddNewComponent,
@@ -78,7 +78,7 @@ export class EmployeesListComponent implements OnInit{
     onAction($event):void{
         switch($event.action){
             case 'DELETE':
-                this.__deleteItems($event.item.id);                
+                this.__deleteItems($event.item.id);
                 break;
             case 'EDIT':
                 let __url = 'employees/details/'+ $event.item.id.toString();
@@ -106,9 +106,7 @@ export class EmployeesListComponent implements OnInit{
             this._lab.__setAlerts__('warn' , 'حجم الصورة أقل من 10 ميجابايت ... <jpeg,png>');
         };
         this._uploaderService.onCompleteUpload = (img, response, status, headers) => {
-            if(response && response.data){
-                location.reload();
-            }
+            return this._lab.__onChangeAvatar__(this , item , response.data);
         };
         this._uploaderService.onProgressUpload = (img, percentComplete) => {
         };
@@ -135,7 +133,7 @@ export class EmployeesListComponent implements OnInit{
     onPageChanging($event):void{
         let __queryParams:any = this._router.routerState.root.queryParams['value'];
         if(!__queryParams || !__queryParams['sort']){
-            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort; 
+            $event.queryParams += '&sortby=' + this.__order + '&sort=' + this.__sort;
         }
         this.__getItems(this._controller +'/'+ $event.queryParams);
     }
@@ -179,15 +177,15 @@ export class EmployeesListComponent implements OnInit{
             address1 : 'العنوان 1',
             address2 : 'العنوان 2',
             open_amount : 'رصيد أول المدة',
-            sells_count : 'عدد المبيعات' ,
+            sales_count : 'عدد المبيعات' ,
             invoices_count : 'عدد الفواتير' ,
             total : 'اجمالى المبيعات' ,
             paid : 'المستلم من المبيعات' ,
             invoices_total : 'اجمالى فواتير المبيعات' ,
             invoices_paid : 'المستلم من فواتير المبيعات' ,
-            buys_total : 'اجمالى المشتريات' ,
-            buys_paid : 'المدفوع للمشتريات' ,
-            buys_count : 'عدد المشتريات',
+            purchases_total : 'اجمالى المشتريات' ,
+            purchases_paid : 'المدفوع للمشتريات' ,
+            purchases_count : 'عدد المشتريات',
             createdAt : 'تاريخ الانشاء',
             updatedAt : 'أخر تعديل',
             __pipes : {
@@ -196,23 +194,23 @@ export class EmployeesListComponent implements OnInit{
                 paid : 'currency' ,
                 invoices_total : 'currency' ,
                 invoices_paid : 'currency' ,
-                buys_total : 'currency' ,
-                buys_paid : 'currency' ,
-                buys_count : 'currency',
+                purchases_total : 'currency' ,
+                purchases_paid : 'currency' ,
+                purchases_count : 'currency',
                 createdAt : 'date',
                 updatedAt : 'date',
             },
             __required : {
                 open_amount : true,
-                sells_count : true,
+                sales_count : true,
                 total : true ,
                 paid : true  ,
                 invoices_count : true,
                 invoices_total : true  ,
                 invoices_paid : true  ,
-                buys_total : true ,
-                buys_paid : true ,
-                buys_count : true ,
+                purchases_total : true ,
+                purchases_paid : true ,
+                purchases_count : true ,
                 createdAt : true ,
                 updatedAt : true ,
             }
@@ -242,7 +240,7 @@ export class EmployeesListComponent implements OnInit{
                     this.__hideLists = true;
                 }
             },
-            (error) => { 
+            (error) => {
                 this.errors = error;
                 this.__count = 0;
                 this.__pages = 0;

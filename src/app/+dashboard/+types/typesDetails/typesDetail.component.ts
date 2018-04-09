@@ -160,6 +160,7 @@ export class TypesDetailsComponent implements OnInit,AfterViewInit,OnChanges{
         let intRegex:RegExp = this._global.config["intRegex"];
         let floatRegex:RegExp = this._global.config["floatRegex"];
         this.formObject = this._fb.group({
+            branch_id          : [ this._global.getResource('branches')[0].id, [ Validators.required , Validators.pattern(intRegex)]],
             id                 : [ 0 , Validators.pattern(intRegex)],
             name               : ['' , [ Validators.required , Validators.pattern(nameRegex)]],
             father             : ['' , Validators.pattern(nameRegex)],
